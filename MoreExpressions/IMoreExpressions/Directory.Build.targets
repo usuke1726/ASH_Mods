@@ -1,0 +1,3 @@
+﻿<Project>
+    <Import Project="$(DirectoryBuildPropsPath)\..\Build.Preload.xml"/>
+</Project>

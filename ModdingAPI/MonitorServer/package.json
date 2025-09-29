@@ -1,0 +1,19 @@
+{
+  "name": "a_short_hike_modding_api_monitor",
+  "author": "Quicker1726",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^5.101.0"
+  },
+  "dependencies": {
+    "bufferutil": "^4.0.9",
+    "utf-8-validate": "^6.0.5",
+    "webpack-cli": "^6.0.1",
+    "ws": "^8.18.3"
+  }
+}

@@ -1,0 +1,67 @@
+<Project>
+    <ItemGroup>
+        <Reference Include="Assembly-CSharp">
+            <HintPath>$(DirectoryBuildPropsPath)\..\.lib\Assembly-CSharp.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="$(DirectoryBuildPropsPath)\..\.lib\Managed\*.dll" Private="False"/>
+        <Reference Include="$(DirectoryBuildPropsPath)\..\.lib\preloads\*.dll" Private="False"/>
+        <Reference Include="ModdingAPI">
+            <HintPath>$(DirectoryBuildPropsPath)\..\.lib\ModdingAPI.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Content Include="$(DirectoryBuildPropsPath)\..\.lib\ModdingAPI.xml">
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+            <Visible>false</Visible>
+        </Content>
+        <Content Include="i18n\*.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <SourceDll>$(TargetDir)\$(TargetName).dll</SourceDll>
+        <ModsDir>$(ModsPath)</ModsDir>
+        <DestinationDir>$(ModsDir)\$(TargetName)</DestinationDir>
+        <PreloadDll>$(DirectoryBuildPropsPath)\..\.lib\preloads\$(PreloadName).preload.dll</PreloadDll>
+        <MoveDepsJsonDir>$(TargetDir)\..</MoveDepsJsonDir>
+        <DefaultItemExcludes>$(DefaultItemExcludes);dist\**\*;</DefaultItemExcludes>
+    </PropertyGroup>
+    <Choose>
+        <When Condition="'$(Configuration)'=='Debug'">
+            <PropertyGroup>
+                <OutputPackage>$(TargetDir)\..\$(TargetName)_Debug_$(Version).zip</OutputPackage>
+            </PropertyGroup>
+        </When>
+        <Otherwise>
+            <PropertyGroup>
+                <OutputPackage>$(TargetDir)\..\$(TargetName)_$(Version).zip</OutputPackage>
+                <DebugType>none</DebugType>
+            </PropertyGroup>
+        </Otherwise>
+    </Choose>
+
+    <Import Project="./Build.Hash.xml"/>
+
+    <Target Name="BeforeBuild">
+        <Error Condition="!Exists('$(GamePath)')" Text="The folder '$(GamePath)' was not found." ContinueOnError="false" />
+        <Error Condition="!Exists('$(GamePath)\A Short Hike.exe')" Text="A Short Hike game was not found on $(GamePath)." ContinueOnError="false" />
+        <Error Condition="!Exists('$(GamePath)\BepInEx')" Text="GamePath is correct but BepInEx has not been installed." ContinueOnError="false" />
+        <Error Condition="!Exists('$(GamePath)\BepInEx\plugins')" Text="You haven't launched the game after installing BepInEx." ContinueOnError="false" />
+        <Error Condition="'$(ModsDir)'==''" Text="The ModsPath property is not set." ContinueOnError="false" />
+        <Error Condition="!Exists('$(ModsDir)')" Text="The folder '$(ModsDir)' was not found." ContinueOnError="false" />
+        <Error Condition="'$(Configuration)'!='Debug' And '$(Configuration)'!='Release'" Text="Configuration must be Debug or Release." ContinueOnError="false" />
+        <Message Text="Debug or Release: $(Configuration)"  Importance="high" />
+    </Target>
+
+    <Target Name="AfterBuild">
+        <Message Text="Copying from '$(TargetDir)' to '$(ModsDir)'..." Importance="high" />
+        <Move SourceFiles="$(TargetDir)\$(TargetName).deps.json" DestinationFolder="$(MoveDepsJsonDir)" />
+        <Copy Condition="Exists('$(PreloadDll)')" SourceFiles="$(PreloadDll)" DestinationFolder="$(TargetDir)" ContinueOnError="false" />
+        <MakeDir Condition="!Exists('$(DestinationDir)')" Directories="$(DestinationDir)" ContinueOnError="false" />
+        <ZipDirectory SourceDirectory="$(TargetDir)" DestinationFile="$(OutputPackage)" Overwrite="true" ContinueOnError="false" />
+        <Unzip SourceFiles="$(OutputPackage)" DestinationFolder="$(DestinationDir)" ContinueOnError="false" />
+        <Move SourceFiles="$(MoveDepsJsonDir)\$(TargetName).deps.json" DestinationFolder="$(TargetDir)" />
+        <Message Text="Copied!" Importance="high" />
+    </Target>
+</Project>

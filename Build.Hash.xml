@@ -1,0 +1,37 @@
+<!-- 
+Zip packaging including hash of each file (for mod distributing)
+-->
+<Project>
+    <PropertyGroup>
+        <HashAlgorithm>SHA512</HashAlgorithm>
+        <HashExtension>.sha512.txt</HashExtension>
+        <HashOutput>$(TargetDir)\.$(TargetName)$(HashExtension)</HashOutput>
+        <HashOnDebug>false</HashOnDebug>
+        <DistDir>$(SolutionDir)\dist</DistDir>
+    </PropertyGroup>
+    <Target Name="HashOutputFiles" Condition="'$(HashOnDebug)'=='true' Or '$(Configuration)'=='Release'" AfterTargets="AfterBuild">
+        <ItemGroup>
+            <HashedTargets Include="$(TargetDir)\**" Exclude="**\*.deps.json;**\*$(HashExtension)" />
+        </ItemGroup>
+        <GetFileHash Files="@(HashedTargets)" Algorithm="$(HashAlgorithm)">
+            <Output TaskParameter="Items" ItemName="FilesWithHashes" />
+        </GetFileHash>
+        <ItemGroup>
+            <RelativePaths Include="@(FilesWithHashes)">
+                <Path>$([MSBuild]::MakeRelative('$(TargetDir)', '%(Identity)'))</Path>
+                <Hash>%(FileHash)</Hash>
+            </RelativePaths>
+        </ItemGroup>
+        <WriteLinesToFile
+            File="$(HashOutput)"
+            Lines="@(RelativePaths->'%(Hash) %(Path)')"
+            Overwrite="true" />
+        <Move SourceFiles="$(TargetDir)\$(TargetName).deps.json" DestinationFiles="$(TargetDir)\.$(TargetName).deps.json" />
+        <ZipDirectory SourceDirectory="$(TargetDir)" DestinationFile="$(OutputPackage)" Overwrite="true" />
+        <Delete Files="$(HashOutput)" />
+        <Move SourceFiles="$(TargetDir)\.$(TargetName).deps.json" DestinationFiles="$(TargetDir)\$(TargetName).deps.json" />
+        <MakeDir Condition="!Exists('$(DistDir)')" Directories="$(DistDir)" />
+        <Copy SourceFiles="$(OutputPackage)" DestinationFolder="$(DistDir)" />
+        <Message Text="Hashing done!" Importance="high" />
+    </Target>
+</Project>

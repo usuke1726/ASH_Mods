@@ -1,0 +1,22 @@
+﻿{
+    "ModLoader.Error.ModsPathConflictingPreload": "Preload 用フォルダー {0} はModsPathとして使用できません",
+    "ModLoader.Error.ModsPathNotOnGameRootPath": "ModsPath は フォルダ {0} 上になければいけません",
+    "ModLoader.Error.InvalidModsPathName": "無効なフォルダ: {0} (path: {1})",
+    "ModLoader.Error.ModsPathNotFound": "ModsPath {0} が見つかりませんでした",
+    "ModLoader.Error.FolderUnauthorized": "パス {0} の読み込み権限がありません",
+    "ModLoader.Error.ModClassNotFound": "Modクラスを継承したクラスが見つかりません",
+    "ModLoader.Error.MultipleModClasses": "2つ以上のクラスが見つかりました",
+    "ModLoader.Error.FailedInstanciatingModClass": "インスタンス化に失敗しました",
+    "ModLoader.Error.DuplicatedModUniqueID": "ID {0} はすでに登録されています",
+    "ModRegistry.Error.ApiNotFound": "ID {0} のmodが見つかりませんでした",
+    "ModRegistry.Error.ApiNotInterface": "{0} はinterfaceではありません",
+    "ModRegistry.Error.ApiNotPublic": "{0} はpublicでなければなりません",
+    "ModRegistry.Error.FailedCastingToInterafce": "{0} への変換に失敗しました\n{1}",
+    "MonitorServer.Info.ServerDisabled": "設定によりModdingAPIモニター サーバーは無効化されています",
+    "MonitorServer.Info.ClientDisabled": "設定によりModdingAPIモニター クライアントは無効化されています",
+    "MonitorServer.Error.UnsupportedPlatform": "プラットフォーム {0} ではサーバーがサポートされていません",
+    "MonitorServer.Error.InvalidPort": "不正なポート番号: ポート番号は 80番 あるいは 1024番 以降を使用してください",
+    "MonitorServer.Info.DisableClientOnFailedLaunchServer": "サーバーの起動に失敗したため，ModdingAPIモニター クライアントを無効化します",
+    "MonitorServer.Error.ScriptNotFound": "スクリプト {0} が見つかりません",
+    "IO.Core.Warn.GlobIsUnsupported": "globstar \"**\" は使用できません"
+}

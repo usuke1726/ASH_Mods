@@ -1,0 +1,18 @@
+<Project>
+    <PropertyGroup>
+        <GamePath>C:\XboxGames\A Short Hike\Content</GamePath>
+        <DebugType>none</DebugType>
+    </PropertyGroup>
+    <Choose>
+        <When Condition="'$(Configuration)'=='Debug'">
+            <PropertyGroup>
+                <ModsPath>$(GamePath)\Mods_dev</ModsPath>
+            </PropertyGroup>
+        </When>
+        <When Condition="'$(Configuration)'=='Release'">
+            <PropertyGroup>
+                <ModsPath>$(GamePath)\Mods</ModsPath>
+            </PropertyGroup>
+        </When>
+    </Choose>
+</Project>

@@ -1,0 +1,89 @@
+﻿<Project>
+    <ItemGroup>
+        <Reference Include="Assembly-CSharp">
+            <HintPath>$(DirectoryBuildPropsPath)\..\.lib\Assembly-CSharp.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="$(DirectoryBuildPropsPath)\..\.lib\Managed\*.dll" Private="False"/>
+        <Content Include="i18n\*.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <DefaultItemExcludes>$(DefaultItemExcludes);dist\**\*;</DefaultItemExcludes>
+        <SourceDll>$(TargetDir)\$(TargetName).dll</SourceDll>
+        <SourceXml>$(TargetDir)\$(TargetName).xml</SourceXml>
+        <PluginDir>$(GamePath)\BepInEx\plugins</PluginDir>
+        <DestinationDir>$(PluginDir)\$(TargetName)</DestinationDir>
+        <TempDir>$(GamePath)\BepInEx\.for-IDE-tmp</TempDir>
+        <DevDir>$(TempDir)\plugins_dev\$(TargetName)</DevDir>
+        <ReleaseDir>$(TempDir)\plugins_release\$(TargetName)</ReleaseDir>
+        <LibDir>$([System.IO.Path]::Combine("$(DirectoryBuildPropsPath)", "../.lib"))</LibDir>
+        <MonitorServerScript>$([System.IO.Path]::Combine("$(DirectoryBuildTargetsPath)", "../MonitorServer/dist/server.js"))</MonitorServerScript>
+        <MoveDepsJsonDir>$(TargetDir)\..</MoveDepsJsonDir>
+        <MessageBar>===========================================================================</MessageBar>
+    </PropertyGroup>
+
+    <Target Name="AddGeneratedFiles" BeforeTargets="BeforeCompile;CoreCompile">
+        <PropertyGroup>
+            <GeneratedText><![CDATA[
+namespace $(RootNamespace)
+{
+    public static class ModdingApiInfo{
+        public const string PLUGIN_PATH = @"$(DestinationDir)"%3B
+        public const string GAMEROOT_PATH = @"$(GamePath)"%3B
+        public static string ModsPath { get%3B internal set%3B } = null!%3B
+    }
+}
+            ]]></GeneratedText>
+            <GeneratedFilePath>$(IntermediateOutputPath)ModdingApiInfo.cs</GeneratedFilePath>
+        </PropertyGroup>
+        <ItemGroup>
+            <Compile Include="$(GeneratedFilePath)" />
+            <FileWrites Include="$(GeneratedFilePath)" />
+        </ItemGroup>
+        <WriteLinesToFile Lines="$(GeneratedText)" File="$(GeneratedFilePath)" WriteOnlyWhenDifferent="true" Overwrite="true" />
+    </Target>
+
+    <Target Name="BeforeBuild">
+        <Error Condition="!Exists('$(GamePath)')" Text="The folder '$(GamePath)' was not found." ContinueOnError="false" />
+        <Error Condition="!Exists('$(GamePath)\A Short Hike.exe')" Text="A Short Hike game was not found on $(GamePath)." ContinueOnError="false" />
+        <Error Condition="!Exists('$(GamePath)\BepInEx')" Text="GamePath is correct but BepInEx has not been installed." ContinueOnError="false" />
+        <Error Condition="!Exists('$(GamePath)\BepInEx\plugins')" Text="You haven't launched the game after installing BepInEx." ContinueOnError="false" />
+        <Error Condition="!Exists('$(PluginDir)')" Text="The folder '$(PluginDir)' was not found." ContinueOnError="false" />
+        <MakeDir Condition="!Exists('$(TempDir)')" Directories="$(TempDir)" />
+        <Message Text="Debug or Release: $(Configuration)"  Importance="high" />
+        <Message Text="LibDir: $(LibDir)"  Importance="high" />
+    </Target>
+
+    <Choose>
+        <When Condition="'$(Configuration)'=='Debug'">
+            <PropertyGroup>
+                <OutputPackage>$(TargetDir)\..\$(TargetName)_Debug_$(Version).zip</OutputPackage>
+            </PropertyGroup>
+        </When>
+        <Otherwise>
+            <PropertyGroup>
+                <OutputPackage>$(TargetDir)\..\$(TargetName)_$(Version).zip</OutputPackage>
+                <DebugType>none</DebugType>
+            </PropertyGroup>
+        </Otherwise>
+    </Choose>
+    <Import Project="$(DirectoryBuildPropsPath)\..\Build.Hash.xml"/>
+    <Target Name="AfterBuild">
+        <Message Text="Copying '$(SourceDll)' to '$(PluginDir)'..." Importance="high" />
+        <MakeDir Condition="!Exists('$(DestinationDir)')" Directories="$(DestinationDir)"/>
+        <Copy SourceFiles="$(SourceDll)" DestinationFolder="$(LibDir)" ContinueOnError="true" />
+        <Copy SourceFiles="$(SourceXml)" DestinationFolder="$(LibDir)" ContinueOnError="true" />
+        <Copy Condition="Exists('$(MonitorServerScript)')" SourceFiles="$(MonitorServerScript)" DestinationFolder="$(TargetDir)" ContinueOnError="true" />
+
+        <Move SourceFiles="$(TargetDir)\$(TargetName).deps.json" DestinationFolder="$(MoveDepsJsonDir)" />
+        <ZipDirectory SourceDirectory="$(TargetDir)" DestinationFile="$(OutputPackage)" Overwrite="true" ContinueOnError="false" />
+        <Unzip SourceFiles="$(OutputPackage)" DestinationFolder="$(DestinationDir)" ContinueOnError="false" />
+        <Unzip Condition="Exists('$(DevDir)')" SourceFiles="$(OutputPackage)" DestinationFolder="$(DevDir)" ContinueOnError="false" />
+        <Unzip Condition="Exists('$(ReleaseDir)')" SourceFiles="$(OutputPackage)" DestinationFolder="$(ReleaseDir)" ContinueOnError="false" />
+        <Move SourceFiles="$(MoveDepsJsonDir)\$(TargetName).deps.json" DestinationFolder="$(TargetDir)" />
+        <Message Text="Copied!" Importance="high" />
+    </Target>
+</Project>

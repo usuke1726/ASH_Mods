@@ -1,0 +1,191 @@
+﻿
+# demo video plot (japanese)
+
+id test # 本会話データのID (必須プロパティ)
+
+# カメラ設定
+camera (171.4179 7.1091 109.1254) [22.5 58 0] # ()はposition, []はrotation． コンマはあってもなくても良い
+
+# 登場人物の定義 ()はposition, []はrotation． コンマはあってもなくても良い
+# (*, *) はx座標とz座標(y座標は地面の上に配置されるようにいい感じに調整される)
+char [1] Claire (138, 81.7) [0, 0, 0] # 主人公クレア (キャラクター名はenum ModdingAPI.Charactersを参照(ただしcase-insensitive))
+char [2] ClimbingRhino (143, 94) [0, 200, 0] # 記述 "[2]" より，キャラクター名 "2" をエイリアスとして登録する
+char [3] Tim (130, 90) [0, 120, 0]
+char [dummy1] RumorGuy (392 74) (0, 0) # エイリアスは自由記述だが "]" と空白文字は使用禁止
+# gossipの移動経路に3人が集まってる場所が重なっているので，会話中に横切らせないように端っこに移動させている
+char [dummy2] Avery (382 74) (0, 0)
+
+1.0 2 at # 注目を集める(他のプレイヤーがプレイヤー"2"(つまりrhino)に顔を向ける)
+1.0 2 talk "ワタシたち" 0.8 # 時刻 1.0 にプレイヤー "2" が，0.8秒間 "ワタシたち" と喋る
+2.0 2 "ついに..." 1.25 # (アクション名 "talk" は省略可能)
+3.5 2 "自由におしゃべりできるようになったわ！" 2.5
+3.6 1 emote Surprise # 驚いた表情にする
+3.6 3 emote Surprise
+3.5 2 emote Happy
+3.5 2 pose RaiseArms # 腕を上げる動作をする
+_+1.5 2 pose _ # 腕を上げる動作を1.5秒後に解除 ("pose null" でも可)
+4.0 1 emote Happy
+4.2 1 lk null # 注目状態を解除("lk _" でも可)
+4.2 1 pose RaiseArms
+6.0 1 pose _
+4.2 1 "イエー！" 2.0
+4.2 3 lk null
+4.2 3 emote Happy
+4.2 3 pose RaiseArms
+_+1.5 3 pose _
+4.8 3 "やったな！！" 1.7 -3
+
+7.0 1 emote _
+7.0 2 emote _
+7.0 3 emote _
+
+7.0 2 at
+_ 2 "今はこうやって" 1.3
+_ 2 "立ち止まってのお話しか" 1.2
+_ 2 "できないんだけどね" 1.6
+
+_ 3 lk null
+_ 3 at
+_ 3 "それよりもだ" 1.0
+_ 3 "今はまだ" 0.8
+_ 3 "カン字 がほんの一部しか使えないんだろ？" 1.7
+_ 3 emote EyesClosed
+_ 3 "俺(オレ) とか 私(ワタシ) とかも\n使えないぞ！" 1.7 0
+_ 3 emote _
+
+_ 1 at
+_ 1 at 3
+_ 1 "それは仕方ないよ" 1.1
+_ 1 "ゲームって" 0.9
+_ 1 "必要最小限の文字しか用意しないものだし" 2.0
+_ 1 "それに" 0.7
+_ 1 "このmodの開発者じゃ力不足だもの" 1.5
+
+_ 1 aat
+_ 3 at
+_ 3 "その点 エイゴ はいいよな" 1.6
+_ 3 "単語を使い放題じゃないか" 1.1
+
+_ 3 aat
+_ 2 at
+_ 2 "でもこれで" 0.8
+_ 2 "ちょっとした おしばい も" 1.2
+_ 2 emote Happy
+_ 2 "できるんじゃないかしら？" 1.7
+
+_ 2 aat
+_ 1 at
+_ 1 "そうだよ！" 1.0
+_ 1 "ワタシ みんなともっと楽しく過ごしたいな！" 1.7
+
+_ 3 at
+_ 3 lk 1
+_ 3 pose RaiseArms
+_+1.5 3 pose _
+__ 3 "ロッククライミングの話なら" 0.9
+_ 3 "いくらでも付き合うぜ！" 1.3
+
+_ 2 lk 1
+_ 1 emote Happy
+_ 1 "いいね！" 0.9
+_ 1 "今からチャーリーさんのところに行って話そう！" 1.7
+
+_ 2 lk 3
+_ 3 emote Happy
+_ 3 "いいだろう！" 1.0
+_ 3 "ついでにオレの鍛え上げた" 1.2
+_ 3 "クライミング技術を披露してやる！" 1.5 0
+_?+0.5 1 emote Surprise # "クライミング技術を～"のセリフを表示してから0.5秒後
+_+0.9 1 emote _
+
+_ 2 lk 1
+_+0.6 1 "えっ 何て？" 1.0
+__+1.0 2 emote _
+_+1.1 3 emote EyesClosed
+
+_ 2 lk 3
+_+0.6 2 emote Happy
+__ 3 "...何でもねぇよ" 1.3
+
+_ 1 end
+_ 2 end
+_ 3 end
+
+EOF
+
+(これ以降はすべてコメント)
+
+# 基本文法
+
+`<time(float)> <character(string)> <type(string)> ...arguments`
+あるいは
+`@<cacheId(string)> <time(float)> <character(string)> <type(string)> ...arguments`
+
+## コメント
+
+`#`, `;`, `//` で行コメントが記述できる．
+アクションの行末尾にも同様に記述できるが，その場合は直前に空白がないといけない．
+
+## timeの特殊記法
+  `_`:  直前のアクションの時刻 (ただし，typeがtalkの場合吹き出しが消滅する瞬間の時刻が用いられる)
+  `__`: 前の前のアクションの時刻
+  `_?`: 最後に記述されたtalk actionの開始時刻(吹き出しが表示される瞬間の時刻)
+
+  また，時刻に「何秒後」という指定もできる：
+  `_+0.5`: `_`の0.5秒後
+  `_?+-1.0` : `_?`の1.0秒前
+
+### 時刻キャッシュ
+  `@<cacheId(string,non-space)>` を先頭に記述することで，時刻キャッシュを指定できる
+  そのcacheIdが未指定ならば，その次に記述された時刻が登録される(例のごとく，talk actionの場合は吹き出しが消滅する瞬間であるので注意)
+  また，キャッシュ記述単体で指定することができる: `@<cacheId>`
+  その場合， `_` の時刻がそのまま登録される (つまり `@<cacheId> _` と同義)
+
+## typeごとの文法(typeはcase-insensitive)
+
+### type: "talk" => 吹き出しを表示させる
+  [talk|speak|sp|t|] "<text(string)>" <showingTime(float,optional)> <xOffset(float,optional)>
+
+  例: 1.0 claire talk "OK!" 1.2 0 # 時刻1.0にクレアが1.2秒間"OK!"としゃべる(offset: 0ということで若干左に配置されるはず)
+  例: 1.0 claire "GOOD!" # type名"talk"は省略可能． showingTimeのデフォルト値は1.0, xoffsetは0.35
+
+### type: "look" => 特定のキャラクターに注目する
+  [look|lk] <target(string or null文字)>
+
+  例: 1.0 claire look tim # timの方を向く
+  ※ nullで向いていた状態を解除する(null文字に該当するのは `null` および `_`．)
+  ※ 後述のatによって注目していた場合も，本アクションで解除できる
+
+### type: "draw-attention" => 他のキャラクターを自分の方に注目させる
+  [draw-attention|attention|at]
+
+  例: 1.0 claire at
+
+### type: "avoid-attention" => draw-attentionを解除
+  [avoid-attention|avoid|aat|av]
+
+  例: 1.0 claire aat
+  ※ lookで自分の方を向いていた場合でも，その状態が解除される．
+
+### type: "emote" => 表情を変える
+  [emote|em] <emote(string or null文字)>
+
+  例 1.0 claire emote Happy
+  ※ emoteの種類はcase-insensitiveである
+  ※ null文字で無表情になる
+  ※ 現在使用可能なemote: Happy, Surprise, EyesClosed
+
+### type: "pose" => アニメーション動作を起動する
+  [pose|ps] <pose(string or null)>
+
+  例 1.0 claire pose RaiseArms # バンザイする
+  ※ null文字でアニメーションを無効化する
+  ※ バンザイの動作は，明示的に解除しないとループする
+
+### type: "end" => そのキャラクターのアクションはこれで終了とする
+  [end]
+
+  例 1.0 claire end
+  ※ 現状，すべてのキャラクターに対してendアクションを最後に実行することを推奨している．(恐らくendをしなくても正常に会話が終了してくれるはずだが，念のため．)
+
+

@@ -1,0 +1,10 @@
+﻿<Project>
+    <Import Project="../Directory.Build.targets"/>
+    <ItemGroup>
+        <FilePaths Include="$(DirectoryBuildTargetsPath)/../test/data_*.txt" />
+    </ItemGroup>
+    <Target Name="CopyTxt" AfterTargets="AfterBuild">
+        <Message Text="Copying Data Text Files..."  Importance="high" />
+        <Copy SourceFiles="@(FilePaths)" DestinationFolder="$(DestinationDir)" ContinueOnError="false" />
+    </Target>
+</Project>
