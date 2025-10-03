@@ -1,5 +1,6 @@
 ﻿
 using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace ModdingAPI;
 public static class Util
@@ -33,6 +34,26 @@ public static class Util
             if (disposing) GC.SuppressFinalize(this);
             UnityEngine.Random.state = state;
         }
+    }
+
+    public static Texture2D EditableTexture(Texture2D texture)
+    {
+        var renderTexture = RenderTexture.GetTemporary(
+            texture.width,
+            texture.height,
+            0,
+            RenderTextureFormat.Default,
+            RenderTextureReadWrite.Linear
+        );
+        Graphics.Blit(texture, renderTexture);
+        var previous = RenderTexture.active;
+        RenderTexture.active = renderTexture;
+        var editableTexture = new Texture2D(texture.width, texture.height);
+        editableTexture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+        editableTexture.Apply();
+        RenderTexture.active = previous;
+        RenderTexture.ReleaseTemporary(renderTexture);
+        return editableTexture;
     }
 }
 

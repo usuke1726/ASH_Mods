@@ -80,7 +80,7 @@ internal partial class Core
             Monitor.Log($"texutre is null!", LL.Warning);
             return;
         }
-        var tex2 = EditableTexture(tex);
+        var tex2 = Util.EditableTexture(tex);
         for (int x = 0; x < tex2.width; x++)
         {
             for (int y = 0; y < tex2.height; y++)
@@ -171,7 +171,7 @@ internal partial class Core
     }
     private static Texture2D Mask(Texture2D tex, Func<int, int, bool> show)
     {
-        var newTex = EditableTexture(tex);
+        var newTex = Util.EditableTexture(tex);
         for (int x = 0; x < tex.width; x++)
         {
             for (int y = 0; y < tex.height; y++)
@@ -181,26 +181,6 @@ internal partial class Core
         }
         newTex.Apply();
         return newTex;
-    }
-
-    private static Texture2D EditableTexture(Texture2D texture)
-    {
-        RenderTexture renderTexture = RenderTexture.GetTemporary(
-            texture.width,
-            texture.height,
-            0,
-            RenderTextureFormat.Default,
-            RenderTextureReadWrite.Linear
-        );
-        Graphics.Blit(texture, renderTexture);
-        RenderTexture previous = RenderTexture.active;
-        RenderTexture.active = renderTexture;
-        Texture2D readableTextur2D = new Texture2D(texture.width, texture.height);
-        readableTextur2D.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
-        readableTextur2D.Apply();
-        RenderTexture.active = previous;
-        RenderTexture.ReleaseTemporary(renderTexture);
-        return readableTextur2D;
     }
 }
 
