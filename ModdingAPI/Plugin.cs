@@ -42,6 +42,10 @@ public class Plugin : BaseUnityPlugin
             if (!initialized)
             {
                 GameloopEvents.OnGameLaunched();
+                Context.globalData.onBeforeSave += () =>
+                {
+                    SystemEvents.OnBeforeSaving(GameSettings.saveSlot);
+                };
             }
             else
             {

@@ -27,6 +27,13 @@ internal class ModEntry : Mod
         {
             UpdateTimeHandler.Setup(this);
         };
+        helper.Events.System.BeforeSaving += (_, e) =>
+        {
+            var now = DateTime.Now;
+            UpdateTimeHandler.Update(e.SaveSlot, now);
+            Debug($"== now saved! ({now.ToString(I18n.STRINGS.dateFormat)})");
+            Debug($"slot: {e.SaveSlot}");
+        };
         MainMenu.AddMenuItem(new(
             () => I18n.STRINGS.saveData,
             menu => () => SaveMenu.ShowSaveMenu(menu)

@@ -63,33 +63,6 @@ internal class SaveMenu
     }
 }
 
-[HarmonyPatch(typeof(XGameSaveWrapper))]
-internal class SavingHooks
-{
-    [HarmonyPrefix]
-    [HarmonyPatch("Update")]
-    static bool Update(string containerName, IDictionary<string, byte[]> blobsToSave, IList<string> blobsToDelete)
-    {
-        var now = DateTime.Now;
-        var slot = GameSettings.saveSlot;
-        UpdateTimeHandler.Update(slot, now);
-        Debug($"== now saved! ({now.ToString(I18n.STRINGS.dateFormat)})");
-        Debug($"slot: {slot}, containerName: {containerName}");
-        return true;
-    }
-    [HarmonyPrefix]
-    [HarmonyPatch("UpdateAsync")]
-    static bool UpdateAsync(string containerName, IDictionary<string, byte[]> blobsToSave, IList<string> blobsToDelete, object callback)
-    {
-        var now = DateTime.Now;
-        var slot = GameSettings.saveSlot;
-        UpdateTimeHandler.Update(slot, now);
-        Debug($"== now saved! ({now.ToString(I18n.STRINGS.dateFormat)}, ASYNC)");
-        Debug($"slot: {slot}, containerName: {containerName}");
-        return true;
-    }
-}
-
 [HarmonyPatch(typeof(GameCoreFileSystem))]
 internal class PatchedFileSystem
 {
