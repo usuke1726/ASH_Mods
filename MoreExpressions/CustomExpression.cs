@@ -156,8 +156,8 @@ internal abstract class CustomExpression
     {
         IEnumerable<Characters> chs = [
             Characters.Claire,
-            Characters.Tim,
-            Characters.ClimbingRhino,
+            Characters.Tim1,
+            Characters.ClimbingRhino1,
             Characters.RumorGuy,
         ];
         Func<Expression, Action> emote = e => () =>

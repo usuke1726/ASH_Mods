@@ -339,7 +339,7 @@ internal static class Parser
     private static bool TryGetCharacter(string name, out Characters character)
     {
         if (aliases.TryGetValue(name, out character)) return true;
-        return CharactersParser.TryParse(name, out character);
+        return CharacterUtil.TryParse(name, out character);
     }
     private static string? ParseConversationId(string line, ref ConversationDataSet result)
     {
@@ -370,7 +370,7 @@ internal static class Parser
 
         string? error = ExtractUntilSpace(out var val, ref line, "character not found");
         if (error != null) return error;
-        if (!CharactersParser.TryParse(val, out var character)) return $"invalid character: \"{val}\"";
+        if (!CharacterUtil.TryParse(val, out Characters character)) return $"invalid character: \"{val}\"";
         if (alias != null) aliases[alias] = character;
 
         int start;

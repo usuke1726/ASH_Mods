@@ -88,7 +88,7 @@ public abstract class CharacterObject
             {
                 newCharacter.defaultAnimator = animator.runtimeAnimatorController;
                 if (ch == Characters.Camper) raiseArmsDummyAnimator = animator.runtimeAnimatorController;
-                else if (ch == Characters.DadBoatDeer) standingDummyAnimator = animator.runtimeAnimatorController;
+                else if (ch == Characters.DadBoatDeer2) standingDummyAnimator = animator.runtimeAnimatorController;
                 else if (ch == Characters.AuntMay) sittingDummyAnimator = animator.runtimeAnimatorController;
             }
             else
@@ -128,7 +128,7 @@ public abstract class CharacterObject
     }
     public void PoseStand()
     {
-        if (character == Characters.AuntMay || character == Characters.DadBoatDeer)
+        if (character == Characters.AuntMay || character == Characters.DadBoatDeer2)
         {
             animator.runtimeAnimatorController = standingDummyAnimator;
             animator.Play("NPCStand");
@@ -144,7 +144,7 @@ public abstract class CharacterObject
         switch (character)
         {
             // TODO: Add processes for other characters (some characters are implemented for making demo video)
-            case Characters.Tim:
+            case Characters.Tim1:
                 parent.GetComponent<ClimbingNPC>().enabled = false;
                 break;
             case Characters.RumorGuy:

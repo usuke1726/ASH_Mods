@@ -13,8 +13,8 @@ internal struct Info()
     private static readonly Dictionary<Characters, Info> _data = new()
     {
         [Characters.Claire] = new() { offsetY = 2.0f },
-        [Characters.ClimbingRhino] = new() { offsetY = 3.2f },
-        [Characters.Tim] = new() { offsetY = 3.0f },
+        [Characters.ClimbingRhino1] = new() { offsetY = 3.2f },
+        [Characters.Tim1] = new() { offsetY = 3.0f },
     };
 }
 #pragma warning restore IDE1006
