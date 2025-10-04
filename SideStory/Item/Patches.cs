@@ -8,12 +8,11 @@ namespace SideStory.Item;
 [HarmonyPatch(typeof(GlobalData.GameData))]
 internal class GameDataPatch
 {
-    private static bool enabled = true;
     [HarmonyPostfix()]
     [HarmonyPatch("GetAllCollected")]
     internal static void GetAllCollected(ref IEnumerable<CollectableItem> __result)
     {
-        if (!enabled) return;
+        if (!State.IsActive) return;
         __result = [.. DataHandler.GetAllCollected()];
     }
     [HarmonyPrefix()]
@@ -25,7 +24,7 @@ internal class GameDataPatch
             __result = DataHandler.GetCollected(eItem);
             return false;
         }
-        else if (enabled && item.saveTag == "ITEM_GoldenFeather")
+        else if (State.IsActive && item.saveTag == "ITEM_GoldenFeather")
         {
             __result = DataHandler.GetCollected("GoldenFeather");
             return false;
