@@ -1,0 +1,22 @@
+﻿
+using System.Collections;
+using UnityEngine;
+
+namespace SideStory.Dialogue.Actions;
+
+internal class WaitAction : BaseAction
+{
+    internal readonly float time;
+    internal readonly bool hideBox;
+    public WaitAction(float time, bool hideBox = true, string? anchor = null) : base(ActionType.Wait, anchor)
+    {
+        this.time = time;
+        this.hideBox = hideBox;
+    }
+    internal override IEnumerator Invoke(IConversation conversation)
+    {
+        if (hideBox) conversation.Hide();
+        yield return new WaitForSeconds(time);
+    }
+}
+

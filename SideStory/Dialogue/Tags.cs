@@ -1,0 +1,172 @@
+﻿
+using ModdingAPI;
+using TMPro;
+
+namespace SideStory.Dialogue;
+
+internal static class Tags
+{
+    private static readonly Dictionary<string, int> intValues = [];
+    private static readonly Dictionary<string, float> floatValues = [];
+    private static readonly Dictionary<string, string> stringValues = [];
+    private static readonly Dictionary<string, bool> boolValues = [];
+    internal static void Setup(IModHelper helper)
+    {
+        helper.Events.Gameloop.GameStarted += (_, _) => SaveHandler.EnsureDataLoaded();
+        helper.Events.System.BeforeSaving += (_, _) => SaveHandler.WriteToSaveData();
+    }
+    private static string FormatId(string id)
+    {
+        return id.Replace("\n", "").Replace("\r", "").Replace(":", "");
+    }
+    public static void Set(string id, object value)
+    {
+        if (value is int @int) SetInt(id, @int);
+        else if (value is float @float) SetFloat(id, @float);
+        else if (value is string @string) SetString(id, @string);
+        else if (value is bool @bool) SetBool(id, @bool);
+    }
+    public static void SetInt(string id, int value) => intValues[FormatId(id)] = value;
+    public static void SetFloat(string id, float value) => floatValues[FormatId(id)] = value;
+    public static void SetString(string id, string value) => stringValues[FormatId(id)] = value;
+    public static void SetBool(string id, bool value) => boolValues[FormatId(id)] = value;
+    public static void AddInt(string id, int value)
+    {
+        var fid = FormatId(id);
+        intValues.TryAdd(fid, 0);
+        intValues[fid] += value;
+    }
+    public static void AddFloat(string id, float value)
+    {
+        var fid = FormatId(id);
+        floatValues.TryAdd(fid, 0);
+        floatValues[fid] += value;
+    }
+    public static void ToggleBool(string id)
+    {
+        var fid = FormatId(id);
+        boolValues.TryAdd(id, false);
+        boolValues[id] = !boolValues[id];
+    }
+    public static bool TryGetInt(string id, out int value) => intValues.TryGetValue(FormatId(id), out value);
+    public static bool TryGetFloat(string id, out float value) => floatValues.TryGetValue(FormatId(id), out value);
+    public static bool TryGetString(string id, out string value) => stringValues.TryGetValue(FormatId(id), out value);
+    public static bool TryGetBool(string id, out bool value) => boolValues.TryGetValue(FormatId(id), out value);
+
+
+    private static class SaveHandler
+    {
+        private static readonly string intDataTag = $"ModRegistry_Quicker1726_SideStory_intTags";
+        private static readonly string floatDataTag = $"ModRegistry_Quicker1726_SideStory_floatTags";
+        private static readonly string stringDataTag = $"ModRegistry_Quicker1726_SideStory_stringTags";
+        private static readonly string boolDataTag = $"ModRegistry_Quicker1726_SideStory_boolTags";
+        private static bool hasLoaded = false;
+        internal static void WriteToSaveData()
+        {
+            SaveIntValues();
+            SaveFloatValues();
+            SaveStringValues();
+            SaveBoolValues();
+        }
+        internal static void EnsureDataLoaded()
+        {
+            if (hasLoaded) return;
+            LoadFromSaveData();
+            hasLoaded = true;
+        }
+        private static void LoadFromSaveData()
+        {
+            LoadIntValues();
+            LoadFloatValues();
+            LoadStringValues();
+            LoadBoolValues();
+        }
+        private static void LoadIntValues()
+        {
+            intValues.Clear();
+            var data = Context.globalData.gameData.tags.GetString(intDataTag);
+            if (data == null) return;
+            foreach (var item in Split(data))
+            {
+                if (int.TryParse(item.Item2, out var val)) intValues[item.Item1] = val;
+            }
+        }
+        private static void LoadFloatValues()
+        {
+            floatValues.Clear();
+            var data = Context.globalData.gameData.tags.GetString(floatDataTag);
+            if (data == null) return;
+            foreach (var item in Split(data))
+            {
+                if (float.TryParse(item.Item2, out var val)) floatValues[item.Item1] = val;
+            }
+        }
+        private static void LoadStringValues()
+        {
+            stringValues.Clear();
+            var data = Context.globalData.gameData.tags.GetString(stringDataTag);
+            if (data == null) return;
+            foreach (var item in Split(data))
+            {
+                stringValues[item.Item1] = DeserializeStringValue(item.Item2);
+            }
+        }
+        private static void LoadBoolValues()
+        {
+            boolValues.Clear();
+            var data = Context.globalData.gameData.tags.GetString(boolDataTag);
+            if (data == null) return;
+            foreach (var item in Split(data))
+            {
+                boolValues[item.Item1] = DeserializeBoolValue(item.Item2);
+            }
+        }
+
+        private static void SaveIntValues()
+        {
+            var data = Join(intValues.Select(pair => new Tuple<string, string>(pair.Key, pair.Value.ToString())));
+            Context.globalData.gameData.tags.SetString(intDataTag, data);
+        }
+        private static void SaveFloatValues()
+        {
+            var data = Join(floatValues.Select(pair => new Tuple<string, string>(pair.Key, pair.Value.ToString())));
+            Context.globalData.gameData.tags.SetString(floatDataTag, data);
+        }
+        private static void SaveStringValues()
+        {
+            var data = Join(stringValues.Select(pair => new Tuple<string, string>(pair.Key, SerializeStringValue(pair.Value))));
+            Context.globalData.gameData.tags.SetString(stringDataTag, data);
+        }
+        private static void SaveBoolValues()
+        {
+            var data = Join(boolValues.Select(pair => new Tuple<string, string>(pair.Key, SerializeBoolValue(pair.Value))));
+            Context.globalData.gameData.tags.SetString(boolDataTag, data);
+        }
+
+        private static string SerializeStringValue(string value)
+        {
+            return value.Replace("\\", "\\\\").Replace("\n", "\\n");
+        }
+        private static string DeserializeStringValue(string value)
+        {
+            return value.Replace("\\n", "\n").Replace("\\\\", "\\");
+        }
+        private static string SerializeBoolValue(bool value) => value ? "1" : "0";
+        private static bool DeserializeBoolValue(string value) => value == "1";
+        private static IEnumerable<Tuple<string, string>> Split(string data)
+        {
+            return data.Split("\n")
+                .Select(line =>
+                {
+                    var a = line.Split(":", 2);
+                    if (a.Length < 2) return null!;
+                    return new Tuple<string, string>(a[0], a[1]);
+                }).Where(a => a != null);
+        }
+        private static string Join(IEnumerable<Tuple<string, string>> data)
+        {
+            return string.Join("\n", data.Select(d => $"{d.Item1}:{d.Item2}"));
+        }
+    }
+}
+

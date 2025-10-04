@@ -7,5 +7,14 @@
     "item.GoldenFeather.description": "カネにならない役立たず。\n誰も買っちゃくれない。",
     "item.Wristwatch.name": "腕時計",
     "item.Wristwatch.namePlural": "腕時計",
-    "item.Wristwatch.description": "拾った腕時計。やや古ぼけているが、\n売れば多少のカネにはなるかもしれない。"
+    "item.Wristwatch.description": "拾った腕時計。やや古ぼけているが、\n売れば多少のカネにはなるかもしれない。",
+    "node.dummy1": "こんにちは",
+    "node.dummy2": "こんにちは！",
+    "node.dummy3": "黄金の羽根はいかが？",
+    "node.dummy4.1": "欲しい！",
+    "node.dummy4.2": "いらね",
+    "node.dummy5.y": "よしきた！",
+    "node.dummy6.y": "どうぞ",
+    "node.dummy7.y": "登山楽しんでね！",
+    "node.dummy5.n": "え！？本当にいらないの！？"
 }

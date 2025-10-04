@@ -26,6 +26,7 @@ internal class ModEntry : Mod
         instance = this;
         Character.Core.Setup(helper);
         DataHandler.Setup(helper);
+        new Dialogue.Setup(helper);
     }
 }
 
