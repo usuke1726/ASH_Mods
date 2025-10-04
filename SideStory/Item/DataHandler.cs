@@ -14,9 +14,9 @@ internal static class DataHandler
     internal static bool IsNewGame => isNewGame ??= !Context.globalData.gameData.tags.HasString(dataTag);
     private static readonly IReadOnlyDictionary<string, int> initialCollected = new Dictionary<string, int>()
     {
-        ["Wristwatch"] = 2,
-        ["Coin"] = 10,
-        ["GoldenFeather"] = 4,
+        [Items.WristWatch] = 2,
+        [Items.Coin] = 10,
+        [Items.GoldenFeather] = 4,
     };
     internal static void Setup(IModHelper helper)
     {

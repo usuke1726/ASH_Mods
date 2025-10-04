@@ -1,13 +1,20 @@
 ﻿
 namespace SideStory.Item;
 
+internal static class Items
+{
+    public static readonly string Coin = "Coin";
+    public static readonly string GoldenFeather = "GoldenFeather";
+    public static readonly string WristWatch = "Wristwatch";
+}
+
 internal static class Data
 {
     internal static void Setup()
     {
         List<ExtendedItem> _ = [
             new(
-                id: "Coin",
+                id: Items.Coin,
                 i18nKeys: new("item.Coin.name", "item.Coin.namePlural", "item.Coin.description"),
                 iconData: """
                 000011110000
@@ -30,7 +37,7 @@ internal static class Data
                 priority = 0,
             },
             new(
-                id: "GoldenFeather",
+                id: Items.GoldenFeather,
                 i18nKeys: new("item.GoldenFeather.name", "item.GoldenFeather.namePlural", "item.GoldenFeather.description"),
                 iconData: """
                 000000111111
@@ -53,7 +60,7 @@ internal static class Data
                 priority = -10,
             },
             new(
-                id: "Wristwatch",
+                id: Items.WristWatch,
                 i18nKeys: new("item.Wristwatch.name", "item.Wristwatch.namePlural", "item.Wristwatch.description"),
                 iconData: """
                 000011110000
