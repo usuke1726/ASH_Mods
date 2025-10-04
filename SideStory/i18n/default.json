@@ -1,0 +1,11 @@
+﻿{
+    "item.Coin.name": "Coin",
+    "item.Coin.namePlural": "Coins",
+    "item.Coin.description": "An essential item for survival.\nI need to earn the tuition early...",
+    "item.GoldenFeather.name": "Golden Feather",
+    "item.GoldenFeather.namePlural": "Golden Feathers",
+    "item.GoldenFeather.description": "A worthless junk.\nNobody's buying it.",
+    "item.Wristwatch.name": "Wristwatch",
+    "item.Wristwatch.namePlural": "Wristwatches",
+    "item.Wristwatch.description": "A watch I found. It's a bit worn out\nbut would make some money."
+}

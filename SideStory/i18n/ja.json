@@ -1,0 +1,11 @@
+﻿{
+    "item.Coin.name": "コイン",
+    "item.Coin.namePlural": "コイン",
+    "item.Coin.description": "生きるために欠かせないアイテム。\nはやく学費を稼がなくては...",
+    "item.GoldenFeather.name": "黄金の羽根",
+    "item.GoldenFeather.namePlural": "黄金の羽根",
+    "item.GoldenFeather.description": "カネにならない役立たず。\n誰も買っちゃくれない。",
+    "item.Wristwatch.name": "腕時計",
+    "item.Wristwatch.namePlural": "腕時計",
+    "item.Wristwatch.description": "拾った腕時計。やや古ぼけているが\n売れば多少の金にはなるかもしれない。"
+}

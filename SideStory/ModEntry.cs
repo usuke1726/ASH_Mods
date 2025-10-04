@@ -2,6 +2,7 @@
 global using static SideStory.ModEntry.Global;
 global using LL = BepInEx.Logging.LogLevel;
 using ModdingAPI;
+using SideStory.Item;
 
 namespace SideStory;
 
@@ -24,6 +25,7 @@ internal class ModEntry : Mod
     {
         instance = this;
         Character.Core.Setup(helper);
+        DataHandler.Setup(helper);
     }
 }
 
