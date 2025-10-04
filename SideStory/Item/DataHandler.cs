@@ -1,4 +1,5 @@
 ﻿
+using System.Reflection;
 using System.Text.RegularExpressions;
 using ModdingAPI;
 using ModdingAPI.KeyBind;
@@ -85,6 +86,7 @@ internal static class DataHandler
         if (!collected.ContainsKey(item.id)) collected[item.id] = 0;
         var value = Math.Max(collected[item.id] + amount, 0);
         collected[item.id] = value;
+        if (item.id == Items.GoldenFeather) OnGoldenFeathersChanged(value);
         WriteToSaveData();
     }
     internal static void AddCollected(string id, int amount, bool equipAction = false)
@@ -151,6 +153,21 @@ internal static class DataHandler
             ret[d.Item1] = d.Item2;
         }
         return ret;
+    }
+
+    private static readonly MethodInfo playerOnGoldenFeathersUpdated = typeof(Player).GetMethod("OnGoldenFeathersUpdated", BindingFlags.NonPublic | BindingFlags.Instance);
+    private static readonly MethodInfo uiOnGoldenFeathersUpdated = typeof(FeatherUIController).GetMethod("OnGoldenFeathersChanged", BindingFlags.NonPublic | BindingFlags.Instance);
+    private static GameObject? featherUIObj = null;
+    private static FeatherUIController featherUI = null!;
+    private static void OnGoldenFeathersChanged(int amount)
+    {
+        playerOnGoldenFeathersUpdated.Invoke(Context.player, new object[] { amount });
+        if (featherUIObj == null)
+        {
+            featherUIObj = GameObject.Find("LevelSingletons").transform.Find("UICanvas/UIElements/FeatherBar").gameObject;
+            featherUI = featherUIObj.GetComponent<FeatherUIController>();
+        }
+        uiOnGoldenFeathersUpdated.Invoke(featherUI, new object[] { amount });
     }
 }
 
