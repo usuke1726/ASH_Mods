@@ -83,7 +83,8 @@ internal static class DataHandler
     {
         EnsureDataLoaded();
         if (!collected.ContainsKey(item.id)) collected[item.id] = 0;
-        collected[item.id] += amount;
+        var value = Math.Max(collected[item.id] + amount, 0);
+        collected[item.id] = value;
         WriteToSaveData();
     }
     internal static void AddCollected(string id, int amount, bool equipAction = false)
