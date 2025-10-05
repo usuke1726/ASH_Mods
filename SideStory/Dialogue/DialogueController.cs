@@ -9,13 +9,16 @@ namespace SideStory.Dialogue;
 internal class DialogueController : MonoBehaviour
 {
     internal static DialogueController instance = null!;
+    private static bool characterObjectSetupDone = false;
     internal static void Setup(IModHelper helper)
     {
         helper.Events.Gameloop.GameStarted += (_, _) =>
         {
+            ModdingAPI.Character.OnSetupDone(() => characterObjectSetupDone = true);
             instance = new GameObject("SideStoryDialogueController").AddComponent<DialogueController>();
             if (State.IsNewGame) instance.StartConversation(null);
         };
+        helper.Events.Gameloop.ReturnedToTitle += (_, _) => characterObjectSetupDone = false;
     }
 
     private TextBoxConversation currentConversation = null!;
@@ -42,6 +45,7 @@ internal class DialogueController : MonoBehaviour
     internal int LastSelected { get; private set; } = -1;
     private IEnumerator MainCoroutine()
     {
+        yield return new WaitUntil(() => characterObjectSetupDone);
         while (true)
         {
             var action = currentNode.NextAction();
