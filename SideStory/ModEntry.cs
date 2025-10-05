@@ -28,6 +28,7 @@ internal partial class ModEntry : Mod
         new Item.Setup(helper);
         new Dialogue.Setup(helper);
         new System.Setup(helper);
+        new World.Setup(helper);
         helper.Events.Gameloop.GameLaunched += (_, _) =>
         {
             RegisterModConfigMenu();
