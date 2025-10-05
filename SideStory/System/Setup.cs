@@ -10,6 +10,7 @@ internal class Setup
     {
         if (done) return;
         done = true;
+        SaveData.Setup(helper);
         Tags.Setup(helper);
         EndGameController.Setup(helper);
     }

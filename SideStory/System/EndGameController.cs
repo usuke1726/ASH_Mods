@@ -31,11 +31,11 @@ internal class EndGameController : MonoBehaviour
     }
     internal static void EndGame()
     {
-        if (!Context.GameStarted) return;
+        if (!Context.GameStarted || !State.IsActive) return;
         EndSpeedrun();
         instance.EndGameBody();
     }
-    internal static void EndSpeedrun()
+    private static void EndSpeedrun()
     {
         if (instance.versionStringSet) return;
         instance.versionStringSet = true;

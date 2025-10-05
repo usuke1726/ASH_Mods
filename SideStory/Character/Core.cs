@@ -38,11 +38,12 @@ internal partial class Core
             Monitor.Log($"player is null", LL.Warning);
             return;
         }
+        setupDone = true;
+        if (!State.IsActive) return;
         toughBird = GameObject.Find("/LevelObjects/NPCs").transform.Find("ToughBirdNPC (1)");
         CreateMohawk();
         ChangeColors();
         SetupEyes();
-        setupDone = true;
         EmoteHalfEyes();
     }
     private static void CreateMohawk()
@@ -142,7 +143,7 @@ internal partial class Core
     }
     internal static void EmoteHalfEyes()
     {
-        if (!setupDone) return;
+        if (!setupDone || !State.IsActive) return;
         SetTexture(eyeL, Mask(textureEyeL, (x, y) => x * 3 >= textureEyeL.width));
         SetTexture(eyeR, Mask(textureEyeR, (x, y) => x * 3 >= textureEyeR.width));
         SetTexture(pupilL, Mask(texturePupilL, (x, y) => x * 3 >= texturePupilL.width - 10));
@@ -154,7 +155,7 @@ internal partial class Core
     }
     internal static void EmoteNormalEyes()
     {
-        if (!setupDone) return;
+        if (!setupDone || !State.IsActive) return;
         SetTexture(eyeL, Mask(textureEyeL, (x, y) => true));
         SetTexture(eyeR, Mask(textureEyeR, (x, y) => true));
         SetTexture(pupilL, Mask(texturePupilL, (x, y) => true));

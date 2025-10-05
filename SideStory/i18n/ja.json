@@ -1,4 +1,11 @@
 ﻿{
+    "ModConfigMenu.triedToStartOutsideMainMenu": "メニュー画面に戻って選択してください",
+    "ModConfigMenu.notCreatedSaveData": "サイドストーリーを始める前に\nセーブデータを作成する必要があります",
+    "ModConfigMenu.continue": "つづきから",
+    "ModConfigMenu.newgame": "ニューゲーム",
+    "ModConfigMenu.confirmOverwritingSaveData": "<sprite name=\"Warning\" tint=1> 現在のサイドストーリーの\nセーブデータを上書きします\n(オリジナルのデータは消去されません)",
+    "ModConfigMenu.confirmOverwritingSaveData.y": "つづける",
+    "ModConfigMenu.confirmOverwritingSaveData.n": "ちょっとまって！",
     "item.Coin.name": "コイン",
     "item.Coin.namePlural": "コイン",
     "item.Coin.description": "生きるために欠かせないアイテム。\nはやく学費を稼がなくては...",

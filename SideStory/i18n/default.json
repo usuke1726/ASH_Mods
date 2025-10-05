@@ -1,4 +1,11 @@
 ﻿{
+    "ModConfigMenu.triedToStartOutsideMainMenu": "You must return to the main menu.",
+    "ModConfigMenu.notCreatedSaveData": "You must create save file\nbefore starting SideStory.",
+    "ModConfigMenu.continue": "continue",
+    "ModConfigMenu.newgame": "new game",
+    "ModConfigMenu.confirmOverwritingSaveData": "<sprite name=\"Warning\" tint=1> this will overwrite\nyour current file of SideStory\n(your original file won't be overwritten)",
+    "ModConfigMenu.confirmOverwritingSaveData.y": "continue",
+    "ModConfigMenu.confirmOverwritingSaveData.n": "hold on!",
     "item.Coin.name": "Coin",
     "item.Coin.namePlural": "Coins",
     "item.Coin.description": "An essential item for survival.\nI need to earn the tuition early...",
