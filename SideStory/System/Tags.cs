@@ -12,9 +12,10 @@ internal static class Tags
     private static readonly Dictionary<string, bool> boolValues = [];
     internal static void Setup(IModHelper helper)
     {
-        helper.Events.Gameloop.GameStarted += (_, _) => SaveHandler.EnsureDataLoaded();
+        helper.Events.Gameloop.GameStarted += (_, _) => EnsureDataLoaded();
         helper.Events.System.BeforeSaving += (_, _) => SaveHandler.WriteToSaveData();
     }
+    internal static void EnsureDataLoaded() => SaveHandler.EnsureDataLoaded();
     private static string FormatId(string id)
     {
 #if DEBUG
@@ -50,7 +51,7 @@ internal static class Tags
     public static bool TryGetBool(string id, out bool value) => boolValues.TryGetValue(FormatId(id), out value);
     public static int GetInt(string id, int defaultValue) => TryGetInt(id, out var v) ? v : defaultValue;
     public static float GetFloat(string id, float defaultValue) => TryGetFloat(id, out var v) ? v : defaultValue;
-    public static string GetString(string id, string defaultValue) => TryGetString(id, out var v) ? v : defaultValue;
+    public static string GetString(string id, string? defaultValue = null) => TryGetString(id, out var v) ? v : defaultValue!;
     public static bool GetBool(string id, bool defaultValue = false) => TryGetBool(id, out var v) ? v : defaultValue;
 
 
