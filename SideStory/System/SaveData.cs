@@ -38,14 +38,14 @@ internal class SaveData
     {
         var data = PlayerPrefsAdapter.GetString(SaveDataExistsKey, null);
         if (data == null) saveDataExists = [];
-        else saveDataExists = Deselialize(data);
+        else saveDataExists = Deserialize(data);
         Debug($"loaded saveData: {Serialize()}");
     }
     private static string Serialize()
     {
         return string.Join(";", saveDataExists.Select(p => $"{p.Key}:{(p.Value ? "1" : "0")}"));
     }
-    private static Dictionary<int, bool> Deselialize(string data)
+    private static Dictionary<int, bool> Deserialize(string data)
     {
         Dictionary<int, bool> ret = [];
         foreach (var d in data.Split(";"))

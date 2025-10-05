@@ -120,7 +120,7 @@ internal static class DataHandler
     {
         collected = State.IsNewGame
             ? new(initialCollected)
-            : Deselialize(Context.globalData.gameData.tags.GetString(dataTag));
+            : Deserialize(Context.globalData.gameData.tags.GetString(dataTag));
     }
     private static string Serialize()
     {
@@ -128,7 +128,7 @@ internal static class DataHandler
             .Where(p => collected.ContainsKey(p.Key))
             .Select(p => $"{p.Key}:{collected[p.Key]}"));
     }
-    private static Dictionary<string, int> Deselialize(string rawData)
+    private static Dictionary<string, int> Deserialize(string rawData)
     {
         Monitor.Log($"savedata loaded!!\n{rawData}", LL.Warning);
         if (rawData == null) return [];
