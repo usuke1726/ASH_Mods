@@ -73,6 +73,7 @@ public class Character
             characters.Clear();
             transforms.Clear();
             setupDone = false;
+            onSetupDone = null!;
             helper.Events.Gameloop.PlayerUpdated += SetupCharacters;
         };
     }
