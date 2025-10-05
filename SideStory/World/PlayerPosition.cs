@@ -16,7 +16,7 @@ internal class PlayerPosition
     {
         if (!State.IsActive) return;
         if (!Context.TryToGetPlayer(out var player)) return;
-        System.Tags.SetString(playerPosTag, Serialize(player));
+        System.STags.SetString(playerPosTag, Serialize(player));
     }
     internal static void Spawn()
     {
@@ -68,8 +68,7 @@ internal class PlayerPosition
     }
     private static string Load()
     {
-        System.Tags.EnsureDataLoaded();
-        return State.IsNewGame ? null! : System.Tags.GetString(playerPosTag);
+        return State.IsNewGame ? null! : System.STags.GetString(playerPosTag);
     }
     private static string Serialize(Player player)
     {

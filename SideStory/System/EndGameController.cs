@@ -50,7 +50,7 @@ internal class EndGameController : MonoBehaviour
         cutscene.versionString.text = versionString;
         closingCutscene.gameObject.SetActive(true);
         closingCutscene.Find("Canvas").gameObject.SetActive(true);
-        Tags.SetBool(WonGameTag);
+        STags.SetBool(WonGameTag);
         Context.gameServiceLocator.levelController.gameRunning = false;
         cutscene.timeline.Play();
         this.RegisterTimer((float)cutscene.timeline.duration, () =>

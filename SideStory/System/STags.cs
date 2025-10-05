@@ -4,7 +4,7 @@ using ModdingAPI;
 
 namespace SideStory.System;
 
-internal static class Tags
+internal static class STags
 {
     private static readonly Dictionary<string, int> intValues = [];
     private static readonly Dictionary<string, float> floatValues = [];
@@ -14,6 +14,10 @@ internal static class Tags
     {
         helper.Events.Gameloop.GameStarted += (_, _) => EnsureDataLoaded();
         helper.Events.System.BeforeSaving += (_, _) => SaveHandler.WriteToSaveData();
+        helper.Events.Gameloop.ReturnedToTitle += (_, _) =>
+        {
+            SaveHandler.hasLoaded = false;
+        };
     }
     internal static void EnsureDataLoaded() => SaveHandler.EnsureDataLoaded();
     private static string FormatId(string id)
@@ -25,6 +29,7 @@ internal static class Tags
             throw new Exception($"invalid tag id \"{s}\"");
         }
 #endif
+        SaveHandler.EnsureDataLoaded();
         return id;
     }
     public static void Set(string id, object value)
@@ -61,7 +66,7 @@ internal static class Tags
         private static readonly string floatDataTag = $"ModRegistry_Quicker1726_SideStory_floatTags";
         private static readonly string stringDataTag = $"ModRegistry_Quicker1726_SideStory_stringTags";
         private static readonly string boolDataTag = $"ModRegistry_Quicker1726_SideStory_boolTags";
-        private static bool hasLoaded = false;
+        internal static bool hasLoaded = false;
         internal static void WriteToSaveData()
         {
             SaveIntValues();

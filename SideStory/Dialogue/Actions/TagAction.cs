@@ -1,9 +1,8 @@
 ﻿
 using System.Collections;
+using SideStory.System;
 
 namespace SideStory.Dialogue.Actions;
-
-using SideStory.System;
 
 internal class TagAction : BaseAction
 {
@@ -22,12 +21,12 @@ internal class TagAction : BaseAction
             if (valueWithType.Item1 == Type.Add)
             {
                 var v = valueWithType.Item2;
-                if (v is int @int) Tags.AddInt(id, @int);
-                else if (v is float @float) Tags.AddFloat(id, @float);
+                if (v is int @int) STags.AddInt(id, @int);
+                else if (v is float @float) STags.AddFloat(id, @float);
             }
         }
-        else if (value is Type t && t == Type.Toggle) Tags.ToggleBool(id);
-        Tags.Set(id, value);
+        else if (value is Type t && t == Type.Toggle) STags.ToggleBool(id);
+        STags.Set(id, value);
         yield break;
     }
 }
