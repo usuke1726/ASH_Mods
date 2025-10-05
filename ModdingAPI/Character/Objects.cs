@@ -93,6 +93,8 @@ public class Character
     }
     public static bool TryGet(Transform transform, out Character character)
     {
+        character = null!;
+        if (transform == null) return false;
         var tr = transform;
         while (true)
         {
@@ -100,7 +102,6 @@ public class Character
             if (tr.root == tr) break;
             tr = tr.parent;
         }
-        character = null!;
         return false;
     }
     public static Character Get(Characters ch)
