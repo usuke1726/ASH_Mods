@@ -11,8 +11,6 @@ internal static class DataHandler
 {
     private static readonly Dictionary<string, ExtendedItem> items = [];
     private static Dictionary<string, int> collected = [];
-    private static bool? isNewGame = null;
-    internal static bool IsNewGame => isNewGame ??= !Context.globalData.gameData.tags.HasString(dataTag);
     private static readonly IReadOnlyDictionary<string, int> initialCollected = new Dictionary<string, int>()
     {
         [Items.WristWatch] = 2,
@@ -120,7 +118,7 @@ internal static class DataHandler
     }
     private static void LoadFromSaveData()
     {
-        collected = IsNewGame
+        collected = State.IsNewGame
             ? new(initialCollected)
             : Deselialize(Context.globalData.gameData.tags.GetString(dataTag));
     }
@@ -133,6 +131,7 @@ internal static class DataHandler
     private static Dictionary<string, int> Deselialize(string rawData)
     {
         Monitor.Log($"savedata loaded!!\n{rawData}", LL.Warning);
+        if (rawData == null) return [];
         Dictionary<string, int> ret = [];
         var data = rawData
             .Split(";")

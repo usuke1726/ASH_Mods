@@ -54,14 +54,14 @@ internal class ModEntry : Mod
             closeMenu: true,
             beforeClose: action => TryToStart(action, false),
             condition: () => SaveData.DoesSaveDataExists(),
-            name: () => "Continue"
+            name: () => I18n_.Localize("ModConfigMenu.continue")
         );
         configMenu.AddAction(
             mod: this,
             action: () => NewGameController.StartGame(),
             closeMenu: true,
             beforeClose: action => TryToStart(action, true),
-            name: () => "New game"
+            name: () => I18n_.Localize("ModConfigMenu.newgame")
         );
     }
     private void TryToStart(Action action, bool isNewGame)

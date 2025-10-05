@@ -19,7 +19,11 @@ internal class Node
         for (int i = 0; i < actions.Count; i++)
         {
             var anchor = actions[i].anchor;
-            if (anchor != null) anchors[anchor] = i;
+            if (anchor != null)
+            {
+                if (anchors.ContainsKey(anchor)) Monitor.Log($"anchor \"{anchor}\" already exists", LL.Error);
+                anchors[anchor] = i;
+            }
         }
     }
     internal void Reset()
