@@ -10,6 +10,7 @@ internal class BoolOption(Func<bool> getValue, Action<bool> setValue, Func<strin
     private string getName() => $"{name()}: {formatValue(getValue())}";
     private readonly Func<bool, string> formatValue = formatValue ?? (f => f ? "Y" : "N");
     public bool Unsaved { get; set; } = false;
+    public bool Enabled => true;
     public SubmenuItemEntry MenuItem(OptionsMenu? topMenu, AbstractMenu? modMenu) => MenuItem();
     private SubmenuItemEntry MenuItem() => new(() => getName(), (getSubmenu, getReflesher) => () =>
     {

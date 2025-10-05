@@ -77,9 +77,9 @@ public class Api : ApiBase, IGenericModConfigMenuApi
     {
         GetApi(mod)?.AddSelectOption(mod, getValue, setValue, name, selection, formatValue);
     }
-    public new void AddAction(IMod mod, Action action, Func<string> name, bool closeMenu = false, Action<Action>? beforeClose = null)
+    public new void AddAction(IMod mod, Action action, Func<string> name, bool closeMenu = false, Action<Action>? beforeClose = null, Func<bool>? condition = null)
     {
-        GetApi(mod)?.AddAction(mod, action, name, closeMenu, beforeClose);
+        GetApi(mod)?.AddAction(mod, action, name, closeMenu, beforeClose, condition);
     }
 
     private static readonly HashSet<Type> allowedTypes = [typeof(int), typeof(bool), typeof(float), typeof(string)];

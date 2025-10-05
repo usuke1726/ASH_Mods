@@ -18,6 +18,6 @@ public interface IGenericModConfigMenuApi
     void AddSelectOption(IMod mod, Func<string> getValue, Action<string> setValue, Func<string> name, string[] selection, Func<string, string>? formatValue = null);
     void AddSelectOption(IMod mod, Func<int> getValue, Action<int> setValue, Func<string> name, int[] selection, Func<int, string>? formatValue = null);
     void AddSelectOption(IMod mod, Func<float> getValue, Action<float> setValue, Func<string> name, float[] selection, Func<float, string>? formatValue = null);
-    void AddAction(IMod mod, Action action, Func<string> name, bool closeMenu = false, Action<Action>? beforeClose = null);
+    void AddAction(IMod mod, Action action, Func<string> name, bool closeMenu = false, Action<Action>? beforeClose = null, Func<bool>? condition = null);
 }
 

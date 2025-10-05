@@ -15,7 +15,7 @@ public abstract class ApiBase(string id, string displayName)
     internal virtual void AddSelectOption(IMod mod, Func<string> getValue, Action<string> setValue, Func<string> name, string[] selection, Func<string, string>? formatValue) { }
     internal virtual void AddSelectOption(IMod mod, Func<int> getValue, Action<int> setValue, Func<string> name, int[] selection, Func<int, string>? formatValue) { }
     internal virtual void AddSelectOption(IMod mod, Func<float> getValue, Action<float> setValue, Func<string> name, float[] selection, Func<float, string>? formatValue) { }
-    internal virtual void AddAction(IMod mod, Action action, Func<string> name, bool closeMenu, Action<Action>? beforeClose) { }
+    internal virtual void AddAction(IMod mod, Action action, Func<string> name, bool closeMenu, Action<Action>? beforeClose, Func<bool>? condition) { }
 
     internal virtual void OpenModOptionMenu(Action onClosed) { }
 }

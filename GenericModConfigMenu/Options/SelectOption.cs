@@ -25,6 +25,7 @@ internal abstract class SelectOption<T>(Func<T> getValue, Action<T> setValue, Fu
     protected abstract bool IsSameValue(T a, T b);
     protected abstract T val { get; set; }
     public bool Unsaved { get; set; } = false;
+    public bool Enabled => true;
 
     public SubmenuItemEntry MenuItem(OptionsMenu? topMenu, AbstractMenu? modMenu) => MenuItem(topMenu);
     private SubmenuItemEntry MenuItem(OptionsMenu? menu) => new(() => getName(), (_, getReflesher) => () =>

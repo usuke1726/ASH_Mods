@@ -28,6 +28,7 @@ internal abstract class NumberOptionBase<T, S>(Func<T> getValue, Action<T> setVa
     private KeyWatcher? keyWatcher = null;
 
     public bool Unsaved { get; set; } = false;
+    public bool Enabled => true;
 
     protected abstract S ToS(T v);
     protected abstract T Add(T a, T b);

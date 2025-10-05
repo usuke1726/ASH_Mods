@@ -60,6 +60,7 @@ internal class ModEntry : Mod
             name: () => "Give up race",
             closeMenu: true,
             action: () => GameController.ConfirmToAbandon(),
+            condition: () => GameController.IsRaceActive,
             beforeClose: action =>
             {
                 if (!GameController.IsRaceActive)

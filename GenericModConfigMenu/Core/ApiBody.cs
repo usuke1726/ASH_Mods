@@ -43,7 +43,7 @@ internal class ApiBody<IPoco> : ApiBase
         list.Add(new(DisplayName, getModMenu => () =>
         {
             var modMenu = getModMenu();
-            MainMenu.ShowSubMenu(menu, options.Select(o => o.MenuItem(menu, modMenu)), onClosed: () =>
+            MainMenu.ShowSubMenu(menu, options.Where(o => o.Enabled).Select(o => o.MenuItem(menu, modMenu)), onClosed: () =>
             {
                 if (options.Any(o => o.Unsaved)) _ = Save();
                 foreach (var o in options) o.Unsaved = false;
@@ -52,7 +52,7 @@ internal class ApiBody<IPoco> : ApiBase
     }
     internal override void OpenModOptionMenu(Action onClosed)
     {
-        MainMenu.ShowSubMenu(null, options.Select(o => o.MenuItem(null, null)), onClosed: () =>
+        MainMenu.ShowSubMenu(null, options.Where(o => o.Enabled).Select(o => o.MenuItem(null, null)), onClosed: () =>
         {
             if (options.Any(o => o.Unsaved)) _ = Save();
             foreach (var o in options) o.Unsaved = false;
@@ -83,9 +83,9 @@ internal class ApiBody<IPoco> : ApiBase
     {
         options.Add(new SelectOptionFloat(getValue, setValue, name, selection, formatValue));
     }
-    internal override void AddAction(IMod mod, Action action, Func<string> name, bool closeMenu, Action<Action>? beforeClose)
+    internal override void AddAction(IMod mod, Action action, Func<string> name, bool closeMenu, Action<Action>? beforeClose, Func<bool>? condition)
     {
-        options.Add(new ActionOption(action, name, closeMenu, beforeClose));
+        options.Add(new ActionOption(action, name, closeMenu, beforeClose, condition));
     }
 }
 
