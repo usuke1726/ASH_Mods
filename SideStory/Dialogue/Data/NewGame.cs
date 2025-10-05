@@ -9,7 +9,7 @@ internal class NewGame : DataEntry
     private static readonly string newGameNode = "NewGame.StartedFirstNode";
     internal static void Setup()
     {
-        NodeSelector.RegisterNode(new([
+        NodeSelector.RegisterNode(null, new([
                 new TagAction(newGameNode, true),
                 new WaitAction(2.0f),
                 new LineAction("node.newgame01", Player),
