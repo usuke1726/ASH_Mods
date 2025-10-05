@@ -10,7 +10,7 @@ internal class PlayerPosition
     private static readonly string playerPosTag = "PlayerPos";
     internal static void Setup(IModHelper helper)
     {
-        helper.Events.System.BeforeSaving += (_, _) => SavePlayerPos();
+        System.STags.BeforeSaving += SavePlayerPos;
     }
     private static void SavePlayerPos()
     {

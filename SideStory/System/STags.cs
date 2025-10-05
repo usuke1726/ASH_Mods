@@ -10,6 +10,7 @@ internal static class STags
     private static readonly Dictionary<string, float> floatValues = [];
     private static readonly Dictionary<string, string> stringValues = [];
     private static readonly Dictionary<string, bool> boolValues = [];
+    internal static event Action? BeforeSaving = null;
     internal static void Setup(IModHelper helper)
     {
         helper.Events.Gameloop.GameStarted += (_, _) => EnsureDataLoaded();
@@ -69,6 +70,7 @@ internal static class STags
         internal static bool hasLoaded = false;
         internal static void WriteToSaveData()
         {
+            BeforeSaving?.Invoke();
             SaveIntValues();
             SaveFloatValues();
             SaveStringValues();
@@ -77,7 +79,7 @@ internal static class STags
         internal static void EnsureDataLoaded()
         {
             if (hasLoaded) return;
-            LoadFromSaveData();
+            if (!State.IsNewGame) LoadFromSaveData();
             hasLoaded = true;
         }
         private static void LoadFromSaveData()
