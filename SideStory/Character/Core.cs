@@ -110,7 +110,7 @@ internal partial class Core
         // Without the following code, the color of limbs becomes lighter than the one of head (idk why)
         playerBodyRenderer.material.mainTextureScale = new(0.99f, 0.99f);
 
-        Context.player.fullShirtColor = new(0.0898f, 0.1321f, 0.0729f, 1);
+        player.fullShirtColor = player.emptyShirtColor = new(0.0898f, 0.1321f, 0.0729f, 1);
     }
 
     private static Transform eyeL = null!;
