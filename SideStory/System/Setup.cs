@@ -11,6 +11,7 @@ internal class Setup
         if (done) return;
         done = true;
         Tags.Setup(helper);
+        EndGameController.Setup(helper);
     }
 }
 
