@@ -3,6 +3,8 @@ using System.Collections;
 
 namespace SideStory.Dialogue.Actions;
 
+using SideStory.System;
+
 internal class TagAction : BaseAction
 {
     internal enum Type { Add, Toggle, }

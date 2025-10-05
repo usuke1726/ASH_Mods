@@ -1,8 +1,8 @@
 ﻿
+using System.Text.RegularExpressions;
 using ModdingAPI;
-using TMPro;
 
-namespace SideStory.Dialogue;
+namespace SideStory.System;
 
 internal static class Tags
 {
@@ -17,7 +17,14 @@ internal static class Tags
     }
     private static string FormatId(string id)
     {
-        return id.Replace("\n", "").Replace("\r", "").Replace(":", "");
+#if DEBUG
+        if (Regex.IsMatch(id, @"[^a-zA-Z0-9 ._-]"))
+        {
+            var s = id.Replace("\n", "\\n").Replace("\r", "\\r").Replace("\t", "\\t");
+            throw new Exception($"invalid tag id \"{s}\"");
+        }
+#endif
+        return id;
     }
     public static void Set(string id, object value)
     {
@@ -27,31 +34,24 @@ internal static class Tags
         else if (value is bool @bool) SetBool(id, @bool);
     }
     public static void SetInt(string id, int value) => intValues[FormatId(id)] = value;
+    public static void TrySetInt(string id, int value) => intValues.TryAdd(FormatId(id), value);
     public static void SetFloat(string id, float value) => floatValues[FormatId(id)] = value;
+    public static void TrySetFloat(string id, float value) => floatValues.TryAdd(FormatId(id), value);
     public static void SetString(string id, string value) => stringValues[FormatId(id)] = value;
-    public static void SetBool(string id, bool value) => boolValues[FormatId(id)] = value;
-    public static void AddInt(string id, int value)
-    {
-        var fid = FormatId(id);
-        intValues.TryAdd(fid, 0);
-        intValues[fid] += value;
-    }
-    public static void AddFloat(string id, float value)
-    {
-        var fid = FormatId(id);
-        floatValues.TryAdd(fid, 0);
-        floatValues[fid] += value;
-    }
-    public static void ToggleBool(string id)
-    {
-        var fid = FormatId(id);
-        boolValues.TryAdd(id, false);
-        boolValues[id] = !boolValues[id];
-    }
+    public static void TrySetString(string id, string value) => stringValues.TryAdd(FormatId(id), value);
+    public static void SetBool(string id, bool value = true) => boolValues[FormatId(id)] = value;
+    public static void TrySetBool(string id, bool value) => boolValues.TryAdd(FormatId(id), value);
+    public static void AddInt(string id, int value) => SetInt(id, GetInt(id, 0) + value);
+    public static void AddFloat(string id, float value) => SetFloat(id, GetFloat(id, 0) + value);
+    public static void ToggleBool(string id) => SetBool(id, !GetBool(id, false));
     public static bool TryGetInt(string id, out int value) => intValues.TryGetValue(FormatId(id), out value);
     public static bool TryGetFloat(string id, out float value) => floatValues.TryGetValue(FormatId(id), out value);
     public static bool TryGetString(string id, out string value) => stringValues.TryGetValue(FormatId(id), out value);
     public static bool TryGetBool(string id, out bool value) => boolValues.TryGetValue(FormatId(id), out value);
+    public static int GetInt(string id, int defaultValue) => TryGetInt(id, out var v) ? v : defaultValue;
+    public static float GetFloat(string id, float defaultValue) => TryGetFloat(id, out var v) ? v : defaultValue;
+    public static string GetString(string id, string defaultValue) => TryGetString(id, out var v) ? v : defaultValue;
+    public static bool GetBool(string id, bool defaultValue = false) => TryGetBool(id, out var v) ? v : defaultValue;
 
 
     private static class SaveHandler
@@ -86,6 +86,7 @@ internal static class Tags
             intValues.Clear();
             var data = Context.globalData.gameData.tags.GetString(intDataTag);
             if (data == null) return;
+            Debug($"== load int:\n{data}");
             foreach (var item in Split(data))
             {
                 if (int.TryParse(item.Item2, out var val)) intValues[item.Item1] = val;
@@ -96,6 +97,7 @@ internal static class Tags
             floatValues.Clear();
             var data = Context.globalData.gameData.tags.GetString(floatDataTag);
             if (data == null) return;
+            Debug($"== load float:\n{data}");
             foreach (var item in Split(data))
             {
                 if (float.TryParse(item.Item2, out var val)) floatValues[item.Item1] = val;
@@ -106,6 +108,7 @@ internal static class Tags
             stringValues.Clear();
             var data = Context.globalData.gameData.tags.GetString(stringDataTag);
             if (data == null) return;
+            Debug($"== load string:\n{data}");
             foreach (var item in Split(data))
             {
                 stringValues[item.Item1] = DeserializeStringValue(item.Item2);
@@ -116,6 +119,7 @@ internal static class Tags
             boolValues.Clear();
             var data = Context.globalData.gameData.tags.GetString(boolDataTag);
             if (data == null) return;
+            Debug($"== load bool:\n{data}");
             foreach (var item in Split(data))
             {
                 boolValues[item.Item1] = DeserializeBoolValue(item.Item2);
@@ -125,21 +129,25 @@ internal static class Tags
         private static void SaveIntValues()
         {
             var data = Join(intValues.Select(pair => new Tuple<string, string>(pair.Key, pair.Value.ToString())));
+            Debug($"== save int:\n{data}");
             Context.globalData.gameData.tags.SetString(intDataTag, data);
         }
         private static void SaveFloatValues()
         {
             var data = Join(floatValues.Select(pair => new Tuple<string, string>(pair.Key, pair.Value.ToString())));
+            Debug($"== save float:\n{data}");
             Context.globalData.gameData.tags.SetString(floatDataTag, data);
         }
         private static void SaveStringValues()
         {
             var data = Join(stringValues.Select(pair => new Tuple<string, string>(pair.Key, SerializeStringValue(pair.Value))));
+            Debug($"== save string:\n{data}");
             Context.globalData.gameData.tags.SetString(stringDataTag, data);
         }
         private static void SaveBoolValues()
         {
             var data = Join(boolValues.Select(pair => new Tuple<string, string>(pair.Key, SerializeBoolValue(pair.Value))));
+            Debug($"== save bool:\n{data}");
             Context.globalData.gameData.tags.SetString(boolDataTag, data);
         }
 

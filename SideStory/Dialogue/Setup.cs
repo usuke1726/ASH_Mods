@@ -12,7 +12,6 @@ internal class Setup
         if (done) return;
         done = true;
         DialogueController.Setup(helper);
-        Tags.Setup(helper);
         AddNodes();
         NodeSelector.OnSetupDone();
     }
