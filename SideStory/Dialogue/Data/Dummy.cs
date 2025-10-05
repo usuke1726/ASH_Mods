@@ -29,7 +29,7 @@ internal class Dummy : DataEntry
             new LineAction("node.dummy5.n", Original),
             new EmoteAction(Emotes.Normal, Original),
             new NodeCompleteAction(),
-        ]));
+        ], priority: int.MinValue));
     }
 }
 

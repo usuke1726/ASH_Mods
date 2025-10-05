@@ -6,9 +6,9 @@ namespace SideStory.Dialogue;
 internal static class NodeSelector
 {
     private static readonly List<Node> nodes = [];
-    internal static Node? Find(Transform speaker)
+    internal static Node? Find(Transform? speaker)
     {
-        if (ModdingAPI.Character.TryGet(speaker, out var character))
+        if (ModdingAPI.Character.TryGet(speaker!, out var character))
         {
             Debug($"== talking to the character {character.character}");
         }

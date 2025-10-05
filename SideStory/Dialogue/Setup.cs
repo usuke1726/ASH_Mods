@@ -17,6 +17,7 @@ internal class Setup
     }
     private void AddNodes()
     {
+        NewGame.Setup();
         Dummy.Setup();
     }
 }

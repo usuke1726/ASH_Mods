@@ -14,17 +14,18 @@ internal class DialogueController : MonoBehaviour
         helper.Events.Gameloop.GameStarted += (_, _) =>
         {
             instance = new GameObject("SideStoryDialogueController").AddComponent<DialogueController>();
+            if (State.IsNewGame) instance.StartConversation(null);
         };
     }
 
     private TextBoxConversation currentConversation = null!;
     private Node currentNode = null!;
-    internal IConversation StartConversation(Transform speaker)
+    internal IConversation StartConversation(Transform? speaker)
     {
         var node = NodeSelector.Find(speaker);
         if (node == null)
         {
-            Monitor.Log($"Empty node! speaker: {speaker.name}", LL.Warning);
+            Monitor.Log($"Empty node! speaker: {speaker?.name}", LL.Warning);
             return null!;
         }
         node.Reset();
