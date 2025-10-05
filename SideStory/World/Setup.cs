@@ -11,6 +11,7 @@ internal class Setup
         if (done) return;
         done = true;
         Objects.Setup(helper);
+        PlayerPosition.Setup(helper);
     }
 }
 
