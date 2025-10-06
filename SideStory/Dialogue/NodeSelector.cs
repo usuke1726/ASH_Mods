@@ -24,6 +24,28 @@ internal static class NodeSelector
         }
         return node ?? globalNodes.Find(n => n.condition());
     }
+    private static readonly HashSet<string> vanillaDialogueNodes = [
+        "ToMainIslandStart",
+        "ToSecretIslandStart",
+        "MeteorLakeSignStart",
+        "MeteorLakeLeftSignStart",
+        "KioskSignStart",
+        "VistorCenterCrossroadsStart",
+        "WhiteCoastSign",
+        "BeachHutSign",
+        "HawkPeakRiverSignStart",
+        "RoyalRidgeSignStart",
+        "OutlookPointSignStart",
+        "HawkPeakSignStart",
+        "FireTowerSnowSignStart",
+        "OrangeIslandsSign",
+        "VisitorsCenterSignStart",
+        "HawkPeakAltSignStart",
+    ];
+    internal static bool UseVanillaNode(DialogueInteractable dialogue)
+    {
+        return vanillaDialogueNodes.Contains(dialogue.startNode);
+    }
     internal static void OnSetupDone()
     {
         static int Compare(Node n1, Node n2) => n2.priority.CompareTo(n1.priority);

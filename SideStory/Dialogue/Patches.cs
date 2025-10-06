@@ -16,6 +16,7 @@ internal class DialogueInteractablePatch
     internal static bool Interact(DialogueInteractable __instance)
     {
         if (!State.IsActive) return true;
+        if (NodeSelector.UseVanillaNode(__instance)) return true;
         if (Context.TryToGetPlayer(out var player))
         {
             player.TurnToFace(__instance.transform);
