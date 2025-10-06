@@ -10,6 +10,7 @@ public enum ActionType
     Tag,
     NodeComplete,
     If,
+    Switch,
     Wait,
 }
 

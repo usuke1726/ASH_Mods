@@ -21,6 +21,7 @@ internal abstract class NodeEntryBase
     protected static AddItemAction item(string itemId, int amount, string? anchor = null) => new(itemId, amount, anchor);
     protected static EmoteAction emote(Emotes emotion, string speaker, string? anchor = null) => new(emotion, speaker, anchor);
     protected static IfAction @if(Func<bool> condition, string? trueAnchor, string? falseAnchor, string? anchor = null) => new(condition, trueAnchor, falseAnchor, anchor);
+    protected static SwitchAction @switch(Func<int> getIndex, IEnumerable<string?> anchors, string? anchor = null) => new(getIndex, anchors, anchor);
     protected static LineAction line(string line, string speaker, string? anchor = null) => new(line, speaker, anchor);
     protected static OptionAction option(string[] options, string? anchor = null) => new(options, anchor);
     protected static Anchor anchor(string anchor) => new(anchor);

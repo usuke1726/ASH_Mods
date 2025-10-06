@@ -37,9 +37,9 @@ internal class Node
             index++;
             if (index >= actions.Count) return new NodeCompleteAction();
             var action = actions[index];
-            if (action is IfAction ifAction)
+            if (action is FlowBase flow)
             {
-                var anchor = ifAction.GetAnchor();
+                var anchor = flow.GetAnchor();
                 if (anchor == null) continue;
                 if (!anchors.TryGetValue(anchor, out var nextIdx)) return new NodeCompleteAction();
                 index = nextIdx - 1;
