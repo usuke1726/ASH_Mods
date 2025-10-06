@@ -46,26 +46,6 @@ internal static class DataHandler
             foreach (var item in items.Values) item.OnReturnedTitle();
             items.Clear();
         };
-        KeyBind.RegisterKeyBind("Alpha9(LeftControl)", () =>
-        {
-            if (!Context.TryToGetPlayer(out var player)) return;
-            if (items.TryGetValue("TestItem1", out var item))
-            {
-                //player.pickUpSound.Play();
-                player.StartCoroutine(item.PickUpRoutine());
-                Context.levelUI.statusBar.ShowCollection(item.item).HideAndKill(1f); // a toast on top left
-            }
-        }, name: "DebugGetTestItem1");
-        KeyBind.RegisterKeyBind("Alpha8(LeftControl)", () =>
-        {
-            if (!Context.TryToGetPlayer(out var player)) return;
-            if (items.TryGetValue("TestItem1", out var item))
-            {
-                if (GetCollected(item) <= 0) return;
-                AddCollected(item, -1);
-                Context.levelUI.statusBar.ShowCollection(item.item).HideAndKill(1f);
-            }
-        }, name: "DebugRemoveItem1");
     }
 
     internal static void ValidateItemId(string id)
