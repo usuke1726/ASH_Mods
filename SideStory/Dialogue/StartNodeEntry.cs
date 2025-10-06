@@ -1,14 +1,11 @@
 ﻿
-using ModdingAPI;
-
 namespace SideStory;
 
-internal abstract class StartNodeEntry : NodeEntry
+internal abstract class StartNodeEntry : Dialogue.NodeEntryBase
 {
     protected abstract string StartNode { get; }
-    sealed protected override Characters? Character => null;
     private bool setupDone = false;
-    internal override void Setup()
+    sealed internal override void Setup()
     {
         if (setupDone) return;
         setupDone = true;

@@ -30,15 +30,5 @@
     "node.newgame12": "この調子じゃ",
     "node.newgame13": "羽根はいつまでも売れねぇな...",
     "node.newgame14": "しょうがない",
-    "node.newgame15": "カネになりそうなものを探しに行くか",
-
-    "node.dummy1": "こんにちは",
-    "node.dummy2": "こんにちは！",
-    "node.dummy3": "黄金の羽根はいかが？",
-    "node.dummy4.1": "欲しい！",
-    "node.dummy4.2": "いらね",
-    "node.dummy5.y": "よしきた！",
-    "node.dummy6.y": "どうぞ",
-    "node.dummy7.y": "登山楽しんでね！",
-    "node.dummy5.n": "え！？本当にいらないの！？"
+    "node.newgame15": "カネになりそうなものを探しに行くか"
 }

@@ -1,13 +1,10 @@
 ﻿
-using ModdingAPI;
-
 namespace SideStory;
 
-internal abstract class GlobalNodeEntry : NodeEntry
+internal abstract class GlobalNodeEntry : Dialogue.NodeEntryBase
 {
-    sealed protected override Characters? Character => null;
     private bool setupDone = false;
-    internal override void Setup()
+    sealed internal override void Setup()
     {
         if (setupDone) return;
         setupDone = true;
