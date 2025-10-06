@@ -1,13 +1,6 @@
 ﻿
 namespace SideStory.Item;
 
-internal static class Items
-{
-    public static readonly string Coin = "Coin";
-    public static readonly string GoldenFeather = "GoldenFeather";
-    public static readonly string WristWatch = "Wristwatch";
-}
-
 internal static class Data
 {
     internal static void Setup()

@@ -28,6 +28,7 @@ internal static class NodeSelector
     {
         static int Compare(Node n1, Node n2) => n2.priority.CompareTo(n1.priority);
         foreach (var list in nodes.Values) list.Sort(Compare);
+        nullNodes.Sort(Compare);
         globalNodes.Sort(Compare);
     }
     internal static void RegisterNode(Node node) => globalNodes.Add(node);

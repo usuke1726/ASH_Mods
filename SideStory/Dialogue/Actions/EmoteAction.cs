@@ -4,15 +4,6 @@ using ModdingAPI;
 
 namespace SideStory.Dialogue.Actions;
 
-public enum Emotes
-{
-    Normal,
-    PlayerWideEyes,
-    Happy,
-    Surprise,
-    EyesClosed,
-}
-
 internal class EmoteAction : BaseAction
 {
     internal readonly Emotes emotion;

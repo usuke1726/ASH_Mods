@@ -1,6 +1,6 @@
 ﻿
+using System.Reflection;
 using ModdingAPI;
-using SideStory.Dialogue.Data;
 
 namespace SideStory.Dialogue;
 
@@ -17,8 +17,17 @@ internal class Setup
     }
     private void AddNodes()
     {
-        NewGame.Setup();
-        Dummy.Setup();
+        var asm = Assembly.GetExecutingAssembly();
+        Debug($"Assembly {asm.FullName} {asm.Location} {asm.GetName().Version}");
+        var types = asm.DefinedTypes.Where(type => typeof(NodeEntry).IsAssignableFrom(type) && !type.IsAbstract);
+        foreach (var type in types)
+        {
+            var constructor = type.GetConstructor([]);
+            if (constructor == null) continue;
+            Debug($"found node {type.Name}");
+            var entry = constructor.Invoke([]) as NodeEntry;
+            entry?.Setup();
+        }
     }
 }
 

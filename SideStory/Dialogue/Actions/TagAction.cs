@@ -6,7 +6,6 @@ namespace SideStory.Dialogue.Actions;
 
 internal class TagAction : BaseAction
 {
-    internal enum Type { Add, Toggle, }
     internal readonly string id;
     internal readonly object value;
     public TagAction(string id, object value, string? anchor = null) : base(ActionType.Tag, anchor)
@@ -16,16 +15,16 @@ internal class TagAction : BaseAction
     }
     internal override IEnumerator Invoke(IConversation conversation)
     {
-        if (value is Tuple<Type, object> valueWithType)
+        if (value is Tuple<TagActions, object> valueWithType)
         {
-            if (valueWithType.Item1 == Type.Add)
+            if (valueWithType.Item1 == TagActions.Add)
             {
                 var v = valueWithType.Item2;
                 if (v is int @int) STags.AddInt(id, @int);
                 else if (v is float @float) STags.AddFloat(id, @float);
             }
         }
-        else if (value is Type t && t == Type.Toggle) STags.ToggleBool(id);
+        else if (value is TagActions t && t == TagActions.Toggle) STags.ToggleBool(id);
         STags.Set(id, value);
         yield break;
     }
