@@ -15,6 +15,7 @@ internal class Objects
     }
     private static void SetupObjects()
     {
+        if (!State.IsActive) return;
         var NPCs = GameObject.Find("NPCs").transform;
         NPCs.Find("ToughBirdNPC (1)").gameObject.SetActive(false);
     }
