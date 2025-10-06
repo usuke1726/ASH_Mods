@@ -1,6 +1,7 @@
 ﻿
 using HarmonyLib;
 using ModdingAPI;
+using QuickUnityTools.Input;
 using UnityEngine;
 
 namespace SideStory.Item;
@@ -40,6 +41,34 @@ internal class GameDataPatch
         Debug($"Add item as BaseItem: {item.name}");
         DataHandler.AddCollected(item, amount, equipAction);
         return false;
+    }
+}
+
+[HarmonyPatch(typeof(PauseMenu))]
+internal class PauseMenuPatch
+{
+    private static string fishingRodEscapedName = "___FishingRod";
+    private static string fishingRodName = "FishingRod";
+    [HarmonyPrefix()]
+    [HarmonyPatch("UpdateDescriptionTextForItem")]
+    internal static void UpdateDescriptionTextForItem_Prefix(CollectableItem item)
+    {
+        if (!State.IsActive) return;
+        if (item.name == fishingRodName)
+        {
+            if (GameUserInput.sharedActionSet.LastInputType.IsMouseOrKeyboard())
+            {
+                item.description = I18n_.Localize("item.FishingRod.onMouseOrKeyboard.description");
+            }
+            item.name = fishingRodEscapedName;
+        }
+    }
+    [HarmonyPostfix()]
+    [HarmonyPatch("UpdateDescriptionTextForItem")]
+    internal static void UpdateDescriptionTextForItem_Postfix(CollectableItem item)
+    {
+        if (!State.IsActive) return;
+        if (item.name == fishingRodEscapedName) item.name = fishingRodName;
     }
 }
 

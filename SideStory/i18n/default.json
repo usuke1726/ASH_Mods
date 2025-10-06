@@ -18,6 +18,7 @@
     "item.FishingRod.name": "FishingRod",
     "item.FishingRod.namePlural": "FishingRods",
     "item.FishingRod.description": "test FishingRod",
+    "item.FishingRod.onMouseOrKeyboard.description": "test FishingRod (keyboard)",
     "item.Stick.name": "Stick",
     "item.Stick.namePlural": "Sticks",
     "item.Stick.description": "test Stick",
