@@ -79,6 +79,10 @@ internal static class STags
         internal static void EnsureDataLoaded()
         {
             if (hasLoaded) return;
+            intValues.Clear();
+            floatValues.Clear();
+            stringValues.Clear();
+            boolValues.Clear();
             if (!State.IsNewGame) LoadFromSaveData();
             hasLoaded = true;
         }
@@ -91,7 +95,6 @@ internal static class STags
         }
         private static void LoadIntValues()
         {
-            intValues.Clear();
             var data = Context.globalData.gameData.tags.GetString(intDataTag);
             if (data == null) return;
             Debug($"== load int:\n{data}");
@@ -102,7 +105,6 @@ internal static class STags
         }
         private static void LoadFloatValues()
         {
-            floatValues.Clear();
             var data = Context.globalData.gameData.tags.GetString(floatDataTag);
             if (data == null) return;
             Debug($"== load float:\n{data}");
@@ -113,7 +115,6 @@ internal static class STags
         }
         private static void LoadStringValues()
         {
-            stringValues.Clear();
             var data = Context.globalData.gameData.tags.GetString(stringDataTag);
             if (data == null) return;
             Debug($"== load string:\n{data}");
@@ -124,7 +125,6 @@ internal static class STags
         }
         private static void LoadBoolValues()
         {
-            boolValues.Clear();
             var data = Context.globalData.gameData.tags.GetString(boolDataTag);
             if (data == null) return;
             Debug($"== load bool:\n{data}");
