@@ -4,33 +4,24 @@ using UnityEngine;
 
 namespace SideStory.Item;
 
-internal class ExtendedItem : CollectableItem
+internal class ExtendedItem : ItemWrapperBase
 {
-    public class I18nKeys(string readableName, string readableNamePlural, string description)
-    {
-        public readonly string ReadableName = readableName;
-        public readonly string ReadableNamePlural = readableNamePlural;
-        public readonly string Description = description;
-    }
-    private readonly I18nKeys i18nKeys;
+    public CollectableItem.PickUpPrompt showPrompt = CollectableItem.PickUpPrompt.OnlyOnce;
+    public bool cannotDrop = false;
+    public bool cannotStash = false;
+    public int priority = 0;
+
     private readonly bool[,] iconData;
     private bool ready = false;
     private static readonly int xOffset = 27;
     private static readonly int yOffset = 53;
-    internal readonly string id;
-    public ExtendedItem(string id, I18nKeys i18nKeys, bool[,] iconData)
+    public ExtendedItem(string id, bool[,] iconData, Func<int?>? getState = null) : base(id, getState)
     {
-        DataHandler.ValidateItemId(id);
         if (iconData.GetLength(0) != 12 || iconData.GetLength(1) != 12) throw new Exception("iconData must be 12x12 matrix");
-        this.id = id;
-        name = id;
-        this.i18nKeys = i18nKeys;
         this.iconData = iconData;
-        OnLocaleChanged();
-        DataHandler.Register(this);
     }
-    public ExtendedItem(string id, I18nKeys i18nKeys, int[,] iconData) : this(id, i18nKeys, ToIconData(iconData)) { }
-    public ExtendedItem(string id, I18nKeys i18nKeys, string iconData) : this(id, i18nKeys, ToIconData(iconData)) { }
+    public ExtendedItem(string id, int[,] iconData, Func<int?>? getState = null) : this(id, ToIconData(iconData), getState) { }
+    public ExtendedItem(string id, string iconData, Func<int?>? getState = null) : this(id, ToIconData(iconData), getState) { }
 
     private static bool[,] ToIconData(int[,] iconData)
     {
@@ -61,15 +52,12 @@ internal class ExtendedItem : CollectableItem
         }
         return ret;
     }
-    internal void OnLocaleChanged()
-    {
-        readableName = I18n_.Localize(i18nKeys.ReadableName);
-        readableNamePlural = I18n_.Localize(i18nKeys.ReadableNamePlural);
-        description = I18n_.Localize(i18nKeys.Description);
-    }
-    internal void EnsureIconCreated(Sprite resource)
+    internal override void EnsureIconCreated(Sprite resource)
     {
         if (ready) return;
+        item.cannotDrop = cannotDrop;
+        item.cannotStash = cannotStash;
+        item.priority = priority;
         var tex = Util.EditableTexture(resource.texture);
         for (int x = 0; x < 12; x++)
         {
@@ -79,7 +67,7 @@ internal class ExtendedItem : CollectableItem
             }
         }
         tex.Apply();
-        icon = Sprite.Create(tex, resource.rect, new(0.5f, 0.5f), resource.pixelsPerUnit);
+        item.icon = Sprite.Create(tex, resource.rect, new(0.5f, 0.5f), resource.pixelsPerUnit);
         ready = true;
     }
 }

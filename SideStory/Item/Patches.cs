@@ -19,28 +19,27 @@ internal class GameDataPatch
     [HarmonyPatch("GetCollected")]
     internal static bool GetCollected(CollectableItem item, ref int __result)
     {
-        if (item is ExtendedItem eItem)
+        if (!State.IsActive) return true;
+        if (DataHandler.Find(item, out var wItem))
         {
-            __result = DataHandler.GetCollected(eItem);
-            return false;
+            Debug($"Get item as BaseItem: {item.name}");
+            __result = DataHandler.GetCollected(wItem);
         }
-        else if (State.IsActive && item.saveTag == "ITEM_GoldenFeather")
+        else
         {
-            __result = DataHandler.GetCollected("GoldenFeather");
-            return false;
+            Debug($"Get item {item.name}");
+            __result = DataHandler.GetCollected(item.name);
         }
-        return true;
+        return false;
     }
     [HarmonyPrefix()]
     [HarmonyPatch("AddCollected")]
     internal static bool AddCollected(CollectableItem item, int amount, bool equipAction)
     {
-        if (item is ExtendedItem eItem)
-        {
-            DataHandler.AddCollected(eItem, amount, equipAction);
-            return false;
-        }
-        return true;
+        if (!State.IsActive) return true;
+        Debug($"Add item as BaseItem: {item.name}");
+        DataHandler.AddCollected(item, amount, equipAction);
+        return false;
     }
 }
 

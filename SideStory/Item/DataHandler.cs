@@ -9,7 +9,7 @@ namespace SideStory.Item;
 
 internal static class DataHandler
 {
-    private static readonly Dictionary<string, ExtendedItem> items = [];
+    private static readonly Dictionary<string, ItemWrapperBase> items = [];
     private static Dictionary<string, int> collected = [];
     private static readonly IReadOnlyDictionary<string, int> initialCollected = new Dictionary<string, int>()
     {
@@ -31,12 +31,16 @@ internal static class DataHandler
                 Monitor.Log($"feather is null!", LL.Warning);
                 return;
             }
+            Data.LoadOriginalItems();
             EnsureIconCreated(feather.icon);
+            OnLocaleChanged();
         };
         helper.Events.Gameloop.ReturnedToTitle += (_, _) =>
         {
             collected = [];
             hasLoaded = false;
+            foreach (var item in items.Values) item.OnReturnedTitle();
+            items.Clear();
         };
         KeyBind.RegisterKeyBind("Alpha9(LeftControl)", () =>
         {
@@ -45,7 +49,7 @@ internal static class DataHandler
             {
                 //player.pickUpSound.Play();
                 player.StartCoroutine(item.PickUpRoutine());
-                Context.levelUI.statusBar.ShowCollection(item).HideAndKill(1f); // a toast on top left
+                Context.levelUI.statusBar.ShowCollection(item.item).HideAndKill(1f); // a toast on top left
             }
         }, name: "DebugGetTestItem1");
         KeyBind.RegisterKeyBind("Alpha8(LeftControl)", () =>
@@ -55,7 +59,7 @@ internal static class DataHandler
             {
                 if (GetCollected(item) <= 0) return;
                 AddCollected(item, -1);
-                Context.levelUI.statusBar.ShowCollection(item).HideAndKill(1f);
+                Context.levelUI.statusBar.ShowCollection(item.item).HideAndKill(1f);
             }
         }, name: "DebugRemoveItem1");
     }
@@ -65,20 +69,20 @@ internal static class DataHandler
         if (items.ContainsKey(id)) throw new Exception($"the item of id {id} already exists");
         if (Regex.IsMatch(id, @"[^a-zA-Z0-9 _-]")) throw new Exception($"invalid symbol is contained in \"{id}\"");
     }
-    internal static void Register(ExtendedItem item) => items[item.id] = item;
+    internal static void Register(ItemWrapperBase item) => items[item.id] = item;
 
-    internal static IEnumerable<ExtendedItem> GetAllCollected()
+    internal static IEnumerable<CollectableItem> GetAllCollected()
     {
         EnsureDataLoaded();
-        return collected.Where(p => p.Value > 0 && items.ContainsKey(p.Key)).Select(p => items[p.Key]);
+        return collected.Where(p => p.Value > 0 && items.ContainsKey(p.Key)).Select(p => items[p.Key].item);
     }
-    internal static int GetCollected(ExtendedItem item)
+    internal static int GetCollected(ItemWrapperBase item) => GetCollected(item.id);
+    internal static int GetCollected(string id)
     {
         EnsureDataLoaded();
-        return collected.TryGetValue(item.id, out var v) ? v : 0;
+        return collected.TryGetValue(id, out var v) ? v : 0;
     }
-    internal static int GetCollected(string id) => Find(id, out var item) ? GetCollected(item) : 0;
-    internal static void AddCollected(ExtendedItem item, int amount, bool equipAction = false)
+    internal static void AddCollected(ItemWrapperBase item, int amount, bool equipAction = false)
     {
         EnsureDataLoaded();
         if (!collected.ContainsKey(item.id)) collected[item.id] = 0;
@@ -91,12 +95,33 @@ internal static class DataHandler
     {
         if (Find(id, out var item)) AddCollected(item, amount, equipAction);
     }
-    internal static bool Find(string id, out ExtendedItem item) => items.TryGetValue(id, out item);
-    internal static ExtendedItem? Find(string id) => Find(id, out var item) ? item : null;
+    internal static void AddCollected(CollectableItem collectable, int amount, bool equipAction = false)
+    {
+        if (Find(collectable, out var item)) AddCollected(item, amount, equipAction);
+    }
+    internal static bool Find(string id, out ItemWrapperBase item) => items.TryGetValue(id, out item);
+    internal static ItemWrapperBase? Find(string id) => Find(id, out var item) ? item : null;
+    internal static bool Find(CollectableItem collectable, out ItemWrapperBase item)
+    {
+        foreach (var i in items.Values)
+        {
+            if (i.item == collectable)
+            {
+                item = i;
+                return true;
+            }
+        }
+        item = null!;
+        return false;
+    }
 
     internal static void OnLocaleChanged()
     {
         foreach (var item in items.Values) item.OnLocaleChanged();
+    }
+    internal static void UpdateItemStates()
+    {
+        foreach (var item in items.Values) item.UpdateState();
     }
     internal static void EnsureIconCreated(Sprite resource)
     {

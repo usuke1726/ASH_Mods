@@ -42,7 +42,7 @@ internal class GetItemAction : BaseAction
         {
             conversation.Hide();
             var c = player.StartCoroutine(item.PickUpRoutine());
-            Context.levelUI.statusBar.ShowCollection(item).HideAndKill(1f);
+            Context.levelUI.statusBar.ShowCollection(item.item).HideAndKill(1f);
             yield return c;
         }
     }
@@ -62,7 +62,7 @@ internal class AddItemAction : BaseAction
         {
             conversation.Hide();
             DataHandler.AddCollected(item, amount);
-            Context.levelUI.statusBar.ShowCollection(item).HideAndKill(1f);
+            Context.levelUI.statusBar.ShowCollection(item.item).HideAndKill(1f);
         }
         yield break;
     }
