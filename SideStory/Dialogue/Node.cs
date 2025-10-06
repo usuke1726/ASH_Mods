@@ -9,13 +9,15 @@ internal class Node
     private readonly List<BaseAction> actions;
     private int index = -1;
     internal readonly int priority;
+    internal readonly Action? onConversationFinish;
     internal readonly Func<bool> condition;
     private readonly Dictionary<string, int> anchors = [];
-    public Node(List<BaseAction> actions, Func<bool>? condition = null, int priority = 0)
+    public Node(List<BaseAction> actions, Func<bool>? condition = null, int priority = 0, Action? onConversationFinish = null)
     {
         this.actions = actions;
         this.condition = condition ?? (() => true);
         this.priority = priority;
+        this.onConversationFinish = onConversationFinish;
         for (int i = 0; i < actions.Count; i++)
         {
             var anchor = actions[i].anchor;

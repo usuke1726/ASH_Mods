@@ -35,6 +35,10 @@ internal class DialogueController : MonoBehaviour
         node.Reset();
         currentNode = node;
         currentConversation = new TextBoxConversation(speaker);
+        if (node.onConversationFinish != null)
+        {
+            currentConversation.onConversationFinish += node.onConversationFinish;
+        }
         StartDialogue();
         return currentConversation;
     }
