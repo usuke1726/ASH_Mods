@@ -34,6 +34,10 @@ internal static class DataHandler
             Data.LoadOriginalItems();
             EnsureIconCreated(feather.icon);
             OnLocaleChanged();
+            if (State.IsActive && Find(Items.Coin, out var coin))
+            {
+                coin.item.showPrompt = CollectableItem.PickUpPrompt.Never;
+            }
         };
         helper.Events.Gameloop.ReturnedToTitle += (_, _) =>
         {
@@ -89,6 +93,7 @@ internal static class DataHandler
         var value = Math.Max(collected[item.id] + amount, 0);
         collected[item.id] = value;
         if (item.id == Items.GoldenFeather) OnGoldenFeathersChanged(value);
+        else if (item.id == Items.Coin) Context.levelUI.statusBar.ShowCollection(item.item).HideAndKill(3f);
         WriteToSaveData();
     }
     internal static void AddCollected(string id, int amount, bool equipAction = false)
