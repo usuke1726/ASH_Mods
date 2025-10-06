@@ -28,6 +28,7 @@ internal abstract class NodeEntryBase
     protected static NodeCompleteAction end(string? anchor = null) => new(anchor);
     protected static NodeCompleteAction complete(string? anchor = null) => new(anchor);
     protected static TagAction tag(string id, object value, string? anchor = null) => new(id, value, anchor);
+    protected static TransitionAction transition(Action action, string? anchor = null) => new(action, anchor);
     protected static WaitAction wait(float time, bool hideBox = true, string? anchor = null) => new(time, hideBox, anchor);
 #pragma warning restore IDE1006
 

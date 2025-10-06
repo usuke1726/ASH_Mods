@@ -11,6 +11,7 @@ public enum ActionType
     NodeComplete,
     If,
     Switch,
+    Transition,
     Wait,
 }
 
