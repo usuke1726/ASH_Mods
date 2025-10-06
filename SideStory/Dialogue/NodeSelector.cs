@@ -9,8 +9,14 @@ internal static class NodeSelector
     private static readonly Dictionary<Characters, List<Node>> nodes = [];
     private static readonly List<Node> nullNodes = [];
     private static readonly List<Node> globalNodes = [];
-    internal static Node? Find(Transform? speaker)
+    private static readonly Dictionary<string, List<Node>> nodesFromStartNode = [];
+    internal static Node? Find(DialogueInteractable? dialogue)
     {
+        if (dialogue != null && nodesFromStartNode.TryGetValue(dialogue.startNode, out var sNodes))
+        {
+            return sNodes.Find(n => n.condition());
+        }
+        var speaker = dialogue?.transform;
         var character = ModdingAPI.Character.TryGet(speaker!, out var ch) ? ch : null;
         Node? node = null;
         if (character != null)
@@ -50,10 +56,16 @@ internal static class NodeSelector
     {
         static int Compare(Node n1, Node n2) => n2.priority.CompareTo(n1.priority);
         foreach (var list in nodes.Values) list.Sort(Compare);
+        foreach (var list in nodesFromStartNode.Values) list.Sort(Compare);
         nullNodes.Sort(Compare);
         globalNodes.Sort(Compare);
     }
     internal static void RegisterNode(Node node) => globalNodes.Add(node);
+    internal static void RegisterNodeFromStartNode(string startNode, Node node)
+    {
+        nodesFromStartNode.TryAdd(startNode, []);
+        nodesFromStartNode[startNode].Add(node);
+    }
     internal static void RegisterNode(Characters? character, Node node)
     {
         if (character == null) nullNodes.Add(node);

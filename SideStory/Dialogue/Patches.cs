@@ -28,7 +28,7 @@ internal class DialogueInteractablePatch
                 player.body.AddForce(distance / magnitude * num, ForceMode.Impulse);
             }
         }
-        var conversation = DialogueController.instance.StartConversation(__instance.transform);
+        var conversation = DialogueController.instance.StartConversation(__instance);
         Traverse.Create(__instance).Field("conversation").SetValue(conversation);
         var eventHandler = eventField.GetValue(__instance) as MulticastDelegate;
         if (eventHandler != null)

@@ -3,9 +3,8 @@ using SideStory.Dialogue;
 
 namespace SideStory.NodeData;
 
-internal class Dummy : NodeEntry
+internal class Dummy : GlobalNodeEntry
 {
-    protected override bool IsGlobal => true;
     protected override Node[] Nodes => [
         new([
             line("node.dummy1", Player),

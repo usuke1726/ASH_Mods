@@ -23,9 +23,10 @@ internal class DialogueController : MonoBehaviour
 
     private TextBoxConversation currentConversation = null!;
     private Node currentNode = null!;
-    internal IConversation StartConversation(Transform? speaker)
+    internal IConversation StartConversation(DialogueInteractable? dialogue)
     {
-        var node = NodeSelector.Find(speaker);
+        var speaker = dialogue?.transform;
+        var node = NodeSelector.Find(dialogue);
         if (node == null)
         {
             Monitor.Log($"Empty node! speaker: {speaker?.name}", LL.Warning);

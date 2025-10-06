@@ -1,4 +1,5 @@
 ﻿
+using ModdingAPI;
 using SideStory.Dialogue;
 using SideStory.System;
 
@@ -6,6 +7,7 @@ namespace SideStory.NodeData;
 
 internal class NewGame : NodeEntry
 {
+    protected override Characters? Character => null;
     private static readonly string newGameNode = "NewGame.StartedFirstNode";
     protected override Node[] Nodes => [
         new([

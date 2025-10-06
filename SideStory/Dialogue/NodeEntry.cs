@@ -8,8 +8,7 @@ namespace SideStory;
 internal abstract class NodeEntry
 {
     protected abstract Dialogue.Node[] Nodes { get; }
-    protected virtual Characters? Character => null;
-    protected virtual bool IsGlobal => false;
+    protected abstract Characters? Character { get; }
 
     protected static string Player => Dialogue.Character.Player;
     protected static string Original => Dialogue.Character.Original;
@@ -32,25 +31,15 @@ internal abstract class NodeEntry
 #pragma warning restore IDE1006
 
     private bool setupDone = false;
-    internal void Setup()
+    internal virtual void Setup()
     {
         if (setupDone) return;
         setupDone = true;
         var nodes = Nodes;
-        if (IsGlobal)
+        var character = Character;
+        foreach (var node in nodes)
         {
-            foreach (var node in nodes)
-            {
-                Dialogue.NodeSelector.RegisterNode(node);
-            }
-        }
-        else
-        {
-            var character = Character;
-            foreach (var node in nodes)
-            {
-                Dialogue.NodeSelector.RegisterNode(character, node);
-            }
+            Dialogue.NodeSelector.RegisterNode(character, node);
         }
     }
 }
