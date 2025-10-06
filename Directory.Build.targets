@@ -14,7 +14,7 @@
             <CopyToOutputDirectory>Never</CopyToOutputDirectory>
             <Visible>false</Visible>
         </Content>
-        <Content Include="i18n\*.json">
+        <Content Include="i18n\*.json;i18n\*.jsonc">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>

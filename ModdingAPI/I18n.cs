@@ -1,5 +1,5 @@
 ﻿
-using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 namespace ModdingAPI;
@@ -113,8 +113,7 @@ internal class API_I18n : II18n
         if (file == null) return;
         try
         {
-            var contents = File.ReadAllText(file);
-            stringTables = JsonConvert.DeserializeObject<Dictionary<string, string>>(contents);
+            stringTables = ReadJsonFile(file);
             if (!usedDefaultFile)
             {
                 CompleteTable(defaultFile);
@@ -137,13 +136,20 @@ internal class API_I18n : II18n
             return null;
         }
         List<string> defaultFiles = [
+            Path.Combine(path, "default.jsonc"),
             Path.Combine(path, "default.json"),
+            Path.Combine(path, "en.jsonc"),
             Path.Combine(path, "en.json"),
         ];
-        defaultFile = defaultFiles.Find(p => File.Exists(p));
+        defaultFile = defaultFiles.Find(File.Exists);
         if (CurrentLanguage == SystemLanguage.Unknown) return null;
-        var file = Path.Combine(path, $"{languages[CurrentLanguage].Code}.json");
-        if (File.Exists(file)) return file;
+        var code = languages[CurrentLanguage].Code;
+        List<string> files = [
+            Path.Combine(path, $"{code}.jsonc"),
+            Path.Combine(path, $"{code}.json")
+        ];
+        var file = files.Find(File.Exists);
+        if (file != null) return file;
         usedDefaultFile = true;
         return defaultFile;
     }
@@ -152,8 +158,7 @@ internal class API_I18n : II18n
         if (defaultFile == null) return;
         try
         {
-            var contents = File.ReadAllText(defaultFile);
-            var tables = JsonConvert.DeserializeObject<Dictionary<string, string>>(contents);
+            var tables = ReadJsonFile(defaultFile);
             foreach (var pair in tables)
             {
                 stringTables.TryAdd(pair.Key, pair.Value);
@@ -163,6 +168,13 @@ internal class API_I18n : II18n
         {
             Monitor.SLog($"failed to load default i18n file {Path.GetFileName(defaultFile)} :\n\t{e}");
         }
+    }
+    private Dictionary<string, string> ReadJsonFile(string file)
+    {
+        var contents = File.ReadAllText(file);
+        return JObject
+            .Parse(contents, new() { CommentHandling = CommentHandling.Ignore })
+            .ToObject<Dictionary<string, string>>();
     }
 }
 
