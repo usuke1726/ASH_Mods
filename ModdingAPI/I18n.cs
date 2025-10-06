@@ -18,7 +18,7 @@ internal class API_I18n : II18n
         if (!stringTables.TryGetValue(tag, out s)) return false;
         try
         {
-            s = string.Format(s, [.. args]);
+            if (args.Any()) s = string.Format(s, [.. args]);
             return true;
         }
         catch { return false; }
