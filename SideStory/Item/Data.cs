@@ -17,5 +17,6 @@ internal static class Data
         ItemWrapperBase.TryLoad(Items.Fish);
         ItemWrapperBase.TryLoad(Items.Bucket);
     }
+    internal static int? FishingRodOnKeyboardState { get; private set; } = null;
 }
 

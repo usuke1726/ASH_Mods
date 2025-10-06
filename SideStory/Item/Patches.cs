@@ -1,8 +1,6 @@
 ﻿
 using HarmonyLib;
-using ModdingAPI;
 using QuickUnityTools.Input;
-using UnityEngine;
 
 namespace SideStory.Item;
 
@@ -56,11 +54,15 @@ internal class PauseMenuPatch
         if (!State.IsActive) return;
         if (item.name == fishingRodName)
         {
+            item.name = fishingRodEscapedName;
             if (GameUserInput.sharedActionSet.LastInputType.IsMouseOrKeyboard())
             {
-                item.description = I18n_.Localize("item.FishingRod.onMouseOrKeyboard.description");
+                var state = Data.FishingRodOnKeyboardState;
+                var s = state == null ? "" : $"{state}";
+                var text = I18n_.Localize($"item.FishingRod{s}.onMouseOrKeyboard.description");
+                if (string.IsNullOrEmpty(text)) item.name = fishingRodName;
+                else item.description = text;
             }
-            item.name = fishingRodEscapedName;
         }
     }
     [HarmonyPostfix()]
