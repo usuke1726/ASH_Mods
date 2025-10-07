@@ -12,6 +12,7 @@ internal class Setup
         done = true;
         Objects.Setup(helper);
         PlayerPosition.Setup(helper);
+        ChestController.Setup(helper);
     }
 }
 
