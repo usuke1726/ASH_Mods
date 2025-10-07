@@ -4,7 +4,7 @@ using ModdingAPI;
 
 namespace SideStory.Dialogue.Actions;
 
-internal class EmoteAction : BaseAction
+internal class EmoteAction : BaseAction, IInvokableInAction
 {
     internal readonly Emotes emotion;
     internal readonly string speaker;
@@ -13,7 +13,7 @@ internal class EmoteAction : BaseAction
         this.emotion = emotion;
         this.speaker = speaker;
     }
-    internal override IEnumerator Invoke(IConversation conversation)
+    public override IEnumerator Invoke(IConversation conversation)
     {
         if (Character.TryGetCharacter(conversation, speaker, out var character))
         {

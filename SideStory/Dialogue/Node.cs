@@ -43,7 +43,11 @@ internal class Node
             {
                 var anchor = flow.GetAnchor();
                 if (anchor == null) continue;
-                if (!anchors.TryGetValue(anchor, out var nextIdx)) return new NodeCompleteAction();
+                if (!anchors.TryGetValue(anchor, out var nextIdx))
+                {
+                    Monitor.Log($"anchor \"{anchor}\" not found!!", LL.Warning);
+                    return new NodeCompleteAction();
+                }
                 index = nextIdx - 1;
                 continue;
             }

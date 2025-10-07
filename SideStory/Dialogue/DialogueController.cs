@@ -54,7 +54,7 @@ internal class DialogueController : MonoBehaviour
         while (true)
         {
             var action = currentNode.NextAction();
-            if (action is NodeCompleteAction) break;
+            if (action is NodeCompleteAction end && end.End()) break;
             yield return action.Invoke(currentConversation);
             if (action is OptionAction option) LastSelected = option.selected;
         }

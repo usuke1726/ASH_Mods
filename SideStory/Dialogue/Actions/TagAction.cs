@@ -4,7 +4,7 @@ using SideStory.System;
 
 namespace SideStory.Dialogue.Actions;
 
-internal class TagAction : BaseAction
+internal class TagAction : BaseAction, IInvokableInAction
 {
     internal readonly string id;
     internal readonly object value;
@@ -13,7 +13,7 @@ internal class TagAction : BaseAction
         this.id = id;
         this.value = value;
     }
-    internal override IEnumerator Invoke(IConversation conversation)
+    public override IEnumerator Invoke(IConversation conversation)
     {
         if (value is Tuple<TagActions, object> valueWithType)
         {

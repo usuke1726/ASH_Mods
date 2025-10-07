@@ -4,6 +4,7 @@ public enum ActionType
 {
     Anchor,
     Line,
+    IndexesLines,
     Emote,
     Option,
     Command,
@@ -11,6 +12,7 @@ public enum ActionType
     NodeComplete,
     If,
     Switch,
+    Goto,
     Transition,
     Wait,
 }

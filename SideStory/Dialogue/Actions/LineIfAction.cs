@@ -3,20 +3,22 @@ using System.Collections;
 
 namespace SideStory.Dialogue.Actions;
 
-internal class LineAction : BaseAction, IInvokableInAction
+internal class LineIfAction : BaseAction, IInvokableInAction
 {
-    internal readonly string line;
-    internal readonly string speaker;
-    private readonly Func<bool>? condition;
-    public LineAction(string line, string speaker, Func<bool>? condition = null, string? anchor = null) : base(ActionType.Line, anchor)
+    private readonly Func<bool> condition;
+    private readonly string trueLine;
+    private readonly string falseLine;
+    private readonly string speaker;
+    public LineIfAction(Func<bool> condition, string trueLine, string falseLine, string speaker, string? anchor = null) : base(ActionType.Line, anchor)
     {
-        this.line = line;
-        this.speaker = speaker;
         this.condition = condition;
+        this.trueLine = trueLine;
+        this.falseLine = falseLine;
+        this.speaker = speaker;
     }
     public override IEnumerator Invoke(IConversation conversation)
     {
-        if (condition != null && !condition()) yield break;
+        var line = condition() ? trueLine : falseLine;
         var text = TextReplacer.ReplaceVariables(I18n_.Localize(line));
         if (Character.TryGetCharacter(conversation, speaker, out var character))
         {

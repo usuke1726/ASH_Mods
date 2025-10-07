@@ -11,7 +11,7 @@ internal class Debug : GlobalNodeEntry
 {
     private class Mes(string line) : BaseAction(ActionType.Line)
     {
-        internal override IEnumerator Invoke(IConversation conversation)
+        public override IEnumerator Invoke(IConversation conversation)
         {
             conversation.currentSpeaker = Context.player.transform;
             yield return conversation.ShowLine(line);

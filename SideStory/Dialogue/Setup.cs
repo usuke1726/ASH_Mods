@@ -7,6 +7,7 @@ namespace SideStory.Dialogue;
 internal class Setup
 {
     private static bool done = false;
+    private static readonly List<NodeEntryBase> entries = [];
     public Setup(IModHelper helper)
     {
         if (done) return;
@@ -14,6 +15,10 @@ internal class Setup
         DialogueController.Setup(helper);
         AddNodes();
         NodeSelector.OnSetupDone();
+        helper.Events.Gameloop.GameStarted += (_, _) =>
+        {
+            foreach (var entry in entries) entry.OnGameStarted();
+        };
     }
     private void AddNodes()
     {
@@ -26,7 +31,11 @@ internal class Setup
             if (constructor == null) continue;
             Debug($"found node {type.Name}");
             var entry = constructor.Invoke([]) as NodeEntryBase;
-            entry?.Setup();
+            if (entry != null)
+            {
+                entries.Add(entry);
+                entry.Setup();
+            }
         }
     }
 }

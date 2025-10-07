@@ -2,6 +2,7 @@
 using System.Collections;
 using ModdingAPI;
 using SideStory.Item;
+using UnityEngine;
 
 namespace SideStory.Dialogue.Actions;
 
@@ -20,7 +21,7 @@ internal class CommandAction : BaseAction
         this.coroutine = coroutine;
         this.hideBox = hideBox;
     }
-    internal override IEnumerator Invoke(IConversation conversation)
+    public override IEnumerator Invoke(IConversation conversation)
     {
         if (hideBox) conversation.Hide();
         if (coroutine != null) yield return coroutine();
@@ -28,43 +29,48 @@ internal class CommandAction : BaseAction
     }
 }
 
-internal class GetItemAction : BaseAction
+internal class GetItemAction : BaseAction, IInvokableInAction
 {
-    internal readonly string itemId;
-    public GetItemAction(string itemId, string? anchor = null) : base(ActionType.Command, anchor)
+    internal readonly Func<string> getItemId;
+    public GetItemAction(Func<string> getItemId, string? anchor = null) : base(ActionType.Command, anchor)
     {
-        this.itemId = itemId;
+        this.getItemId = getItemId;
     }
-    internal override IEnumerator Invoke(IConversation conversation)
+    public override IEnumerator Invoke(IConversation conversation)
     {
         if (!Context.TryToGetPlayer(out var player)) yield break;
-        if (DataHandler.Find(itemId, out var item))
+        if (DataHandler.Find(getItemId(), out var item))
         {
             conversation.Hide();
+            var showsPrompt = item.item.showPrompt == CollectableItem.PickUpPrompt.Always || (item.item.showPrompt == CollectableItem.PickUpPrompt.OnlyOnce && !item.item.hasShownPrompt);
             var c = player.StartCoroutine(item.PickUpRoutine());
             Context.levelUI.statusBar.ShowCollection(item.item).HideAndKill(1f);
             yield return c;
+            if (!showsPrompt)
+            {
+                yield return new WaitForSeconds(1f);
+            }
         }
     }
 }
-internal class AddItemAction : BaseAction
+internal class AddItemAction : BaseAction, IInvokableInAction
 {
-    internal readonly string itemId;
-    internal readonly int amount;
-    public AddItemAction(string itemId, int amount, string? anchor = null) : base(ActionType.Command, anchor)
+    internal readonly Func<string> getItemId;
+    internal readonly Func<int> getAmount;
+    public AddItemAction(Func<string> getItemId, Func<int> getAmount, string? anchor = null) : base(ActionType.Command, anchor)
     {
-        this.itemId = itemId;
-        this.amount = amount;
+        this.getItemId = getItemId;
+        this.getAmount = getAmount;
     }
-    internal override IEnumerator Invoke(IConversation conversation)
+    public override IEnumerator Invoke(IConversation conversation)
     {
-        if (DataHandler.Find(itemId, out var item))
+        if (DataHandler.Find(getItemId(), out var item))
         {
             conversation.Hide();
-            DataHandler.AddCollected(item, amount);
+            DataHandler.AddCollected(item, getAmount());
             Context.levelUI.statusBar.ShowCollection(item.item).HideAndKill(1f);
+            yield return new WaitForSeconds(1f);
         }
-        yield break;
     }
 }
 

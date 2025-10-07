@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SideStory.Dialogue.Actions;
 
-internal class WaitAction : BaseAction
+internal class WaitAction : BaseAction, IInvokableInAction
 {
     internal readonly float time;
     internal readonly bool hideBox;
@@ -13,7 +13,7 @@ internal class WaitAction : BaseAction
         this.time = time;
         this.hideBox = hideBox;
     }
-    internal override IEnumerator Invoke(IConversation conversation)
+    public override IEnumerator Invoke(IConversation conversation)
     {
         if (hideBox) conversation.Hide();
         yield return new WaitForSeconds(time);

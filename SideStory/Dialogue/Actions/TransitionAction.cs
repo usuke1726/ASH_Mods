@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace SideStory.Dialogue.Actions;
 
-internal class TransitionAction : BaseAction
+internal class TransitionAction : BaseAction, IInvokableInAction
 {
     private readonly Action action;
     public TransitionAction(Action action, string? anchor = null) : base(ActionType.Transition, anchor)
     {
         this.action = action;
     }
-    internal override IEnumerator Invoke(IConversation conversation)
+    public override IEnumerator Invoke(IConversation conversation)
     {
         var transitionDone = false;
         Context.gameServiceLocator.transitionAnimation.Begin(action, () => transitionDone = true);

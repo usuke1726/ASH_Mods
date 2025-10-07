@@ -12,7 +12,7 @@ internal class OptionAction : BaseAction
     {
         this.options = options;
     }
-    internal override IEnumerator Invoke(IConversation conversation)
+    public override IEnumerator Invoke(IConversation conversation)
     {
         conversation.currentSpeaker = Context.player.transform;
         yield return conversation.ShowOptions([.. options.Select(o => I18n_.Localize(o))], idx => selected = idx);
