@@ -1,6 +1,7 @@
 ﻿
 using System.Collections;
 using ModdingAPI;
+using QuickUnityTools.Input;
 using SideStory.Dialogue.Actions;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ internal class DialogueController : MonoBehaviour
 {
     internal static DialogueController instance = null!;
     private static bool characterObjectSetupDone = false;
+    private static Action? forceKillCurrentDialogue = null;
     internal static void Setup(IModHelper helper)
     {
         helper.Events.Gameloop.GameStarted += (_, _) =>
@@ -39,6 +41,7 @@ internal class DialogueController : MonoBehaviour
         {
             currentConversation.onConversationFinish += node.onConversationFinish;
         }
+        if (NodeData.NewGame.ShouldNewGameNodeStart()) OnNewGameNode();
         StartDialogue();
         return currentConversation;
     }
@@ -51,6 +54,11 @@ internal class DialogueController : MonoBehaviour
     private IEnumerator MainCoroutine()
     {
         yield return new WaitUntil(() => characterObjectSetupDone);
+        forceKillCurrentDialogue = () =>
+        {
+            StopAllCoroutines();
+            currentConversation.Kill();
+        };
         while (true)
         {
             var action = currentNode.NextAction();
@@ -58,7 +66,44 @@ internal class DialogueController : MonoBehaviour
             yield return action.Invoke(currentConversation);
             if (action is OptionAction option) LastSelected = option.selected;
         }
+        forceKillCurrentDialogue = null;
         currentConversation.Kill();
+    }
+
+    private void OnNewGameNode()
+    {
+        var obj = new GameObject("SideStoryDialogueControllerInputWatcher");
+        obj.AddComponent<InputWatcher>();
+        currentConversation.onConversationFinish += () => GameObject.Destroy(obj);
+    }
+    private class InputWatcher : MonoBehaviour
+    {
+        private void Update()
+        {
+            if (Activated())
+            {
+                Debug($"killing newGameNode");
+                forceKillCurrentDialogue?.Invoke();
+            }
+        }
+        private bool Activated()
+        {
+            var f1 = (
+                UnityEngine.Input.GetKey(KeyCode.F1) ||
+                UnityEngine.Input.GetKey(KeyCode.Alpha1)
+            ) && UnityEngine.Input.GetKey(KeyCode.Backspace)
+                && UnityEngine.Input.GetKeyDown(KeyCode.Escape);
+            if (f1) return true;
+            var control = GameUserInput.sharedActionSet;
+            var f2 = (
+                control.button1.IsPressed // JumpButton
+                && control.button2.IsPressed // UseItemButton
+                && control.button3.IsPressed // RunButton
+            //&& control.button4.IsPressed // MenuButton
+            );
+            if (f2) return true;
+            return false;
+        }
     }
 }
 

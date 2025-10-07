@@ -22,8 +22,12 @@ internal class NewGame : NodeEntry
             lines(14, 15, i => $"node.newgame{i:00}", Player),
             end(),
         ],
-            condition: () => State.IsNewGame && !STags.GetBool(newGameNode),
+            condition: ShouldNewGameNodeStart,
             priority: int.MaxValue),
     ];
+    internal static bool ShouldNewGameNodeStart()
+    {
+        return State.IsNewGame && !STags.GetBool(newGameNode);
+    }
 }
 
