@@ -39,7 +39,7 @@ internal class ExtendedItem : ItemWrapperBase
     private static bool[,] ToIconData(string iconData)
     {
         static bool IsTruthy(char c) => c != '0' && c != '.';
-        var lines = iconData.Trim().Split("\n");
+        var lines = iconData.Replace("\t", "").Replace(" ", "").Split("\n").Where(s => s.Trim().Length > 0).ToArray();
         var ret = new bool[12, 12];
         for (int i = 0; i < 12; i++)
         {
