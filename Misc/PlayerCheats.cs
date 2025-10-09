@@ -35,6 +35,7 @@ internal static class SuperJump
     {
         if (!enabled) return;
         if (!Context.TryToGetPlayer(out var player)) return;
+        if (!Context.CanPlayerMove) return;
         float num = 140f;
         var tr = Traverse.Create(player);
         var flag = (player.groundHit.HasValue || tr.Field("justLeftGround").GetValue<bool>() || tr.Field("isSwimming").GetValue<bool>()) && !(tr.Field("jumpOnCooldown").GetValue<bool>());
