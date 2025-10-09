@@ -27,6 +27,7 @@ internal abstract class NodeEntryBase
     protected static LineAction line(string line, string speaker, Func<bool>? condition = null, string? anchor = null) => new(line, speaker, condition, anchor);
     protected static LineIfAction lineif(Func<bool> condition, string trueLine, string falseLine, string speaker, string? anchor = null) => new(condition, trueLine, falseLine, speaker, anchor);
     protected static RangedLinesAction lines(int minInclusive, int maxInclusive, Func<int, string> getI18nKey, string speaker, string? anchor = null) => new(minInclusive, maxInclusive, getI18nKey, speaker, anchor);
+    protected static RangedLinesAction lines(int minInclusive, int maxInclusive, Func<int, string> getI18nKey, Func<int, string> getSpeaker, string? anchor = null) => new(minInclusive, maxInclusive, getI18nKey, getSpeaker, anchor);
     protected static IndexedLinesAction lines(Func<int, string> getI18nKey, string speaker, string? anchor = null) => new(getI18nKey, speaker, anchor);
     protected static IndexedLinesAction lines(Func<int, string> getI18nKey, Func<int, string> getSpeaker, string? anchor = null) => new(getI18nKey, getSpeaker, anchor);
     protected static OptionAction option(string[] options, string? anchor = null) => new(options, anchor);
