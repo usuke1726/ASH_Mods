@@ -21,7 +21,7 @@ internal class EmoteAction : BaseAction, IInvokableInAction
             {
                 case Emotes.Normal:
                     if (character.character == Characters.Claire) SideStory.Character.Core.EmoteHalfEyes();
-                    else character.ClearEmotion();
+                    character.ClearEmotion();
                     break;
                 case Emotes.PlayerWideEyes:
                     if (character.character == Characters.Claire) SideStory.Character.Core.EmoteNormalEyes();
