@@ -34,6 +34,7 @@ internal static class DataHandler
             Data.LoadOriginalItems();
             EnsureIconCreated(feather.icon);
             OnLocaleChanged();
+            UpdateItemStates();
             if (State.IsActive && Find(Items.Coin, out var coin))
             {
                 coin.item.showPrompt = CollectableItem.PickUpPrompt.Never;
