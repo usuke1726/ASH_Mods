@@ -1,4 +1,5 @@
 ﻿
+using HarmonyLib;
 using ModdingAPI;
 
 namespace Sidequel.System;
@@ -20,12 +21,23 @@ internal class SaveData
             BeforeSaving();
         };
     }
+    public static void OnVanillaNewGameStarted()
+    {
+        EnsureDataLoaded();
+        var saveSlot = GameSettings.saveSlot;
+        saveDataExists[saveSlot] = false;
+        Save();
+    }
     public static void BeforeSaving()
     {
         if (!State.IsActive) return;
         EnsureDataLoaded();
         var saveSlot = GameSettings.saveSlot;
         saveDataExists[saveSlot] = true;
+        Save();
+    }
+    private static void Save()
+    {
         var data = Serialize();
         Debug($"saving saveData: {data}");
         PlayerPrefsAdapter.SetString(SaveDataExistsKey, data);
@@ -56,6 +68,17 @@ internal class SaveData
             ret[key] = a[0] != "0";
         }
         return ret;
+    }
+}
+
+[HarmonyPatch(typeof(TitleScreen))]
+internal class BeginNewGameWatcherPatch
+{
+    [HarmonyPrefix()]
+    [HarmonyPatch("BeginLoadingNewGame")]
+    internal static void BeginLoadingNewGame()
+    {
+        SaveData.OnVanillaNewGameStarted();
     }
 }
 
