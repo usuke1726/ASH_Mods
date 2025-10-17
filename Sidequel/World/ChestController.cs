@@ -28,6 +28,7 @@ internal class ChestController
     }
     private static void OnGameStarted()
     {
+        if (!State.IsActive) return;
         items.Clear();
         var buriedChestIDs = GameObject.FindObjectsOfType<BuriedChest>().Select(c => c.chest.GetComponent<GameObjectID>().id).ToHashSet();
         var chests = GameObject.FindObjectsOfType<Chest>().Select(chest =>
