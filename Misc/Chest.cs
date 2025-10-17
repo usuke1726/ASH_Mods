@@ -9,15 +9,13 @@ namespace Misc;
 [HarmonyPatch(typeof(Chest))]
 internal class ChestPatch
 {
-    public static bool EnableInfinityChest = true;
-    public static bool EnableChestBoostReproduction = true;
     private static PropertyInfo setOpened = null!;
 
     [HarmonyPrefix()]
     [HarmonyPatch("Interact")]
     public static bool Interact(Chest __instance)
     {
-        if (!EnableChestBoostReproduction) return true;
+        if (!ModConfig.config.EnableChestBoostReproduction) return true;
         var opened = Traverse.Create(__instance).Field("_opened").GetValue<bool>();
         if (opened) return false;
         __instance.openSound.Play();
@@ -55,7 +53,7 @@ internal class ChestPatch
     [HarmonyPatch("Interact")]
     public static void CloseChest(Chest __instance)
     {
-        if (!EnableInfinityChest) return;
+        if (!ModConfig.config.EnableInfinityChest) return;
         setOpened ??= typeof(Chest).GetProperty("opened", BindingFlags.NonPublic | BindingFlags.SetProperty | BindingFlags.Instance);
         __instance.RegisterTimer(1.2f, delegate
         {

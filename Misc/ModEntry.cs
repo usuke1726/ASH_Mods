@@ -41,6 +41,7 @@ internal class ModEntry : Mod
     {
         instance = this;
         KeyBindingsData.SetDefault(defaultKeybinds);
+        ModConfig.Setup(this);
         TurboClaire.Setup(helper);
         SuperJump.Setup(helper);
         Util.Setup(helper);

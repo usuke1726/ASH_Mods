@@ -9,22 +9,19 @@ namespace Misc;
 [HarmonyPatch(typeof(Player))]
 internal class InfinityStamina
 {
-    public static readonly bool EnableInfiniteFeather = true;
     [HarmonyPrefix()]
     [HarmonyPatch("UseFeather")]
-    public static bool UseFeather() => !EnableInfiniteFeather;
+    public static bool UseFeather() => !ModConfig.config.EnableInfinityStamina;
 
     [HarmonyPrefix()]
     [HarmonyPatch("DrainFeatherStamina")]
-    public static bool DrainFeatherStamina(float amount) => !EnableInfiniteFeather;
+    public static bool DrainFeatherStamina(float amount) => !ModConfig.config.EnableInfinityStamina;
 }
 
 internal static class SuperJump
 {
-    internal static readonly bool enabled = true;
     internal static void Setup(IModHelper helper)
     {
-        if (!enabled) return;
         KeyBind.RegisterKeyBind(
             helper.KeyBindingsData,
             [KeybindKey.SuperJump_Keyboard, KeybindKey.SuperJump_Pad],
@@ -33,7 +30,7 @@ internal static class SuperJump
     }
     internal static void Jump()
     {
-        if (!enabled) return;
+        if (!ModConfig.config.EnableSuperJump) return;
         if (!Context.TryToGetPlayer(out var player)) return;
         if (!Context.CanPlayerMove) return;
         float num = 140f;
@@ -60,12 +57,15 @@ internal static class SuperJump
 
 internal static class TurboClaire
 {
-    internal static readonly bool enabled = false;
-
-    internal static void Setup(IModHelper helper)
+    private static IModHelper helper = null!;
+    internal static void Setup(IModHelper _helper)
     {
-        if (!enabled) return;
-        helper.Events.Gameloop.PlayerUpdated += (_, _) => Update();
+        helper = _helper;
+    }
+    internal static void OnEnabledChanged()
+    {
+        helper.Events.Gameloop.PlayerUpdated -= Update;
+        if (ModConfig.config.EnableTurbo) helper.Events.Gameloop.PlayerUpdated += Update;
     }
 
     private static float? defaultMaxSpeed = null;
@@ -77,7 +77,7 @@ internal static class TurboClaire
     private static int count = -1;
     private static readonly float maxSpeed1 = 150;
     private static readonly float maxSpeed2 = 1000;
-    private static void Update()
+    private static void Update(object sender, EventArgs arg)
     {
         var player = Context.player;
         animator ??= Traverse.Create(player.ikAnimator).Field("animator").GetValue<Animator>();
