@@ -15,7 +15,7 @@ internal class OptionAction : BaseAction
     public override IEnumerator Invoke(IConversation conversation)
     {
         conversation.currentSpeaker = Context.player.transform;
-        yield return conversation.ShowOptions([.. options.Select(o => I18n_.Localize(o))], idx => selected = idx);
+        yield return conversation.ShowOptions([.. options.Select(I18n)], idx => selected = idx);
     }
 }
 

@@ -19,7 +19,7 @@ internal class LineIfAction : BaseAction, IInvokableInAction
     public override IEnumerator Invoke(IConversation conversation)
     {
         var line = condition() ? trueLine : falseLine;
-        var text = TextReplacer.ReplaceVariables(I18n_.Localize(line));
+        var text = TextReplacer.ReplaceVariables(I18n(line));
         if (Character.TryGetCharacter(conversation, speaker, out var character))
         {
             conversation.currentSpeaker = character.gameObject.transform;

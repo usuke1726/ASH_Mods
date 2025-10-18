@@ -26,7 +26,7 @@ internal class Chest : NodeEntry
         isItemIn = true;
         checkedIds.Clear();
     }
-    protected override Node[] Nodes => [new([
+    protected override Node[] Nodes => [new("chest", [
         command(() => {
             hasChestInteractedJustNow = false;
             didLastChestHaveItem = isItemIn;
@@ -36,20 +36,20 @@ internal class Chest : NodeEntry
             checkedIds.Add(chestId);
         }),
         @if(() => hasAlreadyChecked, null, "firstCheck"),
-        line("node.chest.alreadyChecked", Player),
+        line("alreadyChecked", Player),
         command(() => isItemIn = didLastChestHaveItem),
         end(),
         @if(() => isItemIn, "isItemIn", null, anchor: "firstCheck"),
-        lineif(() => didLastChestHaveItem, "node.chest.empty", "node.chest.empty2", Player),
+        lineif(() => didLastChestHaveItem, "empty", "empty2", Player),
         end(),
         @if(() => UnityEngine.Random.value > 0.9f, "v2", null, anchor: "isItemIn"),
-        line("node.chest.item1-1", Player),
-        line("node.chest.item1-2", Player),
+        line("item1-1", Player),
+        line("item1-2", Player),
         @goto("getItem"),
         anchor("v2"),
-        lineif(() => didLastChestHaveItem, "node.chest.empty", "node.chest.empty2", Player),
+        lineif(() => didLastChestHaveItem, "empty", "empty2", Player),
         wait(0.8f),
-        line("node.chest.item2-1", Player),
+        line("item2-1", Player),
         anchor("getItem"),
         @if(
             () => itemInChest.id == Items.Coin,
@@ -57,7 +57,7 @@ internal class Chest : NodeEntry
             item(() => itemInChest.id)
         ),
         command(() => linePrefixOnGotItem = GetLinePrefixOnGotItem()),
-        lines(i => $"node.chest.onGotItem.{linePrefixOnGotItem}{i}", Player),
+        lines(i => $"onGotItem.{linePrefixOnGotItem}{i}", Player),
     ],
         condition: () => hasChestInteractedJustNow,
         priority: int.MaxValue

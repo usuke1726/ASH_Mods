@@ -46,7 +46,7 @@ internal class RangedLinesAction : BaseAction, IInvokableInAction
                     conversation.currentSpeaker = ch.gameObject.transform;
                 }
             }
-            var s = I18n_.Localize(getI18nKey(index));
+            var s = I18n(getI18nKey(index));
             if (string.IsNullOrEmpty(s)) break;
             var text = TextReplacer.ReplaceVariables(s);
             if (!string.IsNullOrWhiteSpace(text))

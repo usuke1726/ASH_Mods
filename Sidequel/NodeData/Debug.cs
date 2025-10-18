@@ -18,7 +18,7 @@ internal class Debug : GlobalNodeEntry
         }
     }
     protected override Node[] Nodes => [
-        new([new Mes("THIS MESSAGE\nSHOULD NOT APPEAR!")], priority: int.MinValue),
+        new("_debug", [new Mes("THIS MESSAGE\nSHOULD NOT APPEAR!")], priority: int.MinValue),
     ];
 }
 #endif
