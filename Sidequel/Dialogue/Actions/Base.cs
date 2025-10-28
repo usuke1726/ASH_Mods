@@ -7,15 +7,14 @@ internal abstract class BaseAction(ActionType type, string? anchor = null)
 {
     internal readonly string? anchor = anchor;
     internal readonly ActionType type = type;
-    protected static string CurrentNodeId { get; private set; } = "";
+    protected static string? CurrentNodeId { get; private set; } = "";
+    private static string i18nKeyPrefix = "";
     internal static void OnNodeStarted(Node node)
     {
-        CurrentNodeId = node.id;
+        var id = CurrentNodeId = node.id;
+        i18nKeyPrefix = id == null ? Const.NodeI18nPrefix : $"{Const.NodeI18nPrefix}.{id}";
     }
-    protected static string I18n(string key)
-    {
-        return I18n_.Localize($"{Const.NodeI18nPrefix}.{CurrentNodeId}.{key}");
-    }
+    protected static string I18n(string key) => I18n_.Localize($"{i18nKeyPrefix}.{key}");
     public virtual IEnumerator Invoke(IConversation conversation) { yield break; }
 }
 internal abstract class FlowBase(ActionType type, string? anchor = null) : BaseAction(type, anchor)

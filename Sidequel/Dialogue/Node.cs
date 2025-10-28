@@ -8,7 +8,7 @@ internal class Node
     protected static int LastSelected { get => DialogueController.instance.LastSelected; }
     private readonly List<BaseAction> actions;
     private int index = -1;
-    internal readonly string id;
+    internal readonly string? id;
     internal readonly int priority;
     internal readonly Action? onConversationFinish;
     internal readonly Func<bool> condition;
@@ -16,7 +16,7 @@ internal class Node
 #if DEBUG
     private static readonly HashSet<string> ids = [];
 #endif
-    public Node(string id, List<BaseAction> actions, Func<bool>? condition = null, int priority = 0, Action? onConversationFinish = null)
+    public Node(string? id, List<BaseAction> actions, Func<bool>? condition = null, int priority = 0, Action? onConversationFinish = null)
     {
         this.id = id;
         this.actions = actions;
@@ -33,11 +33,14 @@ internal class Node
             }
         }
 #if DEBUG
-        if (ids.Contains(id))
+        if (id != null)
         {
-            Monitor.Log($"node id \"{id}\" has been already registered!", LL.Warning);
+            if (ids.Contains(id))
+            {
+                Monitor.Log($"node id \"{id}\" has been already registered!", LL.Warning);
+            }
+            ids.Add(id);
         }
-        ids.Add(id);
 #endif
     }
     internal void Reset()
