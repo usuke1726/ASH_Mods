@@ -1,0 +1,45 @@
+<Project>
+    <Import Project="$(DirectoryBuildPropsPath)\..\Directory.Build.targets"/>
+
+    <ItemGroup>
+        <I18nJa Include="i18n\ja\*.json;i18n\ja\*.jsonc" />
+    </ItemGroup>
+    <Target Name="MergeI18nJsonJa" AfterTargets="BeforeBuild" Inputs="@(I18nJa)" Outputs="$(SolutionDir)i18n\ja.json">
+        <MergeI18nFiles I18nPath="$(SolutionDir)i18n" Lang="ja" />
+    </Target>
+
+
+    <UsingTask TaskName="MergeI18nFiles"
+        TaskFactory="CodeTaskFactory"
+        AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+        <ParameterGroup>
+            <I18nPath ParameterType="System.String" Required="true" />
+            <Lang ParameterType="System.String" Required="true" />
+        </ParameterGroup>
+        <Task>
+            <Code Type="Fragment" Language="cs">
+<![CDATA[
+    var path = string.Format("{0}\\{1}", I18nPath, Lang);
+    var output = string.Format("{0}\\{1}.json", I18nPath, Lang);
+    var files = Enumerable.Concat(
+        Directory.EnumerateFiles(path, "*.json"),
+        Directory.EnumerateFiles(path, "*.jsonc")
+    );
+    Log.LogMessage(MessageImportance.High, "=== Merging {0} json files\n\ton \"{1}\"\n\tto \"{2}\"", files.Count(), path, output);
+    var indent = new string(' ', 4);
+    var contents = "{\n" + string.Join(",\n", files.Select(file =>
+        {
+            return string.Join("\n", File.ReadAllLines(file)
+                .Select(line => line.Trim())
+                .Where(line => line != "" && line != "{" && line != "}" && !line.StartsWith("//"))
+                .Select(line => indent + line)
+            );
+        })
+    ) + "\n}";
+    File.WriteAllLines(output, contents.Split('\n'));
+    Log.LogMessage(MessageImportance.High, "merge done");
+]]>
+            </Code>
+        </Task>
+    </UsingTask>
+</Project>
