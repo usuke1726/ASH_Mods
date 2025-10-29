@@ -25,6 +25,7 @@ internal class DialogueController : MonoBehaviour
 
     private TextBoxConversation currentConversation = null!;
     private Node currentNode = null!;
+    private Node? nextNode = null;
     internal IConversation StartConversation(DialogueInteractable? dialogue)
     {
         var speaker = dialogue?.transform;
@@ -46,6 +47,11 @@ internal class DialogueController : MonoBehaviour
         StartDialogue();
         return currentConversation;
     }
+    internal void SetNext(string nodeId, Characters? character)
+    {
+        if (currentConversation == null || !currentConversation.isAlive) return;
+        nextNode = NodeSelector.Find(nodeId, character);
+    }
     private void StartDialogue()
     {
         StopAllCoroutines();
@@ -63,7 +69,21 @@ internal class DialogueController : MonoBehaviour
         while (true)
         {
             var action = currentNode.NextAction();
-            if (action is NodeCompleteAction end && end.End()) break;
+            if (action is NodeCompleteAction end && end.End())
+            {
+                if (nextNode == null) break;
+                if (currentNode.onConversationFinish != null)
+                {
+                    currentConversation.onConversationFinish -= currentNode.onConversationFinish;
+                }
+                currentNode = nextNode;
+                BaseAction.OnNodeStarted(currentNode);
+                if (currentNode.onConversationFinish != null)
+                {
+                    currentConversation.onConversationFinish += currentNode.onConversationFinish;
+                }
+                continue;
+            }
             yield return action.Invoke(currentConversation);
             if (action is OptionAction option) LastSelected = option.selected;
         }

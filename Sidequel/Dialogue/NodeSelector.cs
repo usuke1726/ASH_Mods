@@ -30,6 +30,11 @@ internal static class NodeSelector
         }
         return node ?? globalNodes.Find(n => n.condition());
     }
+    internal static Node? Find(string id, Characters? character)
+    {
+        var list = character == null ? nullNodes : nodes[(Characters)character];
+        return list.Find(n => n.id == id) ?? globalNodes.Find(n => n.id == id);
+    }
     private static readonly HashSet<string> vanillaDialogueNodes = [
         "ToMainIslandStart",
         "ToSecretIslandStart",
