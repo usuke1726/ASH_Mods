@@ -24,6 +24,7 @@ internal partial class ModEntry : Mod
     {
         instance = this;
         State.Setup(helper);
+        Cont.Setup(helper);
         new Character.Setup(helper);
         new Item.Setup(helper);
         new Dialogue.Setup(helper);

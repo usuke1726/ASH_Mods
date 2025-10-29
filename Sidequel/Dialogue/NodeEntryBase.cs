@@ -36,6 +36,7 @@ internal abstract class NodeEntryBase
     protected static TagAction tag(string id, object value, string? anchor = null) => new(id, value, anchor);
     protected static TransitionAction transition(Action action, string? anchor = null) => new(action, anchor);
     protected static WaitAction wait(float time, bool hideBox = true, string? anchor = null) => new(time, hideBox, anchor);
+    protected static UpdateContAction cont(int value, string? anchor = null) => new(value, anchor);
 #pragma warning restore IDE1006
 
     sealed public override string ToString() => base.ToString();

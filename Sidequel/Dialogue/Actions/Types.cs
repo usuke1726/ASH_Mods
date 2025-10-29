@@ -15,5 +15,6 @@ public enum ActionType
     Goto,
     Transition,
     Wait,
+    Cont,
 }
 
