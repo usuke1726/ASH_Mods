@@ -17,7 +17,10 @@ internal class ChestController
     internal static bool TryGet(string id, out ItemWrapperBase item)
     {
         item = null!;
-        if (!items.TryGetValue(id, out var itemId)) return false;
+        if (!items.Any()) return false;
+        int len = items.First().Key.Length;
+        if (id.Length < len) return false;
+        if (!items.TryGetValue(id[0..len], out var itemId)) return false;
         return DataHandler.Find(itemId, out item);
     }
     internal static void OnChestInteracted(string id)
@@ -51,14 +54,24 @@ internal class ChestController
             }
             ids.Add(id.id);
         }
-        if (State.IsNewGame) SetInitialItemsData(ids);
+        if (State.IsNewGame) SetInitialItemsData(ShortenIds(ids));
         else LoadFromTags();
+    }
+    private static HashSet<string> ShortenIds(HashSet<string> ids)
+    {
+        int len = ids.Count;
+        for (int i = 3; i < 32; i++)
+        {
+            HashSet<string> newIds = [.. ids.Select(s => s[0..i])];
+            if (newIds.Count == len) return newIds;
+        }
+        return ids;
     }
     private static void SetInitialItemsData(HashSet<string> ids)
     {
 #if DEBUG
         int num = Math.Max(0, ids.Count - 15);
-        Monitor.Log($"{num} chests are containing item!!", LL.Warning);
+        Monitor.Log($"{num}/{ids.Count} chests are containing item!!", LL.Warning);
         List<string> itemNames = [
             Items.GoldenFeather,
             Items.Stick,
@@ -76,6 +89,9 @@ internal class ChestController
     private static void WriteToTags()
     {
         var data = string.Join("\n", items.Select(pair => $"{pair.Key}:{pair.Value}"));
+#if DEBUG
+        Monitor.Log($"Items in chests: {string.Join(";", items.Select(pair => $"{pair.Key}:{pair.Value}"))}", LL.Debug, true);
+#endif
         STags.SetString(chestItemsTag, data);
     }
     private static void LoadFromTags()
