@@ -73,4 +73,35 @@ internal class AddItemAction : BaseAction, IInvokableInAction
         }
     }
 }
+internal class AddMultipleItemsAction : BaseAction, IInvokableInAction
+{
+    internal readonly Func<string[]> getItemIds;
+    internal readonly Func<int[]> getAmounts;
+    public AddMultipleItemsAction(Func<string[]> getItemIds, Func<int[]> getAmounts, string? anchor = null) : base(ActionType.Command, anchor)
+    {
+        this.getItemIds = getItemIds;
+        this.getAmounts = getAmounts;
+    }
+    public override IEnumerator Invoke(IConversation conversation)
+    {
+        var items = getItemIds();
+        var amounts = getAmounts();
+        List<Tuple<ItemWrapperBase, int>> validData = [];
+        var num = Math.Min(items.Length, amounts.Length);
+        for (int i = 0; i < num; i++)
+        {
+            if (DataHandler.Find(items[i], out var item)) validData.Add(new(item, amounts[i]));
+        }
+        if (validData.Any())
+        {
+            conversation.Hide();
+            foreach (var data in validData)
+            {
+                DataHandler.AddCollected(data.Item1, data.Item2);
+                Context.levelUI.statusBar.ShowCollection(data.Item1.item).HideAndKill(1f);
+            }
+            yield return new WaitForSeconds(1f);
+        }
+    }
+}
 

@@ -19,6 +19,7 @@ internal abstract class NodeEntryBase
     protected static CommandAction command(Func<IEnumerator> coroutine, bool hideBox = true, string? anchor = null) => new(coroutine, hideBox, anchor);
     protected static GetItemAction item(Func<string> getItemId, string? anchor = null) => new(getItemId, anchor);
     protected static AddItemAction item(Func<string> getItemId, Func<int> getAmount, string? anchor = null) => new(getItemId, getAmount, anchor);
+    protected static AddMultipleItemsAction item(Func<string[]> getItemIds, Func<int[]> getAmounts, string? anchor = null) => new(getItemIds, getAmounts, anchor);
     protected static EmoteAction emote(Emotes emotion, string speaker, string? anchor = null) => new(emotion, speaker, anchor);
     protected static GotoAction @goto(string target, string? anchor = null) => new(target, anchor);
     protected static IfAction @if(Func<bool> condition, string? trueAnchor, string? falseAnchor, string? anchor = null) => new(condition, trueAnchor, falseAnchor, anchor);
