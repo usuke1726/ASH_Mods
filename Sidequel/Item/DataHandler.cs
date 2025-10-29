@@ -115,10 +115,9 @@ internal static class DataHandler
     }
 
 
-    private static readonly string dataTag = $"ModRegistry_Quicker1726_Sidequel_Items";
     private static void WriteToSaveData()
     {
-        Context.globalData.gameData.tags.SetString(dataTag, Serialize());
+        Context.globalData.gameData.tags.SetString(Const.BuiltinGameData.ItemsSaveDataTag, Serialize());
     }
     private static bool hasLoaded = false;
     private static void EnsureDataLoaded()
@@ -131,7 +130,7 @@ internal static class DataHandler
     {
         collected = State.IsNewGame
             ? new(initialCollected)
-            : Deserialize(Context.globalData.gameData.tags.GetString(dataTag));
+            : Deserialize(Context.globalData.gameData.tags.GetString(Const.BuiltinGameData.ItemsSaveDataTag));
     }
     private static string Serialize()
     {

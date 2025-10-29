@@ -63,10 +63,6 @@ internal static class STags
 
     private static class SaveHandler
     {
-        private static readonly string intDataTag = $"ModRegistry_Quicker1726_Sidequel_intTags";
-        private static readonly string floatDataTag = $"ModRegistry_Quicker1726_Sidequel_floatTags";
-        private static readonly string stringDataTag = $"ModRegistry_Quicker1726_Sidequel_stringTags";
-        private static readonly string boolDataTag = $"ModRegistry_Quicker1726_Sidequel_boolTags";
         internal static bool hasLoaded = false;
         internal static void WriteToSaveData()
         {
@@ -95,7 +91,7 @@ internal static class STags
         }
         private static void LoadIntValues()
         {
-            var data = Context.globalData.gameData.tags.GetString(intDataTag);
+            var data = Context.globalData.gameData.tags.GetString(Const.BuiltinGameData.STagsIntDataTag);
             if (data == null) return;
             Debug($"== load int:\n{data}");
             foreach (var item in Split(data))
@@ -105,7 +101,7 @@ internal static class STags
         }
         private static void LoadFloatValues()
         {
-            var data = Context.globalData.gameData.tags.GetString(floatDataTag);
+            var data = Context.globalData.gameData.tags.GetString(Const.BuiltinGameData.STagsFloatDataTag);
             if (data == null) return;
             Debug($"== load float:\n{data}");
             foreach (var item in Split(data))
@@ -115,7 +111,7 @@ internal static class STags
         }
         private static void LoadStringValues()
         {
-            var data = Context.globalData.gameData.tags.GetString(stringDataTag);
+            var data = Context.globalData.gameData.tags.GetString(Const.BuiltinGameData.STagsStringDataTag);
             if (data == null) return;
             Debug($"== load string:\n{data}");
             foreach (var item in Split(data))
@@ -125,7 +121,7 @@ internal static class STags
         }
         private static void LoadBoolValues()
         {
-            var data = Context.globalData.gameData.tags.GetString(boolDataTag);
+            var data = Context.globalData.gameData.tags.GetString(Const.BuiltinGameData.STagsBoolDataTag);
             if (data == null) return;
             Debug($"== load bool:\n{data}");
             foreach (var item in Split(data))
@@ -138,25 +134,25 @@ internal static class STags
         {
             var data = Join(intValues.Select(pair => new Tuple<string, string>(pair.Key, pair.Value.ToString())));
             Debug($"== save int:\n{data}");
-            Context.globalData.gameData.tags.SetString(intDataTag, data);
+            Context.globalData.gameData.tags.SetString(Const.BuiltinGameData.STagsIntDataTag, data);
         }
         private static void SaveFloatValues()
         {
             var data = Join(floatValues.Select(pair => new Tuple<string, string>(pair.Key, pair.Value.ToString())));
             Debug($"== save float:\n{data}");
-            Context.globalData.gameData.tags.SetString(floatDataTag, data);
+            Context.globalData.gameData.tags.SetString(Const.BuiltinGameData.STagsFloatDataTag, data);
         }
         private static void SaveStringValues()
         {
             var data = Join(stringValues.Select(pair => new Tuple<string, string>(pair.Key, SerializeStringValue(pair.Value))));
             Debug($"== save string:\n{data}");
-            Context.globalData.gameData.tags.SetString(stringDataTag, data);
+            Context.globalData.gameData.tags.SetString(Const.BuiltinGameData.STagsStringDataTag, data);
         }
         private static void SaveBoolValues()
         {
             var data = Join(boolValues.Select(pair => new Tuple<string, string>(pair.Key, SerializeBoolValue(pair.Value))));
             Debug($"== save bool:\n{data}");
-            Context.globalData.gameData.tags.SetString(boolDataTag, data);
+            Context.globalData.gameData.tags.SetString(Const.BuiltinGameData.STagsBoolDataTag, data);
         }
 
         private static string SerializeStringValue(string value)

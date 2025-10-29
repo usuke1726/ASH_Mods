@@ -12,7 +12,7 @@ internal abstract class BaseAction(ActionType type, string? anchor = null)
     internal static void OnNodeStarted(Node node)
     {
         var id = CurrentNodeId = node.id;
-        i18nKeyPrefix = id == null ? Const.NodeI18nPrefix : $"{Const.NodeI18nPrefix}.{id}";
+        i18nKeyPrefix = id == null ? Const.I18n.NodePrefix : $"{Const.I18n.NodePrefix}.{id}";
     }
     protected static string I18n(string key) => I18n_.Localize($"{i18nKeyPrefix}.{key}");
     public virtual IEnumerator Invoke(IConversation conversation) { yield break; }

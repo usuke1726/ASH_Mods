@@ -9,7 +9,6 @@ namespace Sidequel.World;
 internal class ChestController
 {
     private static readonly Dictionary<string, string> items = [];
-    private static readonly string chestItemsTag = "ChestItemsData";
     internal static void Setup(IModHelper helper)
     {
         helper.Events.Gameloop.GameStarted += (_, _) => OnGameStarted();
@@ -92,11 +91,11 @@ internal class ChestController
 #if DEBUG
         Monitor.Log($"Items in chests: {string.Join(";", items.Select(pair => $"{pair.Key}:{pair.Value}"))}", LL.Debug, true);
 #endif
-        STags.SetString(chestItemsTag, data);
+        STags.SetString(Const.STags.ChestItems, data);
     }
     private static void LoadFromTags()
     {
-        if (!STags.TryGetString(chestItemsTag, out var data)) return;
+        if (!STags.TryGetString(Const.STags.ChestItems, out var data)) return;
         foreach (var item in data.Split("\n"))
         {
             var a = item.Split(":", 2);

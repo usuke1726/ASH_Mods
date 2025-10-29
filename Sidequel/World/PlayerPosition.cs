@@ -6,7 +6,6 @@ namespace Sidequel.World;
 
 internal class PlayerPosition
 {
-    private static readonly string playerPosTag = "PlayerPos";
     internal static void Setup(IModHelper helper)
     {
         System.STags.BeforeSaving += SavePlayerPos;
@@ -15,7 +14,7 @@ internal class PlayerPosition
     {
         if (!State.IsActive) return;
         if (!Context.TryToGetPlayer(out var player)) return;
-        System.STags.SetString(playerPosTag, Serialize(player));
+        System.STags.SetString(Const.STags.PlayerPosTag, Serialize(player));
     }
     internal static void Spawn()
     {
@@ -67,7 +66,7 @@ internal class PlayerPosition
     }
     private static string Load()
     {
-        return State.IsNewGame ? null! : System.STags.GetString(playerPosTag);
+        return State.IsNewGame ? null! : System.STags.GetString(Const.STags.PlayerPosTag);
     }
     private static string Serialize(Player player)
     {
