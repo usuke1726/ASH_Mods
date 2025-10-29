@@ -25,7 +25,7 @@ internal class TagAction : BaseAction, IInvokableInAction
             }
         }
         else if (value is TagActions t && t == TagActions.Toggle) STags.ToggleBool(id);
-        STags.Set(id, value);
+        else STags.Set(id, value);
         yield break;
     }
 }
