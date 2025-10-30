@@ -13,6 +13,7 @@ internal class Setup
         Objects.Setup(helper);
         PlayerPosition.Setup(helper);
         ChestController.Setup(helper);
+        FlowerController.Setup(helper);
     }
 }
 
