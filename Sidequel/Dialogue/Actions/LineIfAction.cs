@@ -10,18 +10,20 @@ internal class LineIfAction : BaseAction, IInvokableInAction
     private readonly string falseLine;
     private readonly string speaker;
     private readonly Func<string, string> replacer;
-    public LineIfAction(Func<bool> condition, string trueLine, string falseLine, string speaker, Func<string, string>? replacer = null, string? anchor = null) : base(ActionType.Line, anchor)
+    private readonly bool useId;
+    public LineIfAction(Func<bool> condition, string trueLine, string falseLine, string speaker, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(ActionType.Line, anchor)
     {
         this.condition = condition;
         this.trueLine = trueLine;
         this.falseLine = falseLine;
         this.speaker = speaker;
         this.replacer = replacer ?? (s => s);
+        this.useId = useId;
     }
     public override IEnumerator Invoke(IConversation conversation)
     {
         var line = condition() ? trueLine : falseLine;
-        var text = TextReplacer.ReplaceVariables(replacer(I18n(line)));
+        var text = TextReplacer.ReplaceVariables(replacer(I18n(line, useId)));
         if (Character.TryGetCharacter(conversation, speaker, out var character))
         {
             conversation.currentSpeaker = character.gameObject.transform;

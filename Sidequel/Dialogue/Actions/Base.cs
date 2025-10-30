@@ -14,7 +14,7 @@ internal abstract class BaseAction(ActionType type, string? anchor = null)
         var id = CurrentNodeId = node.id;
         i18nKeyPrefix = id == null ? Const.I18n.NodePrefix : $"{Const.I18n.NodePrefix}.{id}";
     }
-    protected static string I18n(string key) => I18n_.Localize($"{i18nKeyPrefix}.{key}");
+    protected static string I18n(string key, bool useId) => I18n_.Localize($"{(useId ? i18nKeyPrefix : Const.I18n.NodePrefix)}.{key}");
     public virtual IEnumerator Invoke(IConversation conversation) { yield break; }
 }
 internal abstract class FlowBase(ActionType type, string? anchor = null) : BaseAction(type, anchor)
