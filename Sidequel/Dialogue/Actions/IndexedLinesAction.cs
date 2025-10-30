@@ -5,8 +5,8 @@ namespace Sidequel.Dialogue.Actions;
 
 internal class IndexedLinesAction : RangedLinesAction
 {
-    public IndexedLinesAction(Func<int, string> getI18nKey, string speaker, string? anchor = null) : base(1, 1000, getI18nKey, speaker, anchor) { }
-    public IndexedLinesAction(Func<int, string> getI18nKey, Func<int, string> getSpeaker, string? anchor = null) : base(1, 1000, getI18nKey, getSpeaker, anchor) { }
+    public IndexedLinesAction(Func<int, string> getI18nKey, string speaker, Func<string, string>? replacer = null, string? anchor = null) : base(1, 1000, getI18nKey, speaker, replacer, anchor) { }
+    public IndexedLinesAction(Func<int, string> getI18nKey, Func<int, string> getSpeaker, Func<string, string>? replacer = null, string? anchor = null) : base(1, 1000, getI18nKey, getSpeaker, replacer, anchor) { }
 }
 
 internal class RangedLinesAction : BaseAction, IInvokableInAction
@@ -16,19 +16,22 @@ internal class RangedLinesAction : BaseAction, IInvokableInAction
     private readonly Func<int, string> getI18nKey;
     private readonly Func<int, string>? getSpeaker = null;
     private readonly string? speaker = null;
-    public RangedLinesAction(int minInclusive, int maxInclusive, Func<int, string> getI18nKey, string speaker, string? anchor = null) : base(ActionType.IndexesLines, anchor)
+    private readonly Func<string, string> replacer = null;
+    public RangedLinesAction(int minInclusive, int maxInclusive, Func<int, string> getI18nKey, string speaker, Func<string, string>? replacer = null, string? anchor = null) : base(ActionType.IndexesLines, anchor)
     {
         this.minInclusive = minInclusive;
         this.maxInclusive = Math.Max(minInclusive, maxInclusive);
         this.getI18nKey = getI18nKey;
         this.speaker = speaker;
+        this.replacer = replacer ?? (s => s);
     }
-    public RangedLinesAction(int minInclusive, int maxInclusive, Func<int, string> getI18nKey, Func<int, string> getSpeaker, string? anchor = null) : base(ActionType.IndexesLines, anchor)
+    public RangedLinesAction(int minInclusive, int maxInclusive, Func<int, string> getI18nKey, Func<int, string> getSpeaker, Func<string, string>? replacer = null, string? anchor = null) : base(ActionType.IndexesLines, anchor)
     {
         this.minInclusive = minInclusive;
         this.maxInclusive = Math.Max(minInclusive, maxInclusive);
         this.getI18nKey = getI18nKey;
         this.getSpeaker = getSpeaker;
+        this.replacer = replacer ?? (s => s);
     }
     public override IEnumerator Invoke(IConversation conversation)
     {
@@ -46,7 +49,7 @@ internal class RangedLinesAction : BaseAction, IInvokableInAction
                     conversation.currentSpeaker = ch.gameObject.transform;
                 }
             }
-            var s = I18n(getI18nKey(index));
+            var s = replacer(I18n(getI18nKey(index)));
             if (string.IsNullOrEmpty(s)) break;
             var text = TextReplacer.ReplaceVariables(s);
             if (!string.IsNullOrWhiteSpace(text))
