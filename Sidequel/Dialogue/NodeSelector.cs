@@ -17,7 +17,7 @@ internal static class NodeSelector
             return sNodes.Find(n => n.condition());
         }
         var speaker = dialogue?.transform;
-        var character = ModdingAPI.Character.TryGet(speaker!, out var ch) ? ch : null;
+        var character = SpeakerToCharacter(speaker);
         Node? node = null;
         if (character != null)
         {
@@ -29,6 +29,14 @@ internal static class NodeSelector
             node = nullNodes.Find(n => n.condition());
         }
         return node ?? globalNodes.Find(n => n.condition());
+    }
+    private static ModdingAPI.Character? SpeakerToCharacter(Transform? speaker)
+    {
+        if (speaker != null && speaker.name == Const.Object.Claire)
+        {
+            return Sidequel.Character.Core.Claire;
+        }
+        return ModdingAPI.Character.TryGet(speaker!, out var ch) ? ch : null;
     }
     internal static Node? Find(string id, Characters? character)
     {

@@ -18,6 +18,11 @@ internal static class Character
             character = ModdingAPI.Character.Get(Characters.Claire);
             return true;
         }
+        else if (name == "Claire")
+        {
+            character = Sidequel.Character.Core.Claire;
+            return true;
+        }
         else return ModdingAPI.Character.TryGet(name, out character);
     }
 }
