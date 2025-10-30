@@ -38,6 +38,8 @@ internal abstract class NodeEntryBase
     protected static TransitionAction transition(Action action, string? anchor = null) => new(action, anchor);
     protected static WaitAction wait(float time, bool hideBox = true, string? anchor = null) => new(time, hideBox, anchor);
     protected static UpdateContAction cont(int value, string? anchor = null) => new(value, anchor);
+    protected static UpdateNodeStateAction state(NodeStates state, string? anchor = null) => new(state, anchor);
+    protected static UpdateNodeStateAction state(string nodeId, NodeStates state, string? anchor = null) => new(nodeId, state, anchor);
 #pragma warning restore IDE1006
 
     sealed public override string ToString() => base.ToString();
@@ -45,5 +47,13 @@ internal abstract class NodeEntryBase
     sealed public override int GetHashCode() => base.GetHashCode();
 
     internal virtual void OnGameStarted() { }
+
+    internal enum NodeStates
+    {
+        NotYet = 0,
+        InProgress = 1,
+        Refused = 2,
+        Done = 3,
+    }
 }
 

@@ -16,5 +16,6 @@ public enum ActionType
     Transition,
     Wait,
     Cont,
+    NodeState,
 }
 
