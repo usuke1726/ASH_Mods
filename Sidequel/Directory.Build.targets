@@ -2,8 +2,12 @@
     <Import Project="$(DirectoryBuildPropsPath)\..\Directory.Build.targets"/>
 
     <ItemGroup>
+        <I18nDefault Include="i18n\default\*.json;i18n\default\*.jsonc" />
         <I18nJa Include="i18n\ja\*.json;i18n\ja\*.jsonc" />
     </ItemGroup>
+    <Target Name="MergeI18nJsonDefault" AfterTargets="BeforeBuild" Inputs="@(I18nDefault)" Outputs="$(SolutionDir)i18n\default.json">
+        <MergeI18nFiles I18nPath="$(SolutionDir)i18n" Lang="default" />
+    </Target>
     <Target Name="MergeI18nJsonJa" AfterTargets="BeforeBuild" Inputs="@(I18nJa)" Outputs="$(SolutionDir)i18n\ja.json">
         <MergeI18nFiles I18nPath="$(SolutionDir)i18n" Lang="ja" />
     </Target>

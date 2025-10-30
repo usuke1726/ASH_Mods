@@ -1,0 +1,107 @@
+﻿{
+    "item.Coin.name": "コイン",
+    "item.Coin.namePlural": "コイン",
+    "item.Coin.description": "生きるために欠かせないアイテム。\nはやく学費を稼がなくては…",
+
+    "item.GoldenFeather.name": "黄金の羽根",
+    "item.GoldenFeather.namePlural": "黄金の羽根",
+    "item.GoldenFeather.description": "カネにならない役立たず。\n誰も買っちゃくれない。",
+
+    "item.Watch.name": "腕時計",
+    "item.Watch.namePlural": "腕時計",
+    "item.Watch.description": "拾った腕時計。やや古ぼけているが、\n売れば多少のカネにはなるかもしれない。",
+
+    // 空文字はオリジナル版と同じものを使うという意味。
+    "item.FishingRod.name": "",
+    "item.FishingRod.namePlural": "",
+    "item.FishingRod.description": "",
+    "item.FishingRod.onMouseOrKeyboard.description": "",
+
+    "item.Stick.name": "",
+    "item.Stick.namePlural": "",
+    "item.Stick.description": "意味もなく拾ってしまった、ただの木の枝。\n当然売れるはずもない。",
+
+    "item.Pickaxe.name": "",
+    "item.Pickaxe.namePlural": "",
+    "item.Pickaxe.description": "持っていて困ることはないだろう。\n邪魔なものは壊してしまえ。",
+
+    "item.Fish.name": "",
+    "item.Fish.namePlural": "",
+    "item.Fish.description": "釣り上げたサカナ。\nとりあえずメシには困らない。",
+
+    "item.Bucket.name": "",
+    "item.Bucket.namePlural": "",
+    "item.Bucket.description": "ゴムの花を開かせるために使う。\n<color=#b6ff63>{{UseItemButton}}</color>で　すくう / そそぐ。",
+
+    "item.WalkieTalkie.name": "",
+    "item.WalkieTalkie.namePlural": "",
+    "item.WalkieTalkie.description": "",
+
+    "item.Compass.name": "",
+    "item.Compass.namePlural": "",
+    "item.Compass.description": "",
+
+    "item.RunningShoes.name": "",
+    "item.RunningShoes.namePlural": "",
+    "item.RunningShoes.description": "",
+
+    "item.GoldMedal.name": "金メダル",
+    "item.GoldMedal.namePlural": "金メダル",
+    "item.GoldMedal.description": "かなり重くて光り輝いている\n立派なメダル。",
+
+    "item.SouvenirMedal.name": "州立公園　記念メダル",
+    "item.SouvenirMedal.namePlural": "州立公園　記念メダル",
+    "item.SouvenirMedal.description": "山の絵とイニシャルが刻印されている、\nどこにでもありそうな　うすっぺらいメダル。",
+
+    "item.FishHook.name": "つりばり",
+    "item.FishHook.namePlural": "つりばり",
+    "item.FishHook.description": "丈夫そうな　つりばり。\nあわよくばビルなら買い取ってもらえるか？",
+
+    "item.AntiqueFigure.name": "アンティークな置物",
+    "item.AntiqueFigure.namePlural": "アンティークな置物",
+    "item.AntiqueFigure.description": "見るからに古そうで、\nいかにもなデザインの置物。",
+
+    "item.OldPicture.name": "古い写真",
+    "item.OldPicture.namePlural": "古い写真",
+    "item.OldPicture.description": "オヤジとジョンの昔の写真。\nまさか二人が知り合いだったとは…",
+
+    "item.CuteEmptyCan.name": "キュートな空きカン",
+    "item.CuteEmptyCan.namePlural": "キュートな空きカン",
+    "item.CuteEmptyCan.description": "おかしか何かが入っていたであろう、\nハートの形の空きカン。",
+
+    "item.TradingCard.name": "トレーディングカード",
+    "item.TradingCard.namePlural": "トレーディングカード",
+    "item.TradingCard.description": "「パルクール・モンスターズ」という、\nヘンテコな名前のゲームのカード。",
+
+    "item.StrongSunscreen.name": "強めの日焼け止め",
+    "item.StrongSunscreen.namePlural": "強めの日焼け止め",
+    "item.StrongSunscreen.description": "長時間の屋外の活動にうってつけの一品。",
+
+    "item.WeakSunscreen.name": "弱めの日焼け止め",
+    "item.WeakSunscreen.namePlural": "弱めの日焼け止め",
+    "item.WeakSunscreen.description": "軽い外出に向いている、\nはだに優しいタイプ。",
+
+    "item.Sunscreen.name": "日焼け止め",
+    "item.Sunscreen.namePlural": "日焼け止め",
+    "item.Sunscreen.description": "中くらいの強さの日焼け止め。\nこういう　ほどほどの強さが一番なのかも。",
+
+    "item.HalfUsedSunscreen.name": "使いかけの日焼け止め",
+    "item.HalfUsedSunscreen.namePlural": "使いかけの日焼け止め",
+    "item.HalfUsedSunscreen.description": "強めのタイプ。まだそこそこ残ってるっぽい？",
+
+    "item.JimsAddressNote.name": "ジムの連絡先のメモ",
+    "item.JimsAddressNote.namePlural": "ジムの連絡先のメモ",
+    "item.JimsAddressNote.description": "仕事の紹介のためにジムから受け取ったメモ。\n夏が終わったら、ジムに電話をかけよう。",
+
+    "item.FishScale1.name": "普通のウロコ",
+    "item.FishScale1.namePlural": "普通のウロコ",
+    "item.FishScale1.description": "普通のサカナからとれた、\n特にコメントのしようがないウロコ。",
+
+    "item.FishScale2.name": "きれいなウロコ",
+    "item.FishScale2.namePlural": "きれいなウロコ",
+    "item.FishScale2.description": "なかなか　きれいな　ウロコ。\n形が良い上に色もすき通っている。",
+
+    "item.FishScale3.name": "最上級のウロコ",
+    "item.FishScale3.namePlural": "最上級のウロコ",
+    "item.FishScale3.description": "かなり　きれいな　ウロコ。形・色・手ざわり、\nどれをとっても他の種類と全然違う。"
+}

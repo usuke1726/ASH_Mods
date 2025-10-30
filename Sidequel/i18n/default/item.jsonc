@@ -1,0 +1,106 @@
+﻿{
+    "item.Coin.name": "Coin",
+    "item.Coin.namePlural": "Coins",
+    "item.Coin.description": "**replace this later!**",
+
+    "item.GoldenFeather.name": "Golden Feather",
+    "item.GoldenFeather.namePlural": "Golden Feathers",
+    "item.GoldenFeather.description": "**replace this later!**",
+
+    "item.Watch.name": "Wristwatch",
+    "item.Watch.namePlural": "Wristwatches",
+    "item.Watch.description": "**replace this later!**",
+
+    "item.FishingRod.name": "Fishing Rod",
+    "item.FishingRod.namePlural": "Fishing Rods",
+    "item.FishingRod.description": "**replace this later!**",
+    "item.FishingRod.onMouseOrKeyboard.description": "**replace this later!**",
+
+    "item.Stick.name": "Stick",
+    "item.Stick.namePlural": "Sticks",
+    "item.Stick.description": "**replace this later!**",
+
+    "item.Pickaxe.name": "Pickaxe",
+    "item.Pickaxe.namePlural": "Pickaxes",
+    "item.Pickaxe.description": "**replace this later!**",
+
+    "item.Fish.name": "Fish",
+    "item.Fish.namePlural": "Fish",
+    "item.Fish.description": "**replace this later!**",
+
+    "item.Bucket.name": "",
+    "item.Bucket.namePlural": "",
+    "item.Bucket.description": "**replace this later!**",
+
+    "item.WalkieTalkie.name": "",
+    "item.WalkieTalkie.namePlural": "",
+    "item.WalkieTalkie.description": "",
+
+    "item.Compass.name": "",
+    "item.Compass.namePlural": "",
+    "item.Compass.description": "",
+
+    "item.RunningShoes.name": "",
+    "item.RunningShoes.namePlural": "",
+    "item.RunningShoes.description": "",
+
+    "item.GoldMedal.name": "Gold Medal",
+    "item.GoldMedal.namePlural": "Gold Medals",
+    "item.GoldMedal.description": "**replace this later!**",
+
+    "item.SouvenirMedal.name": "Park's Official Medal",
+    "item.SouvenirMedal.namePlural": "Park's Official Medals",
+    "item.SouvenirMedal.description": "**replace this later!**",
+
+    "item.FishHook.name": "Fish Hook",
+    "item.FishHook.namePlural": "Fish Hooks",
+    "item.FishHook.description": "**replace this later!**",
+
+    "item.AntiqueFigure.name": "Antique Figure",
+    "item.AntiqueFigure.namePlural": "Antique Figures",
+    "item.AntiqueFigure.description": "**replace this later!**",
+
+    "item.OldPicture.name": "Old Picture",
+    "item.OldPicture.namePlural": "Old Pictures",
+    "item.OldPicture.description": "**replace this later!**",
+
+    "item.CuteEmptyCan.name": "Cute Empty Can",
+    "item.CuteEmptyCan.namePlural": "Cute Empty Cans",
+    "item.CuteEmptyCan.description": "**replace this later!**",
+
+    "item.TradingCard.name": "Collectable Card",
+    "item.TradingCard.namePlural": "Collectable Cards",
+    "item.TradingCard.description": "**replace this later!**",
+
+    "item.StrongSunscreen.name": "Strong Sunscreen",
+    "item.StrongSunscreen.namePlural": "Strong Sunscreens",
+    "item.StrongSunscreen.description": "**replace this later!**",
+
+    "item.WeakSunscreen.name": "Weak Sunscreen",
+    "item.WeakSunscreen.namePlural": "Weak Sunscreens",
+    "item.WeakSunscreen.description": "**replace this later!**",
+
+    "item.Sunscreen.name": "Sunscreen",
+    "item.Sunscreen.namePlural": "Sunscreens",
+    "item.Sunscreen.description": "**replace this later!**",
+
+    "item.HalfUsedSunscreen.name": "Half-used Sunscreen",
+    "item.HalfUsedSunscreen.namePlural": "Half-used Sunscreens",
+    "item.HalfUsedSunscreen.description": "**replace this later!**",
+
+    "item.JimsAddressNote.name": "Note of Jim's Address",
+    "item.JimsAddressNote.namePlural": "Notes of Jim's Address",
+    "item.JimsAddressNote.description": "**replace this later!**",
+
+    "item.FishScale1.name": "Ordinary Fish Scale",
+    "item.FishScale1.namePlural": "Ordinary Fish Scales",
+    "item.FishScale1.description": "**replace this later!**",
+
+    "item.FishScale2.name": "Pretty Fish Scale",
+    "item.FishScale2.namePlural": "Pretty Fish Scales",
+    "item.FishScale2.description": "**replace this later!**",
+
+    "item.FishScale3.name": "Beautiful Fish Scale",
+    "item.FishScale3.namePlural": "Beautiful Fish Scales",
+    "item.FishScale3.description": "**replace this later!**"
+}
