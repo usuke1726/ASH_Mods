@@ -19,6 +19,9 @@ internal class Setup
         {
             foreach (var entry in entries) entry.OnGameStarted();
         };
+#if DEBUG
+        Debug.Setup(helper);
+#endif
     }
     private void AddNodes()
     {
