@@ -12,17 +12,19 @@ internal class Node
     internal readonly int priority;
     internal readonly Action? onConversationFinish;
     internal readonly Func<bool> condition;
+    internal readonly bool resetEmotions;
     private readonly Dictionary<string, int> anchors = [];
 #if DEBUG
     private static readonly HashSet<string> ids = [];
 #endif
-    public Node(string? id, List<BaseAction> actions, Func<bool>? condition = null, int priority = 0, Action? onConversationFinish = null)
+    public Node(string? id, List<BaseAction> actions, Func<bool>? condition = null, int priority = 0, Action? onConversationFinish = null, bool resetEmotions = true)
     {
         this.id = id;
         this.actions = actions;
         this.condition = condition ?? (() => true);
         this.priority = priority;
         this.onConversationFinish = onConversationFinish;
+        this.resetEmotions = resetEmotions;
         for (int i = 0; i < actions.Count; i++)
         {
             var anchor = actions[i].anchor;

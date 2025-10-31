@@ -87,6 +87,11 @@ internal class DialogueController : MonoBehaviour
             yield return action.Invoke(currentConversation);
             if (action is OptionAction option) LastSelected = option.selected;
         }
+        if (currentNode.resetEmotions)
+        {
+            yield return new EmoteAction(Emotes.Normal, Character.Player).Invoke(currentConversation);
+            yield return new EmoteAction(Emotes.Normal, Character.Original).Invoke(currentConversation);
+        }
         forceKillCurrentDialogue = null;
         currentConversation.Kill();
     }
