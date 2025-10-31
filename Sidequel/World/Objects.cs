@@ -47,6 +47,7 @@ internal class Objects
         string[] removedItemPrefixes = [
             "ShellPickup",
             "ToyShovelPickup",
+            "TrashPickup",
         ];
         var items = GameObject.FindObjectsOfType<CollectOnInteract>()
             .Where(i => removedItemPrefixes.Any(p => i.name.StartsWith(p)));
