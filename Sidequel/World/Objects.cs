@@ -40,6 +40,10 @@ internal class Objects
             // remove coins and feathers
             item.gameObject.SetActive(false);
         }
+        foreach (var crack in GameObject.FindObjectsOfType<BuriedCollectable>())
+        {
+            crack.gameObject.SetActive(false);
+        }
         string[] removedItemPrefixes = [
             "ShellPickup",
             "ToyShovelPickup",
