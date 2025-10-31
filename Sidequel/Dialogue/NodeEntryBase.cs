@@ -17,8 +17,12 @@ internal abstract class NodeEntryBase
     protected static IEnumerable<int> range(int minInclusive, int maxInclusive) => Enumerable.Range(minInclusive, Math.Max(maxInclusive + 1 - minInclusive, 1));
     protected static CommandAction command(Action action, bool hideBox = true, string? anchor = null) => new(action, hideBox, anchor);
     protected static CommandAction command(Func<IEnumerator> coroutine, bool hideBox = true, string? anchor = null) => new(coroutine, hideBox, anchor);
+    protected static GetItemAction item(string itemId, string? anchor = null) => new(() => itemId, anchor);
     protected static GetItemAction item(Func<string> getItemId, string? anchor = null) => new(getItemId, anchor);
+    protected static AddItemAction item(string itemId, int amount, string? anchor = null) => new(() => itemId, () => amount, anchor);
+    protected static AddItemAction item(Func<string> getItemId, int amount, string? anchor = null) => new(getItemId, () => amount, anchor);
     protected static AddItemAction item(Func<string> getItemId, Func<int> getAmount, string? anchor = null) => new(getItemId, getAmount, anchor);
+    protected static AddMultipleItemsAction item(string[] itemIds, int[] amounts, string? anchor = null) => new(() => itemIds, () => amounts, anchor);
     protected static AddMultipleItemsAction item(Func<string[]> getItemIds, Func<int[]> getAmounts, string? anchor = null) => new(getItemIds, getAmounts, anchor);
     protected static EmoteAction emote(Emotes emotion, string speaker, string? anchor = null) => new(emotion, speaker, anchor);
     protected static GotoAction @goto(string target, string? anchor = null) => new(target, anchor);
