@@ -22,6 +22,15 @@ internal class Objects
         NPCs.Find("CampfireFriends").gameObject.SetActive(true);
         new GameObject("Sidequel_ClimbersRemover").AddComponent<ClimbersRemover>();
         RemoveItems();
+        ModdingAPI.Character.OnSetupDone(() =>
+        {
+            var nephew = ModdingAPI.Character.Get(Characters.RunningNephew).gameObject;
+            var jon = ModdingAPI.Character.Get(Characters.RangerJon).gameObject;
+            GameObject.Destroy(nephew.GetComponent<PathNPCMovement>());
+            nephew.transform.position = new(239.9925f, 48.3835f, 60.3349f);
+            nephew.transform.localRotation = Quaternion.Euler(0, 214.6103f, 0);
+            nephew.GetComponentInChildren<Animator>().runtimeAnimatorController = jon.GetComponentInChildren<Animator>().runtimeAnimatorController;
+        });
     }
     private static void RemoveItems()
     {
