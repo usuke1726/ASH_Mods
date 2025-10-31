@@ -30,6 +30,7 @@ internal class Objects
             nephew.transform.position = new(239.9925f, 48.3835f, 60.3349f);
             nephew.transform.localRotation = Quaternion.Euler(0, 214.6103f, 0);
             nephew.GetComponentInChildren<Animator>().runtimeAnimatorController = jon.GetComponentInChildren<Animator>().runtimeAnimatorController;
+            new GameObject("Sidequel_PictureGuyWatcher").AddComponent<PictureGuyWatcher>();
         });
     }
     private static void RemoveItems()
@@ -70,6 +71,21 @@ internal class Objects
             if (alex != null && alex.activeSelf) alex.SetActive(false);
             if (above != null && above.activeSelf) above.SetActive(false);
             GameObject.Destroy(gameObject);
+        }
+    }
+    private class PictureGuyWatcher : MonoBehaviour
+    {
+        private GameObject atFoot = null!;
+        private GameObject atTop = null!;
+        private void Awake()
+        {
+            atFoot = ModdingAPI.Character.Get(Characters.PictureFox1).gameObject;
+            atTop = ModdingAPI.Character.Get(Characters.PictureFox2).gameObject;
+        }
+        private void Update()
+        {
+            if (!atFoot.activeSelf) atFoot.SetActive(true);
+            if (atTop.activeSelf) atTop.SetActive(false);
         }
     }
 }
