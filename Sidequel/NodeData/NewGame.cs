@@ -1,4 +1,6 @@
 ﻿
+#define SKIP_NEWGAMENODE
+
 using ModdingAPI;
 using Sidequel.Dialogue;
 using Sidequel.System;
@@ -12,6 +14,9 @@ internal class NewGame : NodeEntry
     protected override Node[] Nodes => [
         new("newgame", [
             tag(newGameNode, true),
+#if DEBUG && SKIP_NEWGAMENODE
+            end(),
+#endif
             wait(2.0f),
             lines(1, 4, i => $"{i:00}", Player),
             wait(1.5f),
