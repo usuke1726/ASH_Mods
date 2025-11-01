@@ -10,6 +10,8 @@ partial class Const
         internal const string Cont = "Cont";
         internal const string JADone = "JADone";
         internal const string NodeStates = "NodeStates";
+        internal const string JATriggeredByJon = "JATriggeredByJon";
+        internal const string CoinsSavedUp = "SavedUp400Coins";
     }
 }
 

@@ -11,6 +11,7 @@ internal class Setup
         if (done) return;
         done = true;
         Core.Setup(helper);
+        Pose.Setup(helper);
     }
 }
 

@@ -1,6 +1,8 @@
 ﻿
 using System.Collections;
+using ModdingAPI;
 using Sidequel.Dialogue.Actions;
+using UnityEngine;
 
 namespace Sidequel.Dialogue;
 
@@ -53,6 +55,24 @@ internal abstract class NodeEntryBase
     sealed public override int GetHashCode() => base.GetHashCode();
 
     internal virtual void OnGameStarted() { }
+
+    protected static ModdingAPI.Character Ch(string id)
+    {
+        if (Character.TryGetCharacter(id, out var ch)) return ch;
+        Debug("character with id \"{id}\" not found!!!");
+        return null!;
+    }
+    protected static ModdingAPI.Character Ch(Characters ch) => Character.Get(ch);
+    protected static void Pose(string id, Poses pose) => Pose(Ch(id).transform, pose);
+    protected static void Pose(Characters ch, Poses pose) => Pose(Ch(ch).transform, pose);
+    protected static void Pose(Transform target, Poses pose) => Sidequel.Character.Pose.Set(target, pose);
+    protected static void Move(string id, Vector3? position = null, Vector3? rotation = null) => Move(Ch(id).transform, position, rotation);
+    protected static void Move(Characters ch, Vector3? position = null, Vector3? rotation = null) => Move(Ch(ch).transform, position, rotation);
+    protected static void Move(Transform target, Vector3? position = null, Vector3? rotation = null)
+    {
+        if (position != null) target.position = (Vector3)position;
+        if (rotation != null) target.localRotation = Quaternion.Euler((Vector3)rotation);
+    }
 
     internal enum NodeStates
     {

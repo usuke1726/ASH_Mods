@@ -42,7 +42,7 @@ internal partial class Core
         var claireObj = auntMay.Clone();
         claireObj.name = Const.Object.Claire;
         claireObj.GetComponentInChildren<Animator>().speed = 0.6f;
-        Claire = new ModdingAPI.Character((Characters)Const.Object.ClaireObjectId, claireObj);
+        Claire = new ModdingAPI.Character((Characters)Const.Object.ClaireObjectId, claireObj.transform);
 
         claireObj.transform.parent = NPCs.transform;
         claireObj.transform.position = new(651.1263f, 20.47f, 338.8536f);

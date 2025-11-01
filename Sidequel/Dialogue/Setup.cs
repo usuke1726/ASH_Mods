@@ -17,6 +17,7 @@ internal class Setup
         NodeSelector.OnSetupDone();
         helper.Events.Gameloop.GameStarted += (_, _) =>
         {
+            if (!State.IsActive) return;
             foreach (var entry in entries) entry.OnGameStarted();
         };
 #if DEBUG
