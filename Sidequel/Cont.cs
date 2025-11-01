@@ -63,7 +63,7 @@ internal static class Cont
     }
     private static void Save()
     {
-        STags.SetInt(Const.STags.Cont, Const.Cont.InitialValue);
+        STags.SetInt(Const.STags.Cont, value);
     }
     internal static void Add(int val)
     {
