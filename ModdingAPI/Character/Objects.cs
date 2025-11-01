@@ -8,15 +8,17 @@ public class Character
 {
     public Characters character { get; private set; }
     public GameObject gameObject { get; private set; }
+    public Transform transform { get; private set; }
     private static readonly Dictionary<Transform, Character> transforms = [];
-    public Character(Characters ch, GameObject obj)
+    public Character(Characters ch, Transform tr)
     {
         character = ch;
-        gameObject = obj;
+        transform = tr;
+        gameObject = tr.gameObject;
         transforms[gameObject.transform] = this;
         SetupAnimator();
     }
-    public Character(Character info) : this(info.character, info.gameObject) { }
+    public Character(Character info) : this(info.character, info.transform) { }
     private IEmotionAnimator? emotionAnimator = null;
     private IPoseAnimator? poseAnimator = null;
     private void SetupAnimator()
@@ -136,7 +138,7 @@ public class Character
         SetupCharacter_normal(Characters.DadBoatDeer1, "DadDeer", "NPCs");
         SetupCharacter_normal(Characters.DadBoatDeer2, "DadDeerDock", "NPCs");
         SetupCharacter_normal(Characters.KidBoatDeer1, "StandingNPC (1)", "NPCs");
-        SetupCharacter_normal(Characters.KidBoatDeer2, "DeerKidBoat", null);
+        SetupCharacter_normal(Characters.KidBoatDeer2, "DeerKidBoat", "TinBoat");
         SetupCharacter_normal(Characters.KidBoatDeer3, "StandingNPC (2)", "NPCs");
         SetupCharacter_normal(Characters.ShipWorker1, "FishBuyer", "World/Structures/Boat");
         SetupCharacter_normal(Characters.ShipWorker2, "FishBuyer", "NPCs");
@@ -171,7 +173,7 @@ public class Character
         SetupCharacter_normal(Characters.WatchGoat, "Goat_StandingNPC", "NPCs");
         SetupCharacter_normal(Characters.Julie, "RefereeKid", null);
         SetupCharacter_normal(Characters.BeachstickballKid, "VolleyballOpponent", null);
-        SetupCharacter_normal(Characters.Avery, "RaceOpponent", null);
+        SetupCharacter_normal(Characters.Avery, "RaceOpponent", "PlayerRace");
         SetupCharacter_normal(Characters.Artist1, "ArtistQuest/Artist1/StandingNPC", "NPCs");
         SetupCharacter_normal(Characters.Artist2, "ArtistQuest/Artist2/StandingNPC", "NPCs");
         SetupCharacter_normal(Characters.Artist3, "ArtistQuest/Artist3/StandingNPC", "NPCs");
@@ -192,36 +194,39 @@ public class Character
     {
         TryAddCharacter(ch, GetChObject_fromStartNode(objName, rootObj, startNode));
     }
-    private static readonly Dictionary<string, GameObject> objCacheFromStartNode = [];
-    private static readonly Dictionary<string, GameObject?> objectCaches = [];
-    private static GameObject? GetChObject_normal(string objName, string? rootObj)
+    private static readonly Dictionary<string, Transform> objCacheFromStartNode = [];
+    private static readonly Dictionary<string, Transform?> objectCaches = [];
+    private static Transform? FindFromGameObject(string id)
     {
-        GameObject? obj;
-        if (rootObj == null) obj = GameObject.Find(objName);
+        var obj = GameObject.Find(id);
+        return obj == null ? null : obj.transform;
+    }
+    private static Transform? GetChObject_normal(string objName, string? rootObj)
+    {
+        if (rootObj == null) return FindFromGameObject(objName);
         else
         {
             objectCaches.TryAdd(rootObj, null);
-            obj = (objectCaches[rootObj] ??= GameObject.Find(rootObj))?.transform?.Find(objName)?.gameObject;
+            return (objectCaches[rootObj] ??= FindFromGameObject(rootObj))?.Find(objName);
         }
-        return obj;
     }
-    private static GameObject? GetChObject_fromStartNode(string objName, string? rootObj, string startNode)
+    private static Transform? GetChObject_fromStartNode(string objName, string? rootObj, string startNode)
     {
         if (objCacheFromStartNode.TryGetValue(startNode, out var obj)) return obj;
         if (rootObj == null) return null;
         objectCaches.TryAdd(rootObj, null);
-        var root = (objectCaches[rootObj] ??= GameObject.Find(rootObj))?.transform;
+        var root = objectCaches[rootObj] ??= FindFromGameObject(rootObj);
         if (root == null) return null;
         foreach (var child in root.GetChildren())
         {
             var di = child.GetComponent<DialogueInteractable>();
             if (di == null) continue;
-            if (child.name == objName && di.startNode == startNode) return child.gameObject;
-            objCacheFromStartNode[di.startNode] = child.gameObject;
+            if (child.name == objName && di.startNode == startNode) return child;
+            objCacheFromStartNode[di.startNode] = child;
         }
         return null;
     }
-    private static void TryAddCharacter(Characters ch, GameObject? obj)
+    private static void TryAddCharacter(Characters ch, Transform? obj)
     {
         if (obj == null)
         {

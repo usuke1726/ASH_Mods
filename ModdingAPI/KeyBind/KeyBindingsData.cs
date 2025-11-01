@@ -182,7 +182,6 @@ internal class KeyBindingsData : IKeyBindingsData
     }
     public bool TryGetValue(string keyId, out string keybind, bool allowDefault = false)
     {
-        Monitor.SLog($"TryGetValue id {uniqueID}");
         keybind = null!;
         if (data == null) return false;
         if (data.TryGetValue(uniqueID, out var dict) && dict.TryGetValue(keyId, out keybind)) return true;
