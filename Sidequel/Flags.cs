@@ -9,6 +9,7 @@ internal static class Flags
 {
     internal static bool BeforeJA => !AfterJA;
     internal static bool AfterJA => STags.GetBool(Const.STags.JADone);
+    internal static bool JATriggeredByJon => STags.GetBool(Const.STags.JATriggeredByJon);
 
     internal static bool NodeYet(string id) => GetNodeState(id) == NodeStates.NotYet;
     internal static bool NodeIP(string id) => GetNodeState(id) == NodeStates.InProgress;

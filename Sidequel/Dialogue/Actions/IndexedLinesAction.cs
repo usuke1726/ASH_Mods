@@ -5,9 +5,9 @@ namespace Sidequel.Dialogue.Actions;
 
 internal class IndexedLinesAction : RangedLinesAction
 {
-    public IndexedLinesAction(Func<int, string> getI18nKey, string speaker, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(1, 1000, getI18nKey, speaker, replacer, useId, anchor) { }
-    public IndexedLinesAction(Func<int, string> getI18nKey, Func<int, string> getSpeaker, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(1, 1000, getI18nKey, getSpeaker, replacer, useId, anchor) { }
-    public IndexedLinesAction(Func<int, string> getI18nKey, HashSet<int> playerIndexes, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(1, 1000, getI18nKey, playerIndexes, replacer, useId, anchor) { }
+    public IndexedLinesAction(Func<int, string> getI18nKey, string speaker, List<Tuple<int, IInvokableInAction>>? actions = null, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(1, 1000, getI18nKey, speaker, actions, replacer, useId, anchor) { }
+    public IndexedLinesAction(Func<int, string> getI18nKey, Func<int, string> getSpeaker, List<Tuple<int, IInvokableInAction>>? actions = null, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(1, 1000, getI18nKey, getSpeaker, actions, replacer, useId, anchor) { }
+    public IndexedLinesAction(Func<int, string> getI18nKey, HashSet<int> playerIndexes, List<Tuple<int, IInvokableInAction>>? actions = null, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(1, 1000, getI18nKey, playerIndexes, actions, replacer, useId, anchor) { }
 }
 
 internal class RangedLinesAction : BaseAction, IInvokableInAction
@@ -19,8 +19,9 @@ internal class RangedLinesAction : BaseAction, IInvokableInAction
     private readonly string? speaker = null;
     private readonly HashSet<int>? playerIndexes = null;
     private readonly Func<string, string> replacer;
+    private readonly Dictionary<int, List<IInvokableInAction>> actionsMap = [];
     private readonly bool useId;
-    public RangedLinesAction(int minInclusive, int maxInclusive, Func<int, string> getI18nKey, string speaker, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(ActionType.IndexesLines, anchor)
+    public RangedLinesAction(int minInclusive, int maxInclusive, Func<int, string> getI18nKey, string speaker, List<Tuple<int, IInvokableInAction>>? actions = null, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(ActionType.IndexesLines, anchor)
     {
         this.minInclusive = minInclusive;
         this.maxInclusive = Math.Max(minInclusive, maxInclusive);
@@ -28,8 +29,9 @@ internal class RangedLinesAction : BaseAction, IInvokableInAction
         this.speaker = speaker;
         this.replacer = replacer ?? (s => s);
         this.useId = useId;
+        SetupActions(actions);
     }
-    public RangedLinesAction(int minInclusive, int maxInclusive, Func<int, string> getI18nKey, Func<int, string> getSpeaker, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(ActionType.IndexesLines, anchor)
+    public RangedLinesAction(int minInclusive, int maxInclusive, Func<int, string> getI18nKey, Func<int, string> getSpeaker, List<Tuple<int, IInvokableInAction>>? actions = null, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(ActionType.IndexesLines, anchor)
     {
         this.minInclusive = minInclusive;
         this.maxInclusive = Math.Max(minInclusive, maxInclusive);
@@ -37,8 +39,9 @@ internal class RangedLinesAction : BaseAction, IInvokableInAction
         this.getSpeaker = getSpeaker;
         this.replacer = replacer ?? (s => s);
         this.useId = useId;
+        SetupActions(actions);
     }
-    public RangedLinesAction(int minInclusive, int maxInclusive, Func<int, string> getI18nKey, HashSet<int> playerIndexes, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(ActionType.IndexesLines, anchor)
+    public RangedLinesAction(int minInclusive, int maxInclusive, Func<int, string> getI18nKey, HashSet<int> playerIndexes, List<Tuple<int, IInvokableInAction>>? actions = null, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(ActionType.IndexesLines, anchor)
     {
         this.minInclusive = minInclusive;
         this.maxInclusive = Math.Max(minInclusive, maxInclusive);
@@ -46,6 +49,16 @@ internal class RangedLinesAction : BaseAction, IInvokableInAction
         this.playerIndexes = playerIndexes;
         this.replacer = replacer ?? (s => s);
         this.useId = useId;
+        SetupActions(actions);
+    }
+    private void SetupActions(List<Tuple<int, IInvokableInAction>>? actions)
+    {
+        if (actions == null) return;
+        foreach (var tuple in actions)
+        {
+            actionsMap.TryAdd(tuple.Item1, []);
+            actionsMap[tuple.Item1].Add(tuple.Item2);
+        }
     }
     public override IEnumerator Invoke(IConversation conversation)
     {
@@ -55,6 +68,10 @@ internal class RangedLinesAction : BaseAction, IInvokableInAction
         }
         for (int index = minInclusive; index <= maxInclusive; index++)
         {
+            if (actionsMap.TryGetValue(index, out var actions))
+            {
+                foreach (var action in actions) yield return action.Invoke(conversation);
+            }
             if (getSpeaker != null)
             {
                 var sp = getSpeaker(index);

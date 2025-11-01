@@ -194,6 +194,8 @@ internal class Debug : MonoBehaviour
         {
             unregister1?.Invoke();
             unregister1 = null!;
+            unregister2?.Invoke();
+            unregister2 = null!;
         }
         private static void NewGame()
         {

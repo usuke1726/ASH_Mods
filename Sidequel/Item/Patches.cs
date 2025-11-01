@@ -21,12 +21,12 @@ internal class GameDataPatch
         if (!State.IsActive) return true;
         if (DataHandler.Find(item, out var wItem))
         {
-            Debug($"Get item as BaseItem: {item.name}");
+            //Debug($"Get item as BaseItem: {item.name}");
             __result = DataHandler.GetCollected(wItem);
         }
         else
         {
-            Debug($"Get item {item.name}");
+            //Debug($"Get item {item.name}");
             __result = DataHandler.GetCollected(item.name);
         }
         return false;

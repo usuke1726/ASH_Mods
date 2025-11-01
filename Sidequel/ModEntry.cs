@@ -18,7 +18,7 @@ internal partial class ModEntry : Mod
         public static II18n I18n_ => instance.I18n_;
 
         [Conditional("DEBUG")]
-        public static void Debug(string m) => Monitor.Log(m, LL.Debug);
+        public static void Debug(string m, LL level = LL.Debug) => Monitor.Log(m, level, true);
     }
     public override void Entry(IModHelper helper)
     {

@@ -55,8 +55,8 @@ internal static class STags
     public static bool TryGetFloat(string id, out float value) => floatValues.TryGetValue(FormatId(id), out value);
     public static bool TryGetString(string id, out string value) => stringValues.TryGetValue(FormatId(id), out value);
     public static bool TryGetBool(string id, out bool value) => boolValues.TryGetValue(FormatId(id), out value);
-    public static int GetInt(string id, int defaultValue) => TryGetInt(id, out var v) ? v : defaultValue;
-    public static float GetFloat(string id, float defaultValue) => TryGetFloat(id, out var v) ? v : defaultValue;
+    public static int GetInt(string id, int defaultValue = 0) => TryGetInt(id, out var v) ? v : defaultValue;
+    public static float GetFloat(string id, float defaultValue = 0) => TryGetFloat(id, out var v) ? v : defaultValue;
     public static string GetString(string id, string? defaultValue = null) => TryGetString(id, out var v) ? v : defaultValue!;
     public static bool GetBool(string id, bool defaultValue = false) => TryGetBool(id, out var v) ? v : defaultValue;
 

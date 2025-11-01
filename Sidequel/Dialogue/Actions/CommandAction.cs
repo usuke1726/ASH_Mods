@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Sidequel.Dialogue.Actions;
 
-internal class CommandAction : BaseAction
+internal class CommandAction : BaseAction, IInvokableInAction
 {
     internal readonly Action? action = null;
     internal readonly Func<IEnumerator>? coroutine = null;

@@ -1,5 +1,6 @@
 ﻿
 using ModdingAPI;
+using Sidequel.Dialogue;
 
 namespace Sidequel;
 
@@ -18,5 +19,6 @@ internal abstract class NodeEntry : Dialogue.NodeEntryBase
             Dialogue.NodeSelector.RegisterNode(character, node);
         }
     }
+    protected void SetNext(string nodeId) => SetNext(nodeId, Character);
 }
 

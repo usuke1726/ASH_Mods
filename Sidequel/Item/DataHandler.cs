@@ -128,6 +128,7 @@ internal static class DataHandler
     }
     private static void LoadFromSaveData()
     {
+        AssertCall(Context.GameStarted);
         collected = State.IsNewGame
             ? new(initialCollected)
             : Deserialize(Context.globalData.gameData.tags.GetString(Const.BuiltinGameData.ItemsSaveDataTag));
