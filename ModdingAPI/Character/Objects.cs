@@ -9,6 +9,7 @@ public class Character
     public Characters character { get; private set; }
     public GameObject gameObject { get; private set; }
     public Transform transform { get; private set; }
+    public Animator animator { get; private set; }
     private static readonly Dictionary<Transform, Character> transforms = [];
     public Character(Characters ch, Transform tr)
     {
@@ -16,6 +17,7 @@ public class Character
         transform = tr;
         gameObject = tr.gameObject;
         transforms[gameObject.transform] = this;
+        animator = tr?.GetComponentInChildren<Animator>()!;
         SetupAnimator();
     }
     public Character(Character info) : this(info.character, info.transform) { }
