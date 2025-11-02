@@ -2,6 +2,7 @@
 using System.Collections;
 using ModdingAPI;
 using Sidequel.Dialogue.Actions;
+using Sidequel.System;
 using UnityEngine;
 
 namespace Sidequel.Dialogue;
@@ -58,6 +59,15 @@ internal abstract class NodeEntryBase
     protected static Func<int, string> digit1(string id, string sep = ".") => i => $"{id}{sep}{i}";
     protected static Func<int, string> digit2(string id, string sep = ".") => i => $"{id}{sep}{i:00}";
     protected static Func<int, string> digit3(string id, string sep = ".") => i => $"{id}{sep}{i:000}";
+    protected static bool _H => Cont.IsHigh;
+    protected static bool _M => Cont.IsMid;
+    protected static bool _L => Cont.IsLow;
+    protected static bool _HM => Cont.IsHighOrMid;
+    protected static bool _ML => Cont.IsMidOrLow;
+    protected static bool _bJA => Flags.BeforeJA;
+    protected static bool _aJA => Flags.AfterJA;
+    protected static bool _JAJon => Flags.JATriggeredByJon;
+    protected static Tags _tags => Context.globalData.gameData.tags;
 #pragma warning restore IDE1006
 
     sealed public override string ToString() => base.ToString();
@@ -75,7 +85,9 @@ internal abstract class NodeEntryBase
     protected static ModdingAPI.Character Ch(Characters ch) => Character.Get(ch);
     protected static void Pose(string id, Poses pose) => Pose(Ch(id).transform, pose);
     protected static void Pose(Characters ch, Poses pose) => Pose(Ch(ch).transform, pose);
+    protected static void Pose(Characters ch, RuntimeAnimatorController controller) => Pose(Ch(ch).transform, controller);
     protected static void Pose(Transform target, Poses pose) => Sidequel.Character.Pose.Set(target, pose);
+    protected static void Pose(Transform target, RuntimeAnimatorController controller) => Sidequel.Character.Pose.Set(target, controller);
     protected static void Move(string id, Vector3? position = null, Vector3? rotation = null) => Move(Ch(id).transform, position, rotation);
     protected static void Move(Characters ch, Vector3? position = null, Vector3? rotation = null) => Move(Ch(ch).transform, position, rotation);
     protected static void Move(Transform target, Vector3? position = null, Vector3? rotation = null)
@@ -84,6 +96,14 @@ internal abstract class NodeEntryBase
         if (rotation != null) target.localRotation = Quaternion.Euler((Vector3)rotation);
     }
     protected static void SetNext(string nodeId, Characters? ch) => DialogueController.instance.SetNext(nodeId, ch);
+    protected static bool NodeDone(string id) => Flags.NodeDone(id);
+    protected static bool NodeYet(string id) => Flags.NodeYet(id);
+    protected static bool NodeIP(string id) => Flags.NodeIP(id);
+    protected static bool NodeRefused(string id) => Flags.NodeRefused(id);
+    protected static bool GetBool(string id, bool defaultValue = false) => STags.GetBool(id, defaultValue);
+    protected static string GetString(string id, string? defaultValue = null) => STags.GetString(id, defaultValue);
+    protected static int GetInt(string id, int defaultValue = 0) => STags.GetInt(id, defaultValue);
+    protected static float GetFloat(string id, float defaultValue = 0) => STags.GetFloat(id, defaultValue);
 
     internal enum NodeStates
     {

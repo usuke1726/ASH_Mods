@@ -41,12 +41,19 @@ internal static class Pose
     {
         return ModdingAPI.Character.Get(ch).transform.GetComponentInChildren<Animator>().runtimeAnimatorController;
     }
+    internal static void Set(Transform target, RuntimeAnimatorController controller) => OnSetupDone(() =>
+    {
+        var animator = GetAnimator(target);
+        if (animator == null) return;
+        animator.runtimeAnimatorController = controller;
+    });
     internal static void Set(Transform target, Poses pose) => OnSetupDone(() =>
     {
         var animator = GetAnimator(target);
         if (animator == null) return;
         animator.runtimeAnimatorController = controllers[pose];
     });
+    internal static void Set(Characters target, RuntimeAnimatorController controller) => Set(ModdingAPI.Character.Get(target).transform, controller);
     internal static void Set(Characters target, Poses pose) => Set(ModdingAPI.Character.Get(target).transform, pose);
     internal static void Set(Characters target, Characters from)
     {
