@@ -45,7 +45,7 @@ internal abstract class NodeEntryBase
     protected static NodeCompleteAction end(Func<bool>? condition = null, string? anchor = null) => new(condition, anchor);
     protected static TagAction tag(string id, object value, string? anchor = null) => new(id, value, anchor);
     protected static TagAction tag(string id, Func<object> getValue, string? anchor = null) => new(id, getValue, anchor);
-    protected static TransitionAction transition(Action action, string? anchor = null) => new(action, anchor);
+    protected static TransitionAction transition(Action action, bool hideBox = true, string? anchor = null) => new(action, hideBox, anchor);
     protected static WaitAction wait(float time, bool hideBox = true, string? anchor = null) => new(time, hideBox, anchor);
     protected static UpdateContAction cont(int value, string? anchor = null) => new(value, anchor);
     protected static UpdateNodeStateAction state(NodeStates state, string? anchor = null) => new(state, anchor);

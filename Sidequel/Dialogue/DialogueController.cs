@@ -77,6 +77,8 @@ internal class DialogueController : MonoBehaviour
                     currentConversation.onConversationFinish -= currentNode.onConversationFinish;
                 }
                 currentNode = nextNode;
+                nextNode = null;
+                currentNode.Reset();
                 BaseAction.OnNodeStarted(currentNode);
                 if (currentNode.onConversationFinish != null)
                 {
