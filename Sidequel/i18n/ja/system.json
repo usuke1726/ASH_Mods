@@ -5,5 +5,7 @@
     "ModConfigMenu.newgame": "ニューゲーム",
     "ModConfigMenu.confirmOverwritingSaveData": "<sprite name=\"Warning\" tint=1> 現在のサイドストーリーの\nセーブデータを上書きします\n(オリジナルのデータは消去されません)",
     "ModConfigMenu.confirmOverwritingSaveData.y": "つづける",
-    "ModConfigMenu.confirmOverwritingSaveData.n": "ちょっとまって！"
+    "ModConfigMenu.confirmOverwritingSaveData.n": "ちょっとまって！",
+    "JATrigger.Jon": "ジョン",
+    "JATrigger.Alex": "アレックス"
 }

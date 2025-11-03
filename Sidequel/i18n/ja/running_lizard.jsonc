@@ -1,0 +1,56 @@
+{
+    "node.RunningLizard.BeforeJA1.01": "やあ",
+    "node.RunningLizard.BeforeJA1.02": "今日は　マラソン大会でも　何でもないような　日だが",
+    "node.RunningLizard.BeforeJA1.03": "それでも　わたしは　走っている",
+    "node.RunningLizard.BeforeJA1.04": "おう…",
+    "node.RunningLizard.BeforeJA1.05": "要は　走るのが　シュミ　ってことだな…？",
+    "node.RunningLizard.BeforeJA1.06": "そうだね",
+    "node.RunningLizard.BeforeJA1.07": "走らざるして　何が　人生ぞ　ってね",
+
+    "node.RunningLizard.BeforeJA2.01": "わたしは　世界中のマラソンに　出ているのだが",
+    "node.RunningLizard.BeforeJA2.02": "オフの日に　再び　この地に　足をふみ入れたのは　なぜだと思う？",
+    "node.RunningLizard.BeforeJA2.03": "さあ",
+    "node.RunningLizard.BeforeJA2.04": "ここが　いいところ　だから？",
+    "node.RunningLizard.BeforeJA2.05": "単なる　気まぐれさ",
+    "node.RunningLizard.BeforeJA2.06": "…",
+
+    "node.RunningLizard.BeforeJA3.01": "きみは　よく　話しかけてくるな",
+    "node.RunningLizard.BeforeJA3.02": "まあ　たまには　走りを止めて",
+    "node.RunningLizard.BeforeJA3.03": "マラソンコースの上で　会話を楽しむのも　一興だ",
+    "node.RunningLizard.BeforeJA3.04": "おう…",
+
+    "node.RunningLizard.AfterJA1.01": "やあ",
+    "node.RunningLizard.AfterJA1.02": "失礼ながら　きみの　身の上話を　聞いてしまったよ",
+    "node.RunningLizard.AfterJA1.03": "そうか",
+    "node.RunningLizard.AfterJA1.04": "どんなに切羽つまっていても　気分転換は大事だ",
+    "node.RunningLizard.AfterJA1.05": "そして　気分転換がしたくなったら　ぜひ　走ってみるといい",
+    "node.RunningLizard.AfterJA1.06": "へぇ",
+    "node.RunningLizard.AfterJA1.07": "それだけで　すべてが　上手くいくような　気になれるだろう",
+    "node.RunningLizard.AfterJA1.08": "それは　大げさだろ",
+    "node.RunningLizard.AfterJA1.09": "大げさかどうかは　人それぞれ　さ",
+
+    "node.RunningLizard.AfterJA2.01": "わたしは　そこまで　走りが速い方じゃない",
+    "node.RunningLizard.AfterJA2.02": "時には　わたしが走ることに　何の意味もないのでは　と考えることさえある",
+    "node.RunningLizard.AfterJA2.03": "ただ　そういうのは大抵　単なる気の迷い　なのだから",
+    "node.RunningLizard.AfterJA2.04": "結局は　続けるのが　一番ってことなのだろうな",
+
+    "node.RunningLizard.GoldMedal1.01": "なあ　このメダルなんだが…",
+    "node.RunningLizard.GoldMedal1.02": "何か　知ってるか？",
+    "node.RunningLizard.GoldMedal1.03": "ふむ　これは　マラソンにちなんだものの可能性が　高いだろう",
+    "node.RunningLizard.GoldMedal1.04": "だが　明らかに公式大会のものでは　ないな",
+    "node.RunningLizard.GoldMedal1.05": "そして　この名前…",
+    "node.RunningLizard.GoldMedal1.06": "よくは覚えていないが",
+    // (この「実在」はあくまでゲーム内世界での実在。)
+    "node.RunningLizard.GoldMedal1.07": "確か　実在した選手のはずだ",
+    "node.RunningLizard.GoldMedal1.08": "無名のまま　若くして　なくなった　選手だったか…",
+    "node.RunningLizard.GoldMedal1.09": "いや　それならば　なぜ　わたしは　知っているんだ？",
+    "node.RunningLizard.GoldMedal1.10": "多分　記録に残るような　何かが　あったと思うんだが…",
+    "node.RunningLizard.GoldMedal1.11": "そうか　まあ参考にさせてもらうよ",
+
+    "node.RunningLizard.GoldMedal2.01": "メダルの件は　解決したかな？",
+    "node.RunningLizard.GoldMedal2.02": "いや　まだだ",
+    "node.RunningLizard.GoldMedal2.03": "そうか",
+
+    "node.RunningLizard.GoldMedal3.01": "あのメダルに　あんなストーリーがあったとはね…",
+    "node.RunningLizard.GoldMedal3.02": "自分の　なじみのある　分野でも　分からないものだ"
+}

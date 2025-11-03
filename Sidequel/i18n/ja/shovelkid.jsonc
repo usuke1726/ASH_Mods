@@ -1,0 +1,34 @@
+{
+    "node.ShovelKid.Start1.01": "この前は　ここに砂の王国を　造って　選挙運動をしたんだ",
+    "node.ShovelKid.Start1.02": "お、おう…",
+    "node.ShovelKid.Start1.03": "流石に　砂だから　数日経ったら　都市は　風化しちゃったんだけど…",
+    "node.ShovelKid.Start1.04": "次は何を　ソウゾウ　しようかな！",
+    "node.ShovelKid.Start1.05": "きみ　何か　いいアイデア　持ってる？",
+    "node.ShovelKid.Start1.H06": "いや　ねぇよ",
+    "node.ShovelKid.Start1.H07": "フフフ　想像力が足りないね！",
+    "node.ShovelKid.Start1.ML06": "そうだな…",
+
+    "node.ShovelKid.High2.01": "やっと　アイデアが　思いうかんだかい？",
+    "node.ShovelKid.High2.02": "えっ　結局オレが　考えるのかよ？",
+    "node.ShovelKid.High2.03": "うん　そういう流れになった",
+    "node.ShovelKid.High2.04": "流れって…",
+
+    "node.ShovelKid.High3.01": "やっと　アイデアが　思いうかんだかい？",
+    "node.ShovelKid.High3.02": "まだだよ",
+
+    "node.ShovelKid.MidLow2.01": "やっと　アイデアが　思いうかんだかい？",
+    "node.ShovelKid.MidLow2.02": "そうだな…",
+
+    "node.ShovelKid.Story1Start.01": "広大な砂の海に　ひっそり　たたずむ　秘密基地…",
+    "node.ShovelKid.Story1Start.02": "そこに　迷い込んだ　一人の戦士は　信じられないものを　目の当たりにする！",
+    "node.ShovelKid.Story1Start.03": "…なんてな",
+    "node.ShovelKid.Story1Start.04": "なるほど…",
+    "node.ShovelKid.Story1Start.05": "よし　そのファンタジーの世界を　ここに完成させようじゃないか！",
+    "node.ShovelKid.Story1Start.06": "燃えてきた！",
+    "node.ShovelKid.Story1Start.07": "おう…",
+
+    // Story1のテキストゲームは次期バージョンで実装する予定。
+    "node.ShovelKid.Story1NotImplemented.01": "さっそく　物語をスタートしよう　といきたいところだけど",
+    "node.ShovelKid.Story1NotImplemented.02": "まだまだ　設定が　十分に練られていないんだ…",
+    "node.ShovelKid.Story1NotImplemented.03": "そこ　結構　こだわるのな…"
+}
