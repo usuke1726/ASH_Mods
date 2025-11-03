@@ -8,19 +8,19 @@ using UnityEngine;
 namespace Sidequel.World;
 internal class ChestController
 {
-    private static readonly Dictionary<string, string> items = [];
+    private static readonly Dictionary<string, ChestRewardInternal> items = [];
     internal static void Setup(IModHelper helper)
     {
         helper.Events.Gameloop.GameStarted += (_, _) => OnGameStarted();
     }
-    internal static bool TryGet(string id, out ItemWrapperBase item)
+    internal static bool TryGet(string id, out ChestReward item)
     {
         item = null!;
         if (!items.Any()) return false;
         int len = items.First().Key.Length;
         if (id.Length < len) return false;
-        if (!items.TryGetValue(id[0..len], out var itemId)) return false;
-        return DataHandler.Find(itemId, out item);
+        if (!items.TryGetValue(id[0..len], out var reward)) return false;
+        return ChestRewardInternal.TryGet(reward, out item);
     }
     internal static void OnChestInteracted(string id)
     {
@@ -68,28 +68,38 @@ internal class ChestController
     }
     private static void SetInitialItemsData(HashSet<string> ids)
     {
-#if DEBUG
-        int num = Math.Max(0, ids.Count - 15);
-        Monitor.Log($"{num}/{ids.Count} chests are containing item!!", LL.Warning);
-        List<string> itemNames = [
-            Items.GoldenFeather,
-            Items.Stick,
-            Items.Coin,
+        List<ChestRewardInternal> rewards = [
+            new(Items.OldPicture),
+            new(Items.SouvenirMedal),
+            new(Items.CuteEmptyCan),
+            new(Items.FishHook),
+            new(Items.GoldMedal),
+            new(Items.AntiqueFigure),
+            new(Items.TradingCard),
+            new(Items.Coin, 4),
+            new(Items.Coin, 7),
+            new(Items.Coin, 8),
+            new(Items.Coin, 9),
+            new(Items.Coin, 12),
         ];
+        int num = rewards.Count;
+        Assert(ids.Count >= num, "too few chests");
+        Debug($"{num}/{ids.Count} chests are containing item!!", LL.Warning);
         for (int i = 0; i < num; i++)
         {
             var id = ids.PickRandom();
-            items[id] = itemNames.PickRandom();
+            var reward = rewards.PickRandom();
+            items[id] = reward;
             ids.Remove(id);
+            rewards.Remove(reward);
         }
-#endif
         WriteToTags();
     }
     private static void WriteToTags()
     {
         var data = string.Join("\n", items.Select(pair => $"{pair.Key}:{pair.Value}"));
 #if DEBUG
-        Monitor.Log($"Items in chests: {string.Join(";", items.Select(pair => $"{pair.Key}:{pair.Value}"))}", LL.Debug, true);
+        Debug($"Items in chests: {string.Join(";", items.Select(pair => $"{pair.Key}:{pair.Value}"))}", LL.Debug);
 #endif
         STags.SetString(Const.STags.ChestItems, data);
     }
@@ -100,7 +110,35 @@ internal class ChestController
         {
             var a = item.Split(":", 2);
             if (a.Length < 2) continue;
-            items[a[0]] = a[1];
+            items[a[0]] = ChestRewardInternal.From(a[1]);
+        }
+    }
+    internal class ChestReward(ItemWrapperBase item, int amount)
+    {
+        internal ItemWrapperBase Item { get; private set; } = item;
+        internal int Amount { get; private set; } = amount;
+    }
+    private class ChestRewardInternal(string id, int amount = 1)
+    {
+        internal string Id { get; private set; } = id;
+        internal int Amount { get; private set; } = amount;
+        public override string ToString() => $"{Id},{Amount}";
+        internal static ChestRewardInternal From(string data)
+        {
+            var list = data.Split(",", 2);
+            if (list.Length != 2) throw new Exception("invalid data");
+            if (!int.TryParse(list[1], out var amount)) throw new Exception("second value is not an integer");
+            return new(list[0], amount);
+        }
+        internal static bool TryGet(ChestRewardInternal from, out ChestReward reward)
+        {
+            reward = null!;
+            if (DataHandler.Find(from.Id, out var item))
+            {
+                reward = new(item, from.Amount);
+                return true;
+            }
+            return false;
         }
     }
 }
