@@ -35,17 +35,31 @@ internal class DialogueController : MonoBehaviour
             Monitor.Log($"Empty node! speaker: {speaker?.name}", LL.Warning);
             return null!;
         }
-        node.Reset();
-        currentNode = node;
-        BaseAction.OnNodeStarted(node);
         currentConversation = new TextBoxConversation(speaker);
+        SetupNode(node);
+        if (NodeData.NewGame.ShouldNewGameNodeStart()) OnNewGameNode();
+        StartDialogue();
+        return currentConversation;
+    }
+    internal bool OnOriginalConversationStarted(string startNode, Transform speaker, ref IConversation conv)
+    {
+        if (!NodeSelector.TryToFindFromStartNode(startNode, out var node) || node == null) return true;
+        currentConversation = new TextBoxConversation(speaker);
+        SetupNode(node);
+        conv = currentConversation;
+        StartDialogue();
+        Debug($"Sidequel dialogue starting! (id: {node.id})");
+        return false;
+    }
+    private void SetupNode(Node node)
+    {
+        currentNode = node;
+        node.Reset();
+        BaseAction.OnNodeStarted(node);
         if (node.onConversationFinish != null)
         {
             currentConversation.onConversationFinish += node.onConversationFinish;
         }
-        if (NodeData.NewGame.ShouldNewGameNodeStart()) OnNewGameNode();
-        StartDialogue();
-        return currentConversation;
     }
     internal void SetNext(string nodeId, Characters? character)
     {
@@ -76,14 +90,8 @@ internal class DialogueController : MonoBehaviour
                 {
                     currentConversation.onConversationFinish -= currentNode.onConversationFinish;
                 }
-                currentNode = nextNode;
+                SetupNode(nextNode);
                 nextNode = null;
-                currentNode.Reset();
-                BaseAction.OnNodeStarted(currentNode);
-                if (currentNode.onConversationFinish != null)
-                {
-                    currentConversation.onConversationFinish += currentNode.onConversationFinish;
-                }
                 continue;
             }
             yield return action.Invoke(currentConversation);

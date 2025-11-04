@@ -12,10 +12,7 @@ internal static class NodeSelector
     private static readonly Dictionary<string, List<Node>> nodesFromStartNode = [];
     internal static Node? Find(DialogueInteractable? dialogue)
     {
-        if (dialogue != null && nodesFromStartNode.TryGetValue(dialogue.startNode, out var sNodes))
-        {
-            return sNodes.Find(n => n.condition());
-        }
+        if (dialogue != null && TryToFindFromStartNode(dialogue.startNode, out var sNode)) return sNode;
         var speaker = dialogue?.transform;
         var character = SpeakerToCharacter(speaker);
         Node? node = null;
@@ -29,6 +26,16 @@ internal static class NodeSelector
             node = nullNodes.Find(n => n.condition());
         }
         return node ?? globalNodes.Find(n => n.condition());
+    }
+    internal static bool TryToFindFromStartNode(string startNode, out Node? result)
+    {
+        result = null;
+        if (nodesFromStartNode.TryGetValue(startNode, out var sNodes))
+        {
+            result = sNodes.Find(n => n.condition());
+            return true;
+        }
+        return false;
     }
     private static ModdingAPI.Character? SpeakerToCharacter(Transform? speaker)
     {

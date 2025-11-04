@@ -42,3 +42,17 @@ internal class DialogueInteractablePatch
     }
 }
 
+[HarmonyPatch(typeof(global::DialogueController))]
+internal class OriginalDialogueControllerPatch
+{
+    [HarmonyPrefix()]
+    [HarmonyPatch("StartConversation")]
+    internal static bool Prefix(string startNode, Transform speaker, global::DialogueController __instance, ref IConversation __result)
+    {
+        if (!State.IsActive) return true;
+        Debug($"conv detected (node: {startNode})");
+        return DialogueController.instance.OnOriginalConversationStarted(startNode, speaker, ref __result);
+    }
+}
+
+
