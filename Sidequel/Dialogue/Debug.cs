@@ -69,7 +69,7 @@ internal class Debug : MonoBehaviour
     }
     public enum WarpPoints
     {
-        Claire = 1, Charlie, MeteorLaKe, Jon, Avery, Beackstick, Boat, Ship,
+        Claire = 1, Charlie, MeteorLaKe, Jon, Avery, Beachstick, Boat, Ship,
         Sunhat, Home, Jim,
     }
     private static Dictionary<WarpPoints, Vector3> positions = new()
@@ -79,7 +79,7 @@ internal class Debug : MonoBehaviour
         [WarpPoints.MeteorLaKe] = new(616, 129, 421),
         [WarpPoints.Jon] = new(161, 32, 120),
         [WarpPoints.Avery] = new(48, 58, 349),
-        [WarpPoints.Beackstick] = new(107, 11, 986),
+        [WarpPoints.Beachstick] = new(107, 11, 986),
         [WarpPoints.Boat] = new(149, 16, 1266),
         [WarpPoints.Ship] = new(744, 28, 743),
         [WarpPoints.Sunhat] = new(953, 11, 954),
@@ -116,6 +116,7 @@ internal class Debug : MonoBehaviour
         z_Cutscenes = GameObject.Find("Cutscenes");
         z_NPCs = GameObject.Find("NPCs");
         z_Player = GameObject.Find("Player");
+        Util.instance = this;
     }
     public string __CurrentText()
     {
@@ -166,6 +167,7 @@ internal class Debug : MonoBehaviour
 
     private static class Util
     {
+        internal static Debug instance = null!;
         private static Action? unregister1 = null!;
         private static Action? unregister2 = null!;
         internal static void Setup(IModHelper helper)
@@ -189,6 +191,19 @@ internal class Debug : MonoBehaviour
                 if (keybind1 != null) ModdingAPI.KeyBind.KeyBind.RegisterKeyBind(keybind1, out unregister1);
                 if (keybind2 != null) ModdingAPI.KeyBind.KeyBind.RegisterKeyBind(keybind2, out unregister2);
             };
+            helper.Events.Gameloop.GameStarted += (_, _) => Timer.Register(1f, () =>
+            {
+                var jadone = DebugInitialValues.JADone;
+                if (jadone != null) instance.JADone = (bool)jadone;
+                var cont = DebugInitialValues.Cont;
+                if (cont != null) instance.Cont = (int)cont;
+                var money = DebugInitialValues.Money;
+                if (money != null) instance.Money = (int)money;
+                var moneySavedUp = DebugInitialValues.MoneySavedUp;
+                if (moneySavedUp != null) instance.MoneySavedUp = (bool)moneySavedUp;
+                var p = DebugInitialValues.Point;
+                if (p != null) instance.z_WarpTo = (WarpPoints)p;
+            });
         }
         internal static void Unregister()
         {

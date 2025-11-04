@@ -2,7 +2,6 @@
 using System.Reflection;
 using System.Text.RegularExpressions;
 using ModdingAPI;
-using ModdingAPI.KeyBind;
 using UnityEngine;
 
 namespace Sidequel.Item;
@@ -132,6 +131,12 @@ internal static class DataHandler
         collected = State.IsNewGame
             ? new(initialCollected)
             : Deserialize(Context.globalData.gameData.tags.GetString(Const.BuiltinGameData.ItemsSaveDataTag));
+#if DEBUG
+        if (DebugInitialValues.AdditionalItems != null)
+        {
+            foreach (var pair in DebugInitialValues.AdditionalItems) collected[pair.Key] = pair.Value;
+        }
+#endif
     }
     private static string Serialize()
     {
