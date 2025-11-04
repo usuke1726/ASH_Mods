@@ -11,6 +11,7 @@ partial class Const
         internal const string JADone = "JADone";
         internal const string NodeStates = "NodeStates";
         internal const string JATriggeredByJon = "JATriggeredByJon";
+        internal const string BeachstickballHighscore = "BeachstickballHighscore";
         internal const string CoinsSavedUp = "SavedUp400Coins";
     }
 }
