@@ -256,13 +256,20 @@ internal class BeachstickGameEnd : StartNodeEntry
     protected override Node[] Nodes => [
         new(End1, [
             end(() => CurrentGameScore == 0),
+            wait(0.3f),
+            command(Face),
+            wait(0.7f),
             line(1, Julie, replacer: s => s.Replace("{{BallHits}}", $"{CurrentGameScore}")),
             lines(2, 8, digit2, GetSpeaker([2, 3, 6, 7, 8])),
             command(UpdateHighscore),
+            command(Unface),
             done(),
         ], condition: () => NodeYet(End1) && CurrentGameScore < TargetScore),
 
         new(End2, [
+            wait(0.3f),
+            command(Face),
+            wait(0.7f),
             line(1, Julie, replacer: s => s.Replace("{{BallHits}}", $"{CurrentGameScore}")),
             lines(2, 9, digit2, GetSpeaker([2, 4, 6, 7, 8]), [
                 new(2, emote(Emotes.Happy, Player)),
@@ -270,24 +277,32 @@ internal class BeachstickGameEnd : StartNodeEntry
                 new(5, emote(Emotes.Happy, BeachstickKid)),
             ]),
             command(UpdateHighscore),
+            command(Unface),
             done(),
         ], condition: () => NodeYet(End2) && CurrentGameScore >= TargetScore),
 
         new(End3, [
             end(() => CurrentGameScore == 0),
+            wait(0.3f),
+            command(Face),
+            wait(0.7f),
             line(1, Julie, replacer: s => s.Replace("{{BallHits}}", $"{CurrentGameScore}")),
             lines(2, 12, digit2, GetSpeaker([2, 3, 4, 6, 7, 10, 12]), [
                 new(8, emote(Emotes.Happy, BeachstickKid))
             ]),
             command(UpdateHighscore),
+            command(Unface),
             done(),
         ], condition: () => NodeDone(End1) && NodeYet(End3) && CurrentGameScore < TargetScore),
 
         new(End4, [
             end(() => CurrentGameScore == 0),
+            wait(0.3f),
+            command(Face),
+            wait(0.7f),
             line(1, Julie, replacer: s => s.Replace("{{BallHits}}", $"{CurrentGameScore}")),
             @if(() => CurrentGameScore > Highscore, "updated", "notUpdated"),
-            lines(2, 5, digit2("updated"), GetSpeaker([3]), anchor: "updated"),
+            lines(2, 5, digit2("updated"), GetSpeaker([4]), anchor: "updated"),
             command(UpdateHighscore),
             end(),
             anchor("notUpdated"),
@@ -299,13 +314,27 @@ internal class BeachstickGameEnd : StartNodeEntry
                 < 50 => "lt50",
                 _ => "ge50"
             }),
-            line("notUpdated.lt10", BeachstickKid, anchor: "lt10"), end(),
-            line("notUpdated.lt20", BeachstickKid, anchor: "lt20"), end(),
-            line("notUpdated.lt30", BeachstickKid, anchor: "lt30"), end(),
-            line("notUpdated.lt50", BeachstickKid, anchor: "lt50"), end(),
-            line("notUpdated.ge50", BeachstickKid, anchor: "ge50"), end(),
-        ], condition: () => NodeDone(End2) || NodeDone(End3)),
+            lines(2, 2, digit2("notUpdated.lt10"), BeachstickKid, anchor: "lt10"), end(),
+            lines(2, 2, digit2("notUpdated.lt20"), BeachstickKid, anchor: "lt20"), end(),
+            lines(2, 2, digit2("notUpdated.lt30"), BeachstickKid, anchor: "lt30"), end(),
+            lines(2, 2, digit2("notUpdated.lt50"), BeachstickKid, anchor: "lt50"), end(),
+            lines(2, 2, digit2("notUpdated.ge50"), BeachstickKid, anchor: "ge50"), end(),
+        ], condition: () => NodeDone(End2) || NodeDone(End3), onConversationFinish: Unface),
     ];
+    private static void Face()
+    {
+        var player = Context.player;
+        var kid = Ch(Characters.BeachstickballKid).gameObject;
+        var ptok = (kid.transform.position - player.transform.position).normalized;
+        Context.player.WalkTo(player.transform.position + ptok * 3, null, 0.5f);
+        player.GetComponentInChildren<PlayerIKAnimator>().lookAt = kid.transform;
+        OpponentFacer.isActive = true;
+    }
+    private static void Unface()
+    {
+        Context.player.GetComponentInChildren<PlayerIKAnimator>().lookAt = null;
+        OpponentFacer.isActive = false;
+    }
     private static void UpdateHighscore()
     {
         if (CurrentGameScore > Highscore)
@@ -368,6 +397,20 @@ internal class AchievementManagerPatch
     {
         if (!State.IsActive || boardname != Name) return true;
         BeachstickGameEnd.CurrentGameScore = value;
+        return false;
+    }
+}
+
+[HarmonyPatch(typeof(VolleyballOpponent))]
+internal class OpponentFacer
+{
+    internal static bool isActive = false;
+    [HarmonyPrefix()]
+    [HarmonyPatch("GetDesiredRotateDirection")]
+    internal static bool Direction(VolleyballOpponent __instance, ref Vector3 __result)
+    {
+        if (!isActive) return true;
+        __result = NPCMovement.TowardPlayerRotation(__instance.transform);
         return false;
     }
 }
