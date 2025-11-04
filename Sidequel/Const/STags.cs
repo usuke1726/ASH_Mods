@@ -13,6 +13,11 @@ partial class Const
         internal const string JATriggeredByJon = "JATriggeredByJon";
         internal const string BeachstickballHighscore = "BeachstickballHighscore";
         internal const string CoinsSavedUp = "SavedUp400Coins";
+        internal const string CoinsAtJA = "CoinsAtJA";
+        internal const string TalkedAboutWilOnce = "TalkedAboutWilOnce";
+        internal const string TalkedAboutNoahOnce = "TalkedAboutNoahOnce";
+        internal const string TalkedAboutDeborahOnce = "TalkedAboutDeborahOnce";
+        internal const string GoldMedalProgress = "GoldMedalProgress";
     }
 }
 
