@@ -46,6 +46,14 @@ internal class BeachstickKid : NodeEntry
 
         new(StickComplete, [
             lines(1, 8, digit2, [2, 3, 5, 6], [
+                new(4, command(() => {
+                    if(BeachstickGameStartPoint.HoldsStick && Items.Num(Items.Stick) == 3){
+                        var heldItem = Context.player.heldItem;
+                        Context.player.DropItem(false);
+                        Context.globalData.gameData.AddCollected(heldItem.associatedItem, 1, equipAction: true);
+                        GameObject.Destroy(heldItem.gameObject);
+                    }
+                })),
                 new(4, item(Items.Stick, -4)),
                 new(4, command(OnStickEventDone)),
                 new(4, emote(Emotes.Happy, Original)),
@@ -55,7 +63,9 @@ internal class BeachstickKid : NodeEntry
             item(Items.Coin, 20),
             lines(13, 18, digit2, [13, 14, 17, 18]),
             state(StickEvent, NodeStates.Done),
-        ], condition: () => NodeIP(StickEvent) && Items.Num(Items.Stick) >= 4),
+        ], condition: () => NodeIP(StickEvent) && (
+            Items.Num(Items.Stick) >= 4 || (BeachstickGameStartPoint.HoldsStick && Items.Num(Items.Stick) >= 3)
+        ), priority: 5),
 
         new(HighAfterCompleted, [
             lines(1, 3, digit2, [3]),
@@ -74,7 +84,7 @@ internal class BeachstickKid : NodeEntry
             lines(3, 6, digit2, []),
             lines(7, 8, digit2, "Julie"),
             lines(9, 32, digit2, [14, 17, 18, 22, 27, 28]),
-            @if(() => Items.Has(Items.Stick), "start"),
+            @if(() => Items.Has(Items.Stick) || BeachstickGameStartPoint.HoldsStick, "start"),
             lines(1, 3, digit2("NotHasStick"), [1], [new(3, item(Items.Stick, 1))]),
             anchor("start"),
             line(33, Player),
