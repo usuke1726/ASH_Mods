@@ -70,7 +70,7 @@ internal class Charlie : NodeEntry
             lines(1, 3, digit2, [2]),
             @if(() => NodeYet(GoldMedal2), lines(4, 6, digit2("First"), [6])),
             done(),
-        ], condition: () => NodeIs(Const.Events.GoldMedal, NodeStates.Stage1)),
+        ], condition: () => NodeS1(Const.Events.GoldMedal)),
 
         new(AfterGoldMedal, [
             lines(digit2, Original),

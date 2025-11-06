@@ -176,13 +176,12 @@ internal class Avery : NodeEntry
                 new(34, emote(Emotes.Happy, Original)),
             ]),
             done(),
-        ], condition: () => NodeIP(Const.Events.GoldMedal) && NodeYet(GoldMedal1)),
+        ], condition: () => NodeActive(Const.Events.GoldMedal) && NodeYet(GoldMedal1)),
 
         new(GoldMedal2, [
             lines(1, 5, digit2, [3]),
             command(() => SetNext(RaceStartBody)),
-        ], condition: () => NodeIP(Const.Events.GoldMedal) && NodeDone(GoldMedal1) && (GetInt(Const.STags.GoldMedalProgress) < 1 || NodeDone(GoldMedal3))
-        ),
+        ], condition: () => NodeActive(Const.Events.GoldMedal) && NodeDone(GoldMedal1), priority: -1),
 
         new(GoldMedal3, [
             lines(1, 14, digit2, [3, 5, 6, 8,  11, 14], [
@@ -191,7 +190,7 @@ internal class Avery : NodeEntry
                 new(12, emote(Emotes.Happy, Original)),
             ]),
             done(),
-        ], condition: () => NodeIP(Const.Events.GoldMedal) && NodeDone(GoldMedal1) && NodeYet(GoldMedal3) && GetInt(Const.STags.GoldMedalProgress) == 1),
+        ], condition: () => NodeS1(Const.Events.GoldMedal) && NodeDone(GoldMedal1) && NodeYet(GoldMedal3)),
     ];
     private RaceController? raceController = null;
     private Transform raceOpponent = null!;

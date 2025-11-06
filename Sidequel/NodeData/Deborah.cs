@@ -112,7 +112,7 @@ internal class Deborah : NodeEntry
             @if(() => NodeDone(AntiqueFigure1), lines(1, 2, digit2("AntiqueFigureDone"), [2])),
             lines(9, 21, digit2, [12, 14, 15, 17, 18, 21]),
             done(),
-        ], condition: () => NodeYet(GoldMedal) && !NodeYet(Const.Events.GoldMedal) && !NodeDone(Const.Events.GoldMedal)),
+        ], condition: () => NodeYet(GoldMedal) && NodeActive(Const.Events.GoldMedal)),
     ];
 }
 
