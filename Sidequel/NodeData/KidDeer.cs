@@ -42,7 +42,7 @@ internal class KidDeer : NodeEntry
         Items.FishScale2,
         Items.FishScale3,
     ];
-    protected override Characters? Character => Characters.KidBoatDeer3;
+    protected override Characters? Character => Characters.KidBoatDeer2;
     private string showingItem = null!;
     protected override Node[] Nodes => [
         new(Start1, [
@@ -195,13 +195,19 @@ internal class KidDeer : NodeEntry
         ModdingAPI.Character.OnSetupDone(() =>
         {
             Ch(Characters.KidBoatDeer1).gameObject.SetActive(false);
-            Ch(Characters.KidBoatDeer2).gameObject.SetActive(false);
-            Ch(Characters.KidBoatDeer3).gameObject.SetActive(true);
-            var ch = Ch(Characters.KidBoatDeer3);
+            Ch(Characters.KidBoatDeer2).gameObject.SetActive(true);
+            Ch(Characters.KidBoatDeer3).gameObject.SetActive(false);
+            var ch = Ch(Characters.KidBoatDeer2);
+            ch.transform.parent = GameObject.Find("NPCs").transform;
+            ch.transform.position = new(143.6824f, 20.059f, 1311.036f);
+            ch.transform.localRotation = Quaternion.Euler(342.9369f, 2.4441f, 3.4641f);
+            Timer.Register(1f, () =>
+            {
+                var range = ch.transform.GetComponent<RangedInteractable>();
+                range.range = 7f;
+                Traverse.Create(range).Field("rangeSqr").SetValue(49f);
+            });
             Sidequel.Character.Pose.Set(ch.transform, Poses.Sitting);
-            var book = ch.transform.Find("Fox/Armature/root/Base/Chest/collar_l/arm_l/Cube (1)");
-            Assert(book != null, "book is null");
-            book?.gameObject.SetActive(false);
         });
         Load();
     }
