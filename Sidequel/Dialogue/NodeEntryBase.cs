@@ -101,6 +101,7 @@ internal abstract class NodeEntryBase
     protected static bool NodeYet(string id) => Flags.NodeYet(id);
     protected static bool NodeIP(string id) => Flags.NodeIP(id);
     protected static bool NodeRefused(string id) => Flags.NodeRefused(id);
+    protected static bool NodeIs(string id, NodeStates state) => Flags.NodeIs(id, state);
     protected static bool GetBool(string id, bool defaultValue = false) => STags.GetBool(id, defaultValue);
     protected static string GetString(string id, string? defaultValue = null) => STags.GetString(id, defaultValue);
     protected static int GetInt(string id, int defaultValue = 0) => STags.GetInt(id, defaultValue);
@@ -112,6 +113,9 @@ internal abstract class NodeEntryBase
         InProgress = 1,
         Refused = 2,
         Done = 3,
+        Stage1 = 4,
+        Stage2 = 5,
+        Stage3 = 6,
     }
 }
 
