@@ -55,6 +55,7 @@ internal class ExtendedItem : ItemWrapperBase
     internal override void EnsureIconCreated(Sprite resource)
     {
         if (ready) return;
+        item.showPrompt = showPrompt;
         item.cannotDrop = cannotDrop;
         item.cannotStash = cannotStash;
         item.priority = priority;
