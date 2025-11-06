@@ -19,6 +19,8 @@ partial class Const
         internal const string TalkedAboutNoahOnce = "TalkedAboutNoahOnce";
         internal const string TalkedAboutDeborahOnce = "TalkedAboutDeborahOnce";
         internal const string GoldMedalProgress = "GoldMedalProgress";
+        internal const string HasGotFishScaleOnce = "HasGotFishScaleOnce";
+        internal const string LastGotBestFishScale = "LastGotBestFishScale";
     }
 }
 

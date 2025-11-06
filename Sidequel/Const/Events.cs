@@ -7,6 +7,7 @@ partial class Const
     {
         internal const string GoldMedal = "GoldMedalEvent";
         internal const string StickEvent = "StickEvent";
+        internal const string ScaleEvent = "ScaleEvent";
     }
 }
 
