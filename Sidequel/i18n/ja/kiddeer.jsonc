@@ -33,6 +33,13 @@
     "node.KidBoatDeer.Start2.11": "まあ　本でも読んで　待ってるんだな",
     "node.KidBoatDeer.Start2.12": "うん　そうする！",
 
+    "node.KidBoatDeer.Start3.01": "何か見つけてきた？",
+    "node.KidBoatDeer.Start3.02": "いや　まだだ",
+    "node.KidBoatDeer.Start3.03": "そっか…",
+
+    "node.KidBoatDeer.Start4.01": "色々見せてくれて　ありがとね！",
+    "node.KidBoatDeer.Start4.02": "おう",
+
     "node.KidBoatDeer.ItemFound": "よぉ　こんなの見つけてきたぜ",
 
     "node.KidBoatDeer.GoldMedal.01": "何コレ　金メダル？",
@@ -150,6 +157,7 @@
     "node.KidBoatDeer.FishScale2.ScaleEventDone.02": "実は　もっときれいなヤツが　あったんだよなー",
     "node.KidBoatDeer.FishScale2.ScaleEventDone.03": "ホント！？",
     "node.KidBoatDeer.FishScale2.ScaleEventDone.04": "見せて！！",
+    "node.KidBoatDeer.FishScale2.ScaleEventDone.Has3": "ほらよ",
     "node.KidBoatDeer.FishScale2.ScaleEventDone.05": "もう　あげちまった",
     "node.KidBoatDeer.FishScale2.ScaleEventDone.06": "見たいなら　ジェンに言いな",
     "node.KidBoatDeer.FishScale2.ScaleEventDone.07": "ちぇっ",

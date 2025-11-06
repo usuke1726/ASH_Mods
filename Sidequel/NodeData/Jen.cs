@@ -84,6 +84,7 @@ internal class Jen : NodeEntry
 
         new(ScaleEvent2, [
             lines(1, 8, digit2, [2, 5, 6, 8], [new(3, wait(1f))]),
+            tag(Const.STags.HasShownFishScale2ToJen, true),
             command(() => LastGotBestScale = 0),
         ], condition: () => ScaleEventActive && LastGotBestScale == 2),
 
