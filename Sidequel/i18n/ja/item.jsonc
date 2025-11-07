@@ -103,5 +103,11 @@
 
     "item.FishScale3.name": "最上級のウロコ",
     "item.FishScale3.namePlural": "最上級のウロコ",
-    "item.FishScale3.description": "かなり　きれいな　ウロコ。形・色・手ざわり、\nどれをとっても他の種類と全然違う。"
+    "item.FishScale3.description": "かなり　きれいな　ウロコ。形・色・手ざわり、\nどれをとっても他の種類と全然違う。",
+
+    "item.Binoculars.name": "双眼鏡",
+    "item.Binoculars.namePlural": "双眼鏡",
+    "item.Binoculars.description": "ズーム機能付きの双眼鏡。\nこれで色々な景色を見て回ろう！",
+    "item.Binoculars.action": "のぞく",
+    "node.item.Binoculars.cannotUse": "さすがに落ちながらは　使えねぇよ！"
 }

@@ -261,6 +261,26 @@ internal static class Data
                 001111111100
                 """
             ),
+            new(
+                id: Items.Binoculars,
+                iconData: """
+                001111110000
+                000111111000
+                011011111100
+                101101111110
+                110101111000
+                111000110111
+                111100001101
+                111000001111
+                110111001110
+                101101000000
+                011111000000
+                011110000000
+                """
+            ){
+                createWorldPrefab = System.Binoculars.BinocularsItem.CreateWorldPrefab,
+                priority = 8,
+            },
         ];
     }
     internal static void LoadOriginalItems()

@@ -10,6 +10,7 @@ internal class ExtendedItem : ItemWrapperBase
     public bool cannotDrop = false;
     public bool cannotStash = false;
     public int priority = 0;
+    public Func<GameObject>? createWorldPrefab = null;
 
     private readonly bool[,] iconData;
     private bool ready = false;
@@ -59,6 +60,7 @@ internal class ExtendedItem : ItemWrapperBase
         item.cannotDrop = cannotDrop;
         item.cannotStash = cannotStash;
         item.priority = priority;
+        if (createWorldPrefab != null) item.worldPrefab = createWorldPrefab();
         var tex = Util.EditableTexture(resource.texture);
         for (int x = 0; x < 12; x++)
         {

@@ -13,6 +13,7 @@ internal class Setup
         SaveData.Setup(helper);
         STags.Setup(helper);
         EndGameController.Setup(helper);
+        Binoculars.Setup(helper);
     }
 }
 
