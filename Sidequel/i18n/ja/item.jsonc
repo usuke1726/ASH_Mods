@@ -105,6 +105,10 @@
     "item.FishScale3.namePlural": "最上級のウロコ",
     "item.FishScale3.description": "かなり　きれいな　ウロコ。形・色・手ざわり、\nどれをとっても他の種類と全然違う。",
 
+    "item.Pencil.name": "えんぴつ",
+    "item.Pencil.namePlural": "えんぴつ",
+    "item.Pencil.description": "先のとがった　えんぴつ。\n今は　特に使い道はない。",
+
     "item.Binoculars.name": "双眼鏡",
     "item.Binoculars.namePlural": "双眼鏡",
     "item.Binoculars.description": "ズーム機能付きの双眼鏡。\nこれで色々な景色を見て回ろう！",

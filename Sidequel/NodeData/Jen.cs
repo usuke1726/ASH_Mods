@@ -95,7 +95,7 @@ internal class Jen : NodeEntry
                 new(5, item(Items.FishScale3, -1)),
             ]),
             lineif(() => _HM, "HM06", "L06", Player),
-            lines(7, 9, digit2, [9], [new(9, item(Items.Stick, 1))]),
+            lines(7, 9, digit2, [9], [new(9, item(Items.Pencil, 1))]),
             lineif(() => _HM, "HM10", "L10", Player),
             line(11, Original),
             done(Const.Events.ScaleEvent),
