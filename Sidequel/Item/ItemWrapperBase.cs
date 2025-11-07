@@ -61,20 +61,20 @@ internal class ItemWrapperBase
         var pref = $"item.{id}{idx}";
         return new($"{pref}.name", $"{pref}.namePlural", $"{pref}.description");
     }
-    private string GetDefaultLocalizedName() => I18n_.Localize($"item.{id}.name");
-    private string GetDefaultLocalizedNamePlural() => I18n_.Localize($"item.{id}.namePlural");
+    private string GetDefaultLocalizedName() => I18nLocalize($"item.{id}.name");
+    private string GetDefaultLocalizedNamePlural() => I18nLocalize($"item.{id}.namePlural");
     internal void OnLocaleChanged()
     {
         if (!State.IsActive) return;
         var i18nKeys = GetI18nKeys();
         string s;
-        s = I18n_.Localize(i18nKeys.ReadableName);
+        s = I18nLocalize(i18nKeys.ReadableName);
         if (string.IsNullOrEmpty(s)) s = GetDefaultLocalizedName();
         item.readableName = string.IsNullOrEmpty(s) ? defaultReadableName : s;
-        s = I18n_.Localize(i18nKeys.ReadableNamePlural);
+        s = I18nLocalize(i18nKeys.ReadableNamePlural);
         if (string.IsNullOrEmpty(s)) s = GetDefaultLocalizedNamePlural();
         item.readableNamePlural = string.IsNullOrEmpty(s) ? defaultReadableNamePlural : s;
-        s = I18n_.Localize(i18nKeys.Description);
+        s = I18nLocalize(i18nKeys.Description);
         item.description = string.IsNullOrEmpty(s) ? defaultDescription : s;
         //Debug($"LocaleChanged: \"{item.readableName}\" \"{item.readableNamePlural}\" \"{item.description}\"");
     }

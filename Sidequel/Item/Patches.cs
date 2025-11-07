@@ -59,7 +59,7 @@ internal class PauseMenuPatch
             {
                 var state = Data.FishingRodOnKeyboardState;
                 var s = state == null ? "" : $"{state}";
-                var text = I18n_.Localize($"item.FishingRod{s}.onMouseOrKeyboard.description");
+                var text = I18nLocalize($"item.FishingRod{s}.onMouseOrKeyboard.description");
                 if (string.IsNullOrEmpty(text)) item.name = fishingRodName;
                 else item.description = text;
             }

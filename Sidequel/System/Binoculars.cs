@@ -13,7 +13,7 @@ internal class Binoculars : MonoBehaviour
     {
         public List<ItemAction> GetMenuActions(bool held)
         {
-            return [new(I18n_.Localize("item.Binoculars.action"), () => {
+            return [new(I18nLocalize("item.Binoculars.action"), () => {
                 TryToActivate();
                 return true;
             })];
