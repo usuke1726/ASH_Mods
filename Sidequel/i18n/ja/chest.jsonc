@@ -1,7 +1,7 @@
 {
-    "node.chest.alreadyChecked": "このハコは　さっき見たな",
-    "node.chest.empty": "このハコは　空っぽか…",
-    "node.chest.empty2": "このハコも　空っぽか…",
+    "node.chest.alreadyChecked": "この箱は　さっき見たな",
+    "node.chest.empty": "この箱は　空っぽか…",
+    "node.chest.empty2": "この箱も　空っぽか…",
     "node.chest.item1-1": "中に　何か入ってるな",
     "node.chest.item1-2": "どれ…",
     "node.chest.item2-1": "いや　何か入ってる！？",
@@ -52,11 +52,11 @@
     "node.chest.item.OldPicture.08": "オヤジの話　聞けるかな…",
 
     "node.chest.item.CuteEmptyCan.HM01": "空きカンか",
-    "node.chest.item.CuteEmptyCan.HM02": "おかしか　何かが　入っていたんだろうな",
+    "node.chest.item.CuteEmptyCan.HM02": "お菓子か　何かが　入っていたんだろうな",
     "node.chest.item.CuteEmptyCan.HM03": "それにしても　かわいらしい　デザインじゃねーか",
     "node.chest.item.CuteEmptyCan.HM04": "意外とこういうのって　売れたりする…？",
     "node.chest.item.CuteEmptyCan.L01": "空きカンか",
-    "node.chest.item.CuteEmptyCan.L02": "おかしか　何かが　入っていたんだろうな",
+    "node.chest.item.CuteEmptyCan.L02": "お菓子か　何かが　入っていたんだろうな",
     "node.chest.item.CuteEmptyCan.L03": "それにしても　かわいらしい　デザインじゃねーか",
     "node.chest.item.CuteEmptyCan.L04": "せっかくだし　誰かに　あげるか",
 
