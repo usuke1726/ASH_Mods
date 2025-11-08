@@ -23,6 +23,7 @@ partial class Const
         internal const string HasShownFishScaleToKidDeer = "HasShownFishScaleToKidDeer";
         internal const string HasBorrowedFishingRodOnce = "HasBorrowedFishingRodOnce";
         internal const string HasGotFishScaleOnce = "HasGotFishScaleOnce";
+        internal const string HasClimbedPeakOnce = "HasClimbedPeakOnce";
         internal const string LastGotBestFishScale = "LastGotBestFishScale";
     }
 }
