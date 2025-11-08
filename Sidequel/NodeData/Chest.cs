@@ -56,7 +56,7 @@ internal class Chest : NodeEntry
                 item(() => itemInChest.Item.id),
                 item(() => itemInChest.Item.id, () => itemInChest.Amount)
             ),
-            command(() => SetNext($"chest.item.{itemInChest.Item.id}")),
+            next(() => $"chest.item.{itemInChest.Item.id}"),
         ], condition: () => hasChestInteractedJustNow, priority: int.MaxValue),
         new($"chest.item.{Items.GoldMedal}", [
             @if(() => _HM, lines(1, 3, digit2($"HM", ""), Player), lines(1, 3, digit2($"L", ""), Player)),

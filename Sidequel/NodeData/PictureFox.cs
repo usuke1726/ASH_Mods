@@ -42,11 +42,11 @@ internal class PictureFox : NodeEntry
             line(9, Original),
             @if(() => NodeDone(BeforeJA1), line(10, Player)),
             option(["O1", "O2", "O3"]),
-            command(() => SetNext(LastSelected switch{
+            next(() => LastSelected switch{
                 1 => AfterJA1Accept,
                 2 => AfterJA1Refuse,
                 _ => AfterJA1Hold,
-            })),
+            }),
         ], condition: () => _aJA && NodeYet(AfterJA1)),
 
         new(AfterJA1Hold, [
@@ -76,11 +76,11 @@ internal class PictureFox : NodeEntry
         new(AfterJA2, [
             line(1, Original),
             option(["O1", "O2", "O3"]),
-            command(() => SetNext(LastSelected switch{
+            next(() => LastSelected switch{
                 1 => AfterJA1Accept,
                 2 => AfterJA1Refuse,
                 _ => AfterJA1Hold,
-            })),
+            }),
         ], condition: () => NodeIP(AfterJA1)),
 
         new(AfterJA3, [

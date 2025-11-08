@@ -77,7 +77,7 @@ internal class KidDeer : NodeEntry
 
         new(ItemFound, [
             command(() => OnStarted(showingItem)),
-            command(() => SetNext($"KidBoatDeer.{showingItem}")),
+            next(() => $"KidBoatDeer.{showingItem}"),
             line("KidBoatDeer.ItemFound", Player, useId: false),
         ], condition: () => NodeDone(Start2) && CanStartAny),
 

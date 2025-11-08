@@ -1,6 +1,6 @@
 ﻿
 using ModdingAPI;
-using Sidequel.Dialogue;
+using Sidequel.Dialogue.Actions;
 
 namespace Sidequel;
 
@@ -20,5 +20,8 @@ internal abstract class NodeEntry : Dialogue.NodeEntryBase
         }
     }
     protected void SetNext(string nodeId) => SetNext(nodeId, Character);
+#pragma warning disable IDE1006
+    protected CommandAction next(Func<string> getNodeId, string? anchor = null) => command(() => SetNext(getNodeId()), anchor: anchor);
+#pragma warning restore IDE1006
 }
 

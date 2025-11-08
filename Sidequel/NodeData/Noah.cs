@@ -57,13 +57,13 @@ internal class Noah : NodeEntry
                 new(8, emote(Emotes.Normal, Original)),
             ]),
             option(["O1", "O2"]),
-            command(() => SetNext(LastSelected == 0 ? SunscreenAccept : SunscreenRefuse)),
+            next(() => LastSelected == 0 ? SunscreenAccept : SunscreenRefuse),
         ], condition: () => NodeIP(Const.Events.Sunscreen) && NodeYet(Sunscreen1), priority: 10),
 
         new(Sunscreen2, [
             lines(1, 2, digit2, []),
             option(["O1", "O2"]),
-            command(() => SetNext(LastSelected == 0 ? SunscreenAccept : SunscreenRefuse)),
+            next(() => LastSelected == 0 ? SunscreenAccept : SunscreenRefuse),
         ], condition: () => NodeIP(Const.Events.Sunscreen) && NodeRefused(Sunscreen1), priority: 10),
 
         new(SunscreenAccept, [

@@ -50,7 +50,7 @@ internal class Jen : NodeEntry
             @if(() => _HM, lines(3, 6, digit2("HM", ""), [3, 5]), lines(3, 7, digit2("L", ""), [3, 4, 7])),
             line(8, Original),
             option(["O1", "O2"]),
-            command(() => SetNext(LastSelected == 0 ? AfterJA1Accept : AfterJA1Refuse)),
+            next(() => LastSelected == 0 ? AfterJA1Accept : AfterJA1Refuse),
         ], condition: () => _aJA && NodeYet(AfterJA1)),
 
         new(AfterJA1Accept, [
@@ -68,7 +68,7 @@ internal class Jen : NodeEntry
         new(AfterJA2, [
             line(1, Original),
             option(["O1", "O2"]),
-            command(() => SetNext(LastSelected == 0 ? AfterJA1Accept : AfterJA1Refuse)),
+            next(() => LastSelected == 0 ? AfterJA1Accept : AfterJA1Refuse),
         ], condition: () => NodeRefused(AfterJA1)),
 
         new(ScaleEventNoScale, [

@@ -84,7 +84,7 @@ internal class Deborah : NodeEntry
             lines(1, 3, digit2("O2"), [3], [new(2, emote(Emotes.Happy, Original))]),
             state(NodeStates.Refused),
             end(),
-            command(() => SetNext(BuyAntiqueFigure), anchor: "accept"),
+            next(() => BuyAntiqueFigure, anchor: "accept"),
         ], condition: () => NodeYet(AntiqueFigure1) && Items.Has(Items.AntiqueFigure)),
 
         new(BuyAntiqueFigure, [
@@ -104,7 +104,7 @@ internal class Deborah : NodeEntry
             lines(1, 2, digit2("O2"), [], [new(2, emote(Emotes.Happy, Original))]),
             state(NodeStates.Refused),
             end(),
-            command(() => SetNext(BuyAntiqueFigure), anchor: "accept"),
+            next(() => BuyAntiqueFigure, anchor: "accept"),
         ], condition: () => NodeRefused(AntiqueFigure1), priority: 30),
 
         new(GoldMedal, [

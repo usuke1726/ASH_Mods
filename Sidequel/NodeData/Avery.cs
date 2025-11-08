@@ -59,7 +59,7 @@ internal class Avery : NodeEntry
             lines(15, 21, digit2("H", ""), [15, 16, 17, 20], [new(21, emote(Emotes.Happy, Original))]),
             end(),
             anchor("ML"),
-            command(() => SetNext(AfterJABody)),
+            next(() => AfterJABody),
         ], condition: () => _aJA && NodeYet(AfterJA1)),
 
         new(AfterJA2, [
@@ -68,7 +68,7 @@ internal class Avery : NodeEntry
             lines(2, 4, digit2("H", ""), [2]),
             end(),
             anchor("ML"),
-            command(() => SetNext(AfterJABody)),
+            next(() => AfterJABody),
         ], condition: () => _aJA && NodeDone(AfterJA1) && !GetBool(RacedOnce) && !NodeIP(Const.Events.GoldMedal)),
 
         new(AfterJABody, [
@@ -132,7 +132,7 @@ internal class Avery : NodeEntry
 
         new(RaceStart, [
             lines(1, 2, digit2, []),
-            command(() => SetNext(RaceStartBody)),
+            next(() => RaceStartBody),
         ], condition: () => GetBool(RacedOnce) && !NodeIP(Const.Events.GoldMedal)),
 
         new(RaceStartBody, [
@@ -180,7 +180,7 @@ internal class Avery : NodeEntry
 
         new(GoldMedal2, [
             lines(1, 5, digit2, [3]),
-            command(() => SetNext(RaceStartBody)),
+            next(() => RaceStartBody),
         ], condition: () => NodeActive(Const.Events.GoldMedal) && NodeDone(GoldMedal1), priority: -1),
 
         new(GoldMedal3, [

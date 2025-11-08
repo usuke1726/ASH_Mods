@@ -54,6 +54,7 @@ internal abstract class NodeEntryBase
     protected static UpdateNodeStateAction state(string nodeId, NodeStates state, string? anchor = null) => new(nodeId, state, anchor);
     protected static UpdateNodeStateAction done() => state(NodeStates.Done);
     protected static UpdateNodeStateAction done(string nodeId) => state(nodeId, NodeStates.Done);
+    protected static CommandAction next(Func<string> getNodeId, Characters? ch, string? anchor = null) => command(() => SetNext(getNodeId(), ch), anchor: anchor);
     protected static string digit1(int i) => $"{i}";
     protected static string digit2(int i) => $"{i:00}";
     protected static string digit3(int i) => $"{i:000}";
