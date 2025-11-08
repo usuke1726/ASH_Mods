@@ -42,7 +42,7 @@ internal class Noah : NodeEntry
                 ])
             ),
             done(),
-        ], condition: () => NodeDone(Start3) && NodeYet(Start3)),
+        ], condition: () => NodeDone(Start2) && NodeYet(Start3)),
 
         new(Start4, [
             lines(1, 7, digit2, [3, 5, 7], [new(6, emote(Emotes.Happy, Original))]),
@@ -67,7 +67,7 @@ internal class Noah : NodeEntry
         ], condition: () => NodeIP(Const.Events.Sunscreen) && NodeRefused(Sunscreen1), priority: 10),
 
         new(SunscreenAccept, [
-            lines(1, 15, digit2("O1"), [7, 11, 12, 15], [
+            lines(1, 15, digit2, [7, 11, 12, 15], [
                 new(1, emote(Emotes.Happy, Original)),
                 new(2, emote(Emotes.Normal, Original)),
                 new(6, emote(Emotes.Happy, Original)),
