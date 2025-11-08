@@ -67,6 +67,7 @@ internal static class NodeSelector
         "OrangeIslandsSign",
         "VisitorsCenterSignStart",
         "HawkPeakAltSignStart",
+        "HomeSignStart",
     ];
     internal static bool UseVanillaNode(DialogueInteractable dialogue)
     {
