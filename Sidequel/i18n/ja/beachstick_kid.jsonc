@@ -214,7 +214,7 @@
     "node.BeachstickGame.PoppedBallEnd2.08": "オーケー",
 
     "node.BeachstickKid.AfterGame.01": "わたしたちの最高記録は　{{BallHitsBest}}！",
-    "node.BeachstickKid.AfterGame.lt50.02": "はやく　50 ポイント　いきてぇな",
+    "node.BeachstickKid.AfterGame.lt50.02": "早く　50 ポイント　いきてぇな",
     "node.BeachstickKid.AfterGame.lt50.03": "うん！！再トライだ！！",
     "node.BeachstickKid.AfterGame.ge50.02": "悪くない　記録だ",
     "node.BeachstickKid.AfterGame.ge50.03": "わたしたち　史上最高の　コンビかも！！"
