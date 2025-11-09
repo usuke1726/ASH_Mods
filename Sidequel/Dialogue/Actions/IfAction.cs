@@ -32,7 +32,7 @@ internal class IfSingleAction : BaseAction, IInvokableInAction
         var self = this;
         while (true)
         {
-            var action = self.condition() ? trueAction : falseAction;
+            var action = self.condition() ? self.trueAction : self.falseAction;
             if (action is IfSingleAction nextIf)
             {
                 self = nextIf;
