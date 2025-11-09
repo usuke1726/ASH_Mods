@@ -1,5 +1,6 @@
 <Project>
     <Import Project="$(DirectoryBuildPropsPath)\..\Directory.Build.targets"/>
+    <Import Project="$(SolutionDir)Build.ConvertFontFile.xml"/>
 
     <ItemGroup>
         <I18nDefault Include="i18n\default\*.json;i18n\default\*.jsonc" />

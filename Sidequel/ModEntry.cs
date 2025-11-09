@@ -16,7 +16,7 @@ internal partial class ModEntry : Mod
     internal static class Global
     {
         public static IMonitor Monitor => instance.Monitor;
-        public static string I18nLocalize(string id, params IEnumerable<object> args) => FontSubstituterBase.Replace(instance.I18n_.Localize(id, args));
+        public static string I18nLocalize(string id, params IEnumerable<object> args) => FontSubstituter.Replace(instance.I18n_.Localize(id, args));
 
         [Conditional("DEBUG")]
         public static void Debug(string m, LL level = LL.Debug) => Monitor.Log(m, level, true);
@@ -27,7 +27,7 @@ internal partial class ModEntry : Mod
         State.Setup(helper);
         Cont.Setup(helper);
         Flags.Setup(helper);
-        FontSubstituterBase.Setup(helper);
+        FontSubstituter.Setup(this);
         new Character.Setup(helper);
         new Item.Setup(helper);
         new Dialogue.Setup(helper);

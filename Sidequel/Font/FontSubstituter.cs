@@ -1,5 +1,4 @@
 ﻿
-using System.Reflection;
 using HarmonyLib;
 using ModdingAPI;
 using TMPro;
@@ -7,31 +6,56 @@ using UnityEngine;
 
 namespace Sidequel.Font;
 
-internal abstract class FontSubstituterBase
+internal static class FontSubstituter
 {
     internal class CharacterData(char ch, string data)
     {
         internal readonly char ch = ch;
         internal readonly string data = data;
-    }
-    protected virtual bool DoNotAppend => false;
-    protected virtual void DebugOnReady() { }
-    protected abstract SystemLanguage Language { get; }
-    protected abstract Dictionary<int, CharacterData> RaplacingCharacters { get; }
-#if DEBUG
-    private static List<FontSubstituterBase> debugOnReadyHandlers = [];
-#endif
-    protected FontSubstituterBase()
-    {
-#if DEBUG
-        if (!DoNotAppend) handlers[Language] = this;
-        debugOnReadyHandlers.Add(this);
-#else
-        handlers[Language] = this;
-#endif
+        internal static Dictionary<int, CharacterData> Load(II18n i18n)
+        {
+            Dictionary<int, CharacterData> result = [];
+            int i = 0;
+            while (true)
+            {
+                var data = i18n.Localize($"font{i}");
+                if (string.IsNullOrEmpty(data)) return result;
+                try
+                {
+                    Parse(data, out var target, out var chData);
+                    result[target] = chData;
+                }
+                catch (Exception e)
+                {
+                    Debug($"FONT PARSING ERROR on font{i}: {e.Message}", LL.Error);
+                }
+                i++;
+            }
+        }
+        private static void Parse(string data, out int target, out CharacterData value)
+        {
+            value = null!;
+            target = default;
+            var d1 = data.Split(":", 2);
+            if (d1.Length != 2) throw new("missing colon");
+            var meta = d1[0];
+            var rowdata = d1[1];
+            var d2 = meta.Split(",", 4);
+            if (d2.Length != 4) throw new("meta data has not 4 values");
+            var _ch = d2[0];
+            if (_ch.Length != 1) throw new($"ch has not Length 2 (ch: {_ch})");
+            char ch = _ch[0];
+            if (!int.TryParse(d2[1], out target)) throw new($"second value is not integer (value: {d2[1]})");
+            if (!int.TryParse(d2[2], out var height)) throw new($"third value is not integer (value: {d2[2]})");
+            if (!int.TryParse(d2[3], out var width)) throw new($"fourth value is not integer (value: {d2[3]})");
+            if (rowdata.Length != height * width) throw new($"data size is inavlid (expected: {height} * {width} = {height * width}, actual: {rowdata.Length})");
+            value = new(
+                ch,
+                string.Join("\n", Enumerable.Range(0, height).Select(i => rowdata[(i * width)..((i + 1) * width)]))
+            );
+        }
     }
 
-    private static readonly Dictionary<SystemLanguage, FontSubstituterBase> handlers = [];
     private static readonly Dictionary<SystemLanguage, Texture2D> originalTextures = [];
     private static readonly Dictionary<SystemLanguage, Dictionary<int, bool[][]>> fontMapCache = [];
     private static readonly List<Tuple<char, char>> replaceMap = [];
@@ -39,30 +63,20 @@ internal abstract class FontSubstituterBase
     private static Texture2D texture = null!;
     private static SystemLanguage currentLanguage = SystemLanguage.English;
     private static bool wasSidequelActive = false;
-    internal static void Setup(IModHelper helper)
+    internal static void Setup(IMod mod)
     {
+        var helper = mod.Helper;
         helper.Events.System.LocaleChanged += (_, e) =>
         {
             Reset(e.OldLanguage);
             if ((currentLanguage = e.NewLanguage) == SystemLanguage.English) return;
-            if (handlers.TryGetValue(e.NewLanguage, out var handler))
+            SetFontAsset();
+            if (!fontMapCache.TryGetValue(e.NewLanguage, out fontMaps))
             {
-                SetFontAsset();
-                if (!fontMapCache.TryGetValue(e.NewLanguage, out fontMaps))
-                {
-                    originalTextures.TryAdd(e.NewLanguage, fontAsset.atlasTexture);
-                    SetFontMaps(e.NewLanguage, handler.RaplacingCharacters);
-                }
-                if (State.IsActive) Apply();
+                originalTextures.TryAdd(e.NewLanguage, fontAsset.atlasTexture);
+                SetFontMaps(e.NewLanguage, CharacterData.Load(mod.I18n_));
             }
-#if DEBUG
-            var h = debugOnReadyHandlers.Find(h => h.Language == e.NewLanguage);
-            if (h != null)
-            {
-                SetFontAsset();
-                h.DebugOnReady();
-            }
-#endif
+            if (State.IsActive) Apply();
         };
         helper.Events.Gameloop.GameStarted += (_, _) =>
         {
@@ -75,13 +89,6 @@ internal abstract class FontSubstituterBase
             if (wasSidequelActive) Reset(currentLanguage);
             wasSidequelActive = false;
         };
-        var asm = Assembly.GetExecutingAssembly();
-        var types = asm.DefinedTypes.Where(type => typeof(FontSubstituterBase).IsAssignableFrom(type) && !type.IsAbstract);
-        foreach (var type in types)
-        {
-            var constructor = type.GetConstructor([]);
-            constructor?.Invoke([]);
-        }
     }
 
     private static void SetFontAsset()
@@ -205,8 +212,5 @@ internal abstract class FontSubstituterBase
         }
     }
     internal static void Debug_PrintInfo(uint unicode, bool printData = true) => Debug_PrintInfo(Convert.ToChar(unicode), printData);
-    public sealed override bool Equals(object obj) => base.Equals(obj);
-    public sealed override string ToString() => base.ToString();
-    public sealed override int GetHashCode() => base.GetHashCode();
 }
 

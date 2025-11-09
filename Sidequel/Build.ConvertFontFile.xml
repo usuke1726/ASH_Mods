@@ -1,0 +1,98 @@
+<Project>
+    <PropertyGroup>
+        <FontPath>$(SolutionDir)Font</FontPath>
+    </PropertyGroup>
+    <Target Name="ConvertJaFonts" BeforeTargets="MergeI18nJsonJa" Inputs="$(FontPath)\ja.txt" Outputs="$(SolutionDir)i18n\ja\.font.json">
+        <ConvertFontFile FontPath="$(FontPath)" I18nPath="$(SolutionDir)i18n" Lang="ja" />
+    </Target>
+
+    <UsingTask TaskName="ConvertFontFile"
+        TaskFactory="CodeTaskFactory"
+        AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+        <ParameterGroup>
+            <FontPath ParameterType="System.String" Required="true" />
+            <I18nPath ParameterType="System.String" Required="true" />
+            <Lang ParameterType="System.String" Required="true" />
+        </ParameterGroup>
+        <Task>
+            <Using Namespace="System.Text.RegularExpressions" />
+            <Code Type="Fragment" Language="cs">
+<![CDATA[
+    var fontFilePath = string.Format("{0}\\{1}.txt", FontPath, Lang);
+    var outputFileDir = string.Format("{0}\\{1}", I18nPath, Lang);
+    var outputFilePath = string.Format("{0}\\.font.json", outputFileDir);
+    Func<string, bool> error = (s) => {
+        Log.LogError(s);
+        return false;
+    };
+    Log.LogMessage(MessageImportance.High, "=== Convert the font file to json\n\tfrom \"{0}\"\n\tto \"{1}\"", fontFilePath, outputFilePath);
+    if (!File.Exists(fontFilePath)){
+        return error(string.Format("Font path not found\n(path: {0})", fontFilePath));
+    }
+    if(!Directory.Exists(outputFileDir)){
+        return error(string.Format("Output directory not found\n(path: {0})", outputFileDir));
+    }
+    var output = new List<string>();
+    var metaPattern = new Regex("^(.)[ \t]*,[ \t]*([1-9][0-9]*)[ \t]*,[ \t]*([1-9][0-9]*)[ \t]*[,xX][ \t]*([1-9][0-9]*)$");
+    int width = 0;
+    int height = 0;
+    int target = 0;
+    char character = '0';
+    int lineCount = 0;
+    var lines = File.ReadLines(fontFilePath);
+    bool isFirstEntry = true;
+    string data = "";
+    foreach (var _line in lines)
+    {
+        var line = _line.Trim();
+        if (line.Length == 0 || line.StartsWith("//")) continue;
+        var m = metaPattern.Match(line);
+        if (!m.Success && isFirstEntry) return error("");
+        if (m.Success)
+        {
+            if (!isFirstEntry)
+            {
+                if (lineCount != height)
+                {
+                    return error(string.Format("Wrong height data\n(expected: {0}, actual: {1})", height, lineCount));
+                }
+                output.Add(string.Format("{0},{1},{2},{3}:{4}", character, target, height, width, data));
+            }
+            isFirstEntry = false;
+            character = m.Groups[1].Value[0];
+            target = int.Parse(m.Groups[2].Value);
+            height = int.Parse(m.Groups[3].Value);
+            width = int.Parse(m.Groups[4].Value);
+            data = "";
+            lineCount = 0;
+        }
+        else
+        {
+            if (Regex.IsMatch(line, "[^01.#]")) return error("Data may contain only characters '0', '1', '.' and '#'");
+            if (line.Length != width) return error(string.Format("Invalid width (expected {0})\nat line \"{1}\"", width, line));
+            data += line;
+            lineCount++;
+        }
+    }
+    if (!isFirstEntry)
+    {
+        if (lineCount != height)
+        {
+            return error(string.Format("Wrong height data\n(expected: {0}, actual: {1})", height, lineCount));
+        }
+        output.Add(string.Format("{0},{1},{2},{3}:{4}", character, target, height, width, data));
+    }
+    if (output.Count > 0)
+    {
+        var indent = new string(' ', 4);
+        var contents = "{\n" + string.Join(",\n", Enumerable.Range(0, output.Count)
+            .Select(i => string.Format("{0}\"font{1}\": \"{2}\"", indent, i, output[i]))
+        ) + "\n}";
+        File.WriteAllLines(outputFilePath, contents.Split('\n'));
+    }
+    Log.LogMessage(MessageImportance.High, "font parse done");
+]]>
+            </Code>
+        </Task>
+    </UsingTask>
+</Project>
