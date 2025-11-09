@@ -1,5 +1,6 @@
 ﻿
 using ModdingAPI;
+using UnityEngine;
 using Checkpoints = Sidequel.Const.PatrolCheckpoints;
 
 namespace Sidequel.System.Patrol;
@@ -23,6 +24,14 @@ internal static class PassingStateRegistory
     {
         if (unpassedIds.Count == 0) return default;
         return unpassedIds.PickRandom();
+    }
+    internal static void OnEventDone()
+    {
+        foreach (var checkpoint in checkpoints.Values)
+        {
+            GameObject.Destroy(checkpoint.gameObject);
+        }
+        checkpoints.Clear();
     }
     internal static void Setup(IModHelper helper)
     {
