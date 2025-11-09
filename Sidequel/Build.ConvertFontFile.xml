@@ -33,10 +33,10 @@
         return error(string.Format("Output directory not found\n(path: {0})", outputFileDir));
     }
     var output = new List<string>();
-    var metaPattern = new Regex("^(.)[ \t]*,[ \t]*([1-9][0-9]*)[ \t]*,[ \t]*([1-9][0-9]*)[ \t]*[,xX][ \t]*([1-9][0-9]*)$");
+    var metaPattern = new Regex("^(.)[ \t]*,[ \t]*([^ \t,])[ \t]*,[ \t]*([1-9][0-9]*)[ \t]*[,xX][ \t]*([1-9][0-9]*)$");
     int width = 0;
     int height = 0;
-    int target = 0;
+    char oldCh = '0';
     char character = '0';
     int lineCount = 0;
     var lines = File.ReadLines(fontFilePath);
@@ -56,11 +56,11 @@
                 {
                     return error(string.Format("Wrong height data\n(expected: {0}, actual: {1})", height, lineCount));
                 }
-                output.Add(string.Format("{0},{1},{2},{3}:{4}", character, target, height, width, data));
+                output.Add(string.Format("{0},{1},{2},{3}:{4}", character, oldCh, height, width, data));
             }
             isFirstEntry = false;
             character = m.Groups[1].Value[0];
-            target = int.Parse(m.Groups[2].Value);
+            oldCh = m.Groups[2].Value[0];
             height = int.Parse(m.Groups[3].Value);
             width = int.Parse(m.Groups[4].Value);
             data = "";
@@ -80,7 +80,7 @@
         {
             return error(string.Format("Wrong height data\n(expected: {0}, actual: {1})", height, lineCount));
         }
-        output.Add(string.Format("{0},{1},{2},{3}:{4}", character, target, height, width, data));
+        output.Add(string.Format("{0},{1},{2},{3}:{4}", character, oldCh, height, width, data));
     }
     if (output.Count > 0)
     {

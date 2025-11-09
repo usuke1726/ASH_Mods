@@ -12,9 +12,9 @@ internal static class FontSubstituter
     {
         internal readonly char ch = ch;
         internal readonly string data = data;
-        internal static Dictionary<int, CharacterData> Load(II18n i18n)
+        internal static Dictionary<char, CharacterData> Load(II18n i18n)
         {
-            Dictionary<int, CharacterData> result = [];
+            Dictionary<char, CharacterData> result = [];
             int i = 0;
             while (true)
             {
@@ -32,7 +32,7 @@ internal static class FontSubstituter
                 i++;
             }
         }
-        private static void Parse(string data, out int target, out CharacterData value)
+        private static void Parse(string data, out char target, out CharacterData value)
         {
             value = null!;
             target = default;
@@ -43,9 +43,11 @@ internal static class FontSubstituter
             var d2 = meta.Split(",", 4);
             if (d2.Length != 4) throw new("meta data has not 4 values");
             var _ch = d2[0];
-            if (_ch.Length != 1) throw new($"ch has not Length 2 (ch: {_ch})");
+            if (_ch.Length != 1) throw new($"ch has not Length 1 (ch: \"{_ch}\")");
             char ch = _ch[0];
-            if (!int.TryParse(d2[1], out target)) throw new($"second value is not integer (value: {d2[1]})");
+            var _oldCh = d2[1];
+            if (_oldCh.Length != 1) throw new($"oldCh has not Length 1 (oldCh: \"{_ch}\")");
+            target = _oldCh[0];
             if (!int.TryParse(d2[2], out var height)) throw new($"third value is not integer (value: {d2[2]})");
             if (!int.TryParse(d2[3], out var width)) throw new($"fourth value is not integer (value: {d2[3]})");
             if (rowdata.Length != height * width) throw new($"data size is inavlid (expected: {height} * {width} = {height * width}, actual: {rowdata.Length})");
@@ -57,7 +59,7 @@ internal static class FontSubstituter
     }
 
     private static readonly Dictionary<SystemLanguage, Texture2D> originalTextures = [];
-    private static readonly Dictionary<SystemLanguage, Dictionary<int, bool[][]>> fontMapCache = [];
+    private static readonly Dictionary<SystemLanguage, Dictionary<char, bool[][]>> fontMapCache = [];
     private static readonly List<Tuple<char, char>> replaceMap = [];
     private static TMP_FontAsset fontAsset = null!;
     private static Texture2D texture = null!;
@@ -121,11 +123,14 @@ internal static class FontSubstituter
         if (texture == null) return;
         foreach (var map in fontMaps)
         {
-            var idx = map.Key;
+            var oldChar = map.Key;
             var tex = map.Value;
-            if (idx < 0 || fontAsset.characterTable.Count <= idx) continue;
-            var ch = fontAsset.characterTable[idx];
-            Debug($"replacing {Convert.ToChar(ch.unicode)}");
+            if (!fontAsset.characterLookupTable.TryGetValue(oldChar, out var ch))
+            {
+                Debug($"The oldCh '{oldChar}' is not contained in characterTable!!", LL.Error);
+                continue;
+            }
+            Debug($"replacing {oldChar} -> {replaceMap.Find(m => m.Item2 == oldChar)?.Item1}");
             var rect = ch.glyph.glyphRect;
             var width = Math.Min(rect.width, tex[0].Length);
             var height = Math.Min(rect.height, tex.Length);
@@ -153,18 +158,16 @@ internal static class FontSubstituter
         if (originalTextures.TryGetValue(language, out var tex)) SetTexture(tex);
     }
 
-    private static Dictionary<int, bool[][]> fontMaps = [];
-    private static void SetFontMaps(SystemLanguage language, Dictionary<int, CharacterData> rowMaps)
+    private static Dictionary<char, bool[][]> fontMaps = [];
+    private static void SetFontMaps(SystemLanguage language, Dictionary<char, CharacterData> rowMaps)
     {
         fontMaps = [];
-        var table = fontAsset.characterTable;
         replaceMap.Clear();
         foreach (var pair in rowMaps)
         {
-            var idx = pair.Key;
-            if (idx < 0 || table.Count <= idx) continue;
-            fontMaps[idx] = Parse(pair.Value.data);
-            replaceMap.Add(new(pair.Value.ch, Convert.ToChar(table[idx].unicode)));
+            var oldChar = pair.Key;
+            fontMaps[oldChar] = Parse(pair.Value.data);
+            replaceMap.Add(new(pair.Value.ch, oldChar));
         }
         fontMapCache[language] = fontMaps;
     }
