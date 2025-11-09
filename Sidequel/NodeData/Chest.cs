@@ -27,6 +27,7 @@ internal class Chest : NodeEntry
     }
     protected override Node[] Nodes => [
         new("chest", [
+            tag(Const.STags.HasCheckedChestOnce, true),
             command(() => {
                 hasChestInteractedJustNow = false;
                 didLastChestHaveItem = isItemIn;
@@ -51,6 +52,7 @@ internal class Chest : NodeEntry
             wait(0.8f),
             line("item2-1", Player),
             anchor("getItem"),
+            tag(Const.STags.HasGotItemFromChestOnce, true),
             @if(
                 () => itemInChest.Amount == 1,
                 item(() => itemInChest.Item.id),

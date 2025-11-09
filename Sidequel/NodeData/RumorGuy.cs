@@ -1,0 +1,108 @@
+﻿
+using ModdingAPI;
+using Sidequel.Dialogue;
+
+namespace Sidequel.NodeData;
+
+internal class RumorGuy : NodeEntry
+{
+    internal const string BeforeJA1 = "RumorGuy.BeforeJA1";
+    internal const string BeforeJA2 = "RumorGuy.BeforeJA2";
+    internal const string BeforeJA3 = "RumorGuy.BeforeJA3";
+    internal const string BeforeJA4 = "RumorGuy.BeforeJA4";
+    internal const string AfterJA1 = "RumorGuy.AfterJA1";
+    internal const string AfterJA2 = "RumorGuy.AfterJA2";
+    internal const string AfterJA3 = "RumorGuy.AfterJA3";
+    protected override Characters? Character => Characters.RumorGuy;
+    protected override Node[] Nodes => [
+        new(BeforeJA1, [
+            lines(1, 3, digit2, [2]),
+            option(["O1", "O2"]),
+            @if(() => LastSelected == 1, "refuse"),
+            lines(4, 18, digit2, [6, 9, 11, 15, 16, 18], [
+                new(14, emote(Emotes.Happy, Original)),
+                new(17, emote(Emotes.Normal, Original)),
+            ]),
+            done(),
+            end(),
+            anchor("refuse"),
+            line("O2.01", Original),
+        ], condition: () => _bJA && NodeYet(BeforeJA1)),
+
+        new(BeforeJA2, [
+            lines(1, 11, digit2, [1, 4, 8, 11]),
+            done(),
+        ], condition: () => _bJA && NodeDone(BeforeJA1) && NodeYet(BeforeJA2)),
+
+        new(BeforeJA3, [
+            lines(1, 16, digit2, [2, 7, 8, 11, 14, 16], [
+                new(15, emote(Emotes.Happy, Original)),
+            ]),
+            done(),
+        ], condition: () => _bJA && NodeDone(BeforeJA2) && NodeYet(BeforeJA3)),
+
+        new(BeforeJA4, [
+            lines(1, 4, digit2, [2, 4]),
+            done(),
+        ], condition: () => _bJA && NodeDone(BeforeJA3)),
+
+        new(AfterJA1, [
+            done(),
+            lines(1, 4, digit2, [], [new(4, emote(Emotes.Happy, Original))], replacer: Const.formatJATrigger),
+            emote(Emotes.Normal, Original),
+            @if(() => NodeDone(BeforeJA4),
+                lines(1, 4, digit2("BeforeJA4Done"), [1]),
+                lines(1, 2, digit2("BeforeJA4Yet"), [1])
+            ),
+            lines(5, 12, digit2, [8, 10]),
+            @switch(() => {
+                if(!GetBool(Const.STags.HasCheckedChestOnce)) return "hasNotChecked";
+                if(GetBool(Const.STags.HasGotItemFromChestOnce)) return "hasGotItem";
+                return "hasNotGotItem";
+            }),
+            anchor("hasNotChecked"),
+            lines(1, 1, digit2("HasNotChecked"), [1]),
+            end(),
+            anchor("hasGotItem"),
+            lines(1, 2, digit2("HasGotItem"), [1]),
+            end(),
+            anchor("hasNotGotItem"),
+            lines(1, 2, digit2("HasNotGotItem"), [1]),
+            end(),
+        ], condition: () => _aJA && NodeYet(AfterJA1)),
+
+        new(AfterJA2, [
+            lines(1, 4, digit2, [1]),
+            @if(() => GetBool(Const.STags.TalkedAboutWilOnce),
+                @if(() => NodeDone(BeforeJA3),
+                    lines(1, 1, digit2("BeforeJA3Done.WilKnown"), [1]),
+                    lines(1, 5, digit2("BeforeJA3Yet.WilKnown"), [1, 5], [
+                        new(2, emote(Emotes.Happy, Original)),
+                        new(3, emote(Emotes.Normal, Original)),
+                    ])
+                ),
+                @if(() => NodeDone(BeforeJA3),
+                    lines(1, 4, digit2("BeforeJA3Done.WilUnknown"), [1, 2, 4], [
+                        new(3, emote(Emotes.Happy, Original)),
+                        new(4, emote(Emotes.Normal, Original)),
+                    ]),
+                    lines(1, 5, digit2("BeforeJA3Yet.WilUnknown"), [1, 2, 5], [
+                        new(4, emote(Emotes.Happy, Original)),
+                        new(5, emote(Emotes.Normal, Original)),
+                    ])
+                )
+            ),
+            emote(Emotes.Normal, Original),
+            lines(5, 8, digit2, [6, 8]),
+            @if(() => _L, lines(9, 10, digit2("L", ""), [9], [
+                new(10, emote(Emotes.Happy, Original)),
+            ])),
+            done(),
+        ], condition: () => NodeDone(AfterJA1) && NodeYet(AfterJA2)),
+
+        new(AfterJA3, [
+            lines(1, 4, digit2, [1, 4]),
+        ], condition: () => NodeDone(AfterJA2)),
+    ];
+}
+
