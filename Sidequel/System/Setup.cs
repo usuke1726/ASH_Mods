@@ -14,6 +14,7 @@ internal class Setup
         STags.Setup(helper);
         EndGameController.Setup(helper);
         Binoculars.Setup(helper);
+        Music.Setup(helper);
         Patrol.PassingStateRegistory.Setup(helper);
     }
 }
