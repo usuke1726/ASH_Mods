@@ -10,6 +10,8 @@ internal static class Items
     public static readonly string Stick = "Stick";
     public static readonly string Pickaxe = "Pickaxe";
     public static readonly string Fish = "Fish";
+    public static readonly string Bait = "Bait";
+    public static readonly string FishEncyclopedia = "FishEncyclopedia";
     public static readonly string Bucket = "Bucket";
     public static readonly string WalkieTalkie = "WalkieTalkie";
     public static readonly string Compass = "Compass";
@@ -41,6 +43,30 @@ internal static class Items
     public static bool Has(Item.ItemWrapperBase item) => Num(item) > 0;
     public static int CoinsNum => Num(Coin);
     public static bool CoinsSavedUp => System.STags.GetBool(Const.STags.CoinsSavedUp);
+}
+
+internal static class FishNames
+{
+    internal const string Bluegill = "BluegillFish";
+    internal const string BrookTrout = "BrookTroutFish";
+    internal const string Burbot = "BurbotFish";
+    internal const string Carp = "CarpFish";
+    internal const string Catfish = "CatfishFish";
+    internal const string ChinookSalmon = "ChinookSalmonFish";
+    internal const string Crayfish = "CrayfishFish";
+    internal const string NorthernPike = "NorthernPikeFish";
+    internal const string PumpkinSeed = "PumpkinSeedFish";
+    internal const string RainbowTrout = "RainbowTroutFish";
+    internal const string SpottedBrookTrout = "SpottedBrookTroutFish";
+    internal const string WhiteBass = "WhiteBassFish";
+    internal const string WhitePerch = "WhitePerchFish";
+    internal const string YellowPerch = "YellowPerchFish";
+    internal static string ToI18nKey(Fish fish) => $"{ToI18nKey(fish.species)}{(fish.rare ? ".rare" : "")}";
+    internal static string ToI18nKey(FishSpecies fishSpecies)
+    {
+        Assert(fishSpecies.name.EndsWith("Fish"), $"fishSpecies name does not end with \"Fish\" ({fishSpecies.name})");
+        return fishSpecies.name[0..^4];
+    }
 }
 
 public enum Emotes

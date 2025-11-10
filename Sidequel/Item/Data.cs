@@ -309,6 +309,8 @@ internal static class Data
         ItemWrapperBase.TryLoad(Items.GoldenFeather);
         ItemWrapperBase.TryLoad(Items.WristWatch);
         ItemWrapperBase.TryLoad(Items.Fish);
+        ItemWrapperBase.TryLoad(Items.Bait);
+        ItemWrapperBase.TryLoad(Items.FishEncyclopedia);
         ItemWrapperBase.TryLoad(Items.Bucket);
         ItemWrapperBase.TryLoad(Items.WalkieTalkie);
         ItemWrapperBase.TryLoad(Items.Compass);

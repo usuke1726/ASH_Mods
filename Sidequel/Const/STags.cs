@@ -28,6 +28,11 @@ partial class Const
         internal const string HasCheckedChestOnce = "HasCheckedChestOnce";
         internal const string HasGotItemFromChestOnce = "HasGotItemFromChestOnce";
         internal const string LastGotBestFishScale = "LastGotBestFishScale";
+        internal const string SoldFishBait = "SoldFishBait";
+        internal const string SoldFish = "SoldFish";
+        internal const string HeldFish = "HeldFish";
+        internal const string BiggestFish = "BiggestFish";
+        internal const string FishCatchCount = "FishCatchCount";
     }
 }
 
