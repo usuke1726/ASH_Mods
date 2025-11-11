@@ -43,6 +43,15 @@ internal static class Items
     public static bool Has(Item.ItemWrapperBase item) => Num(item) > 0;
     public static int CoinsNum => Num(Coin);
     public static bool CoinsSavedUp => System.STags.GetBool(Const.STags.CoinsSavedUp);
+    public static int ApproxDiff(int? coins = null)
+    {
+        if (CoinsSavedUp) return 0;
+        var diff = 400 - (coins ?? CoinsNum) + 5;
+        diff -= diff % 10;
+        return diff;
+    }
+    public static string ReplaceApproxDiff(string s) => ReplaceApproxDiff(CoinsNum, s);
+    public static string ReplaceApproxDiff(int coins, string s) => s.Replace("{{ApproxDiff}}", $"{ApproxDiff(coins)}");
 }
 
 internal static class FishNames
