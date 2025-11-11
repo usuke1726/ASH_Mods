@@ -58,7 +58,12 @@ internal class Music
             Assert(activeMusicSet != null, "activeMusicSet is null");
             var data = activeMusicSet!.musicSetData;
             Debug($"default fadeOutTime: {data.fadeOutTime} (name: {data.name})");
+            var defaultFadeOutTime = data.fadeOutTime;
             data.fadeOutTime = (float)time;
+            Timer.Register((float)time + 1f, () =>
+            {
+                data.fadeOutTime = defaultFadeOutTime;
+            });
         }
         Debug("start to fadeout music");
         manager.UnregisterAll();
