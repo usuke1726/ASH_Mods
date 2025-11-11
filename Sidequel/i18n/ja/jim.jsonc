@@ -1,8 +1,8 @@
 {
     "node.Jim.BeforeJA1.01": "やあ！",
     "node.Jim.BeforeJA1.02": "よお",
-    "node.Jim.BeforeJA1.AtOutlook.03": "お前も　展望台に　行くところ？",
-    "node.Jim.BeforeJA1.NotAtOutlook.03": "お前も　ここの　景色を　見に来たのかい？",
+    "node.Jim.BeforeJA1.NotAtOutlook.03": "お前も　展望台に　行くところ？",
+    "node.Jim.BeforeJA1.AtOutlook.03": "お前も　ここの　景色を　見に来たのかい？",
     "node.Jim.BeforeJA1.04": "いや　ただ　島を探索してるだけ",
     "node.Jim.BeforeJA1.05": "へえ！　何かいいもん　見つかった？",
     "node.Jim.BeforeJA1.06": "大したものは　何も　ねぇな",
@@ -160,7 +160,7 @@
     "node.Jim.Peak1.HasClimbed.01": "ああ　登ったよ",
     "node.Jim.Peak1.HasClimbed.02": "おおっ！",
     "node.Jim.Peak1.HasClimbed.03": "何枚で登った？",
-    "node.Jim.Peak1.HasClimbed.04": "4枚",
+    "node.Jim.Peak1.HasClimbed.04": "{{Num}}枚",
     "node.Jim.Peak1.HasClimbed.05": "マジ！？",
     "node.Jim.Peak1.HasClimbed.06": "あの　ウラワザは　本当だったんだ…！",
     "node.Jim.Peak1.HasClimbed.07": "ウラワザ…？",
@@ -175,6 +175,6 @@
     "node.Jim.Peak1.HowClimbed.06": "残念だったな",
 
     "node.Jim.Peak2.01": "頂上　登ったぜ",
-    "node.Jim.Peak2.02": "4枚でな",
+    "node.Jim.Peak2.02": "{{Num}}枚でな",
     "node.Jim.Peak2.03": "マジ！！？"
 }

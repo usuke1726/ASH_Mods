@@ -57,6 +57,7 @@ internal class Peak : NodeEntry
     internal static void OnReachedTop()
     {
         System.STags.SetBool(Const.STags.HasClimbedPeakOnce, true);
+        System.STags.SetInt(Const.STags.FeathersCountOnClimbedPeak, Items.Num(Items.GoldenFeather));
         isActive = true;
         Context.gameServiceLocator.levelUI.HideUI(true);
         Dialogue.DialogueController.instance.StartConversation(null);
