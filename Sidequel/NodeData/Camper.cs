@@ -41,6 +41,7 @@ internal class Camper : NodeEntry
                 new(19, item(Items.FishingRod)),
                 new(19, emote(Emotes.Happy, Original)),
             ]),
+            tag(Const.STags.HasBorrowedFishingRodOnce, true),
             done(),
         ], condition: () => NodeYet(High2) && _ML && NodeYet(BorrowRod1)),
 
@@ -51,6 +52,7 @@ internal class Camper : NodeEntry
                 new(12, item(Items.FishingRod)),
                 new(13, emote(Emotes.Happy, Original)),
             ]),
+            tag(Const.STags.HasBorrowedFishingRodOnce, true),
             done(),
         ], condition: () => NodeDone(High2) && _ML && NodeYet(BorrowRod2)),
 
