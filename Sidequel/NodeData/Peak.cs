@@ -34,17 +34,84 @@ internal class Peak : NodeEntry
             yield return conversation.ShowLine(line);
         }
     }
+    internal const string Entry = "Peak.Entry";
+    internal const string HighMidFirst = "Peak.HighMidFirst";
+    internal const string High = "Peak.High";
+    internal const string Mid = "Peak.Mid";
+    internal const string Low = "Peak.Low";
+    private static bool wasFirstClimbing = false;
     protected override Node[] Nodes => [
-        node("_debug_peak_cutscene", [
+        new(Entry, [
+            command(() => isActive = false),
             wait(2f),
-            new Mes("DUMMY PEAK (1)"),
+            next(() => {
+                if(wasFirstClimbing){
+                    return _H ? High : _M ? Mid : Low;
+                }else{
+                    return _HM ? HighMidFirst : Low;
+                }
+            }),
+        ], condition: () => isActive, priority: int.MaxValue),
+        new(HighMidFirst, [
             command(() => CameraActive = true),
-            wait(3f),
-            new Mes("DUMMY PEAK (2)"),
-            new Mes("DUMMY PEAK (3)"),
+            lines(1, 9, digit2, Player, [
+                new(3, wait(2f)),
+                new(5, wait(1f)),
+                new(7, wait(1f)),
+                new(9, command(() => CameraActive = false)),
+                new(9, wait(2f)),
+            ]),
+            wait(1f),
+        ], condition: () => false),
+        new(High, [
+            command(() => CameraActive = true),
+            lines(1, 4, digit2, Player, [
+                new(3, wait(2f)),
+            ]),
             command(() => CameraActive = false),
-        ]),
+        ], condition: () => false),
+        new(Mid, [
+            command(() => CameraActive = true),
+            lines(1, 4, digit2, Player, [
+                new(3, wait(2f)),
+            ]),
+            command(() => CameraActive = false),
+        ], condition: () => false),
+
+        new(Low, [
+            command(() => CameraActive = true),
+            lines(1, 3, digit2, Player, [
+                new(3, wait(1f)),
+            ]),
+            @if(() => wasFirstClimbing,
+                lines(1, 2, digit2("HasNotClibmed"), Player),
+                lines(1, 2, digit2("HasClibmedOnce"), Player)
+            ),
+            wait(1f),
+            line(4, Player),
+            @if(() => wasFirstClimbing,
+                lines(5, 6, digit2("HasNotClibmed"), Player),
+                line(5, Player)
+            ),
+            @if(() => Cont.IsEndingCont && Items.CoinsSavedUp, "ending"),
+            command(() => CameraActive = false),
+            end(),
+
+            anchor("ending"),
+            lines(7, 15, digit2, Player),
+            command(() => endingActive = true),
+            transition(() => {
+                System.Ending.CutsceneController.camera = camera;
+                System.Ending.Controller.Prepare();
+            }),
+        ], condition: () => false, onConversationFinish: () => {
+            if(endingActive){
+                endingActive = false;
+                System.Ending.Controller.StartScene();
+            }
+        }),
     ];
+    private static bool endingActive = false;
     internal override void OnGameStarted()
     {
         peakCutscene = GameObject.Find("/Cutscenes/PeakCutscene").transform;
@@ -56,7 +123,8 @@ internal class Peak : NodeEntry
     }
     internal static void OnReachedTop()
     {
-        System.STags.SetBool(Const.STags.HasClimbedPeakOnce, true);
+        wasFirstClimbing = !System.STags.GetBool(Const.STags.HasClimbedPeakOnce);
+        System.STags.SetBool(Const.STags.HasClimbedPeakOnce);
         System.STags.SetInt(Const.STags.FeathersCountOnClimbedPeak, Items.Num(Items.GoldenFeather));
         isActive = true;
         Context.gameServiceLocator.levelUI.HideUI(true);

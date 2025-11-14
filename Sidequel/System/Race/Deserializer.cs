@@ -12,7 +12,7 @@ internal static class Deserializer
     internal static readonly PlayerReplayData data = new() { frames = [.. Data.data.Select(DeserializeFrame)] };
 
 #if DEBUG && DEBUG_ACTIVATE_SERIALIZER
-    private static string SerializeFrame(PlayerReplayFrame frame)
+    internal static string SerializeFrame(PlayerReplayFrame frame)
     {
         byte[] data = [
             .. MemoryMarshal.Cast<int, byte>([frame.index]),
@@ -45,7 +45,7 @@ internal static class Deserializer
     }
 #endif
 
-    private static PlayerReplayFrame DeserializeFrame(string data)
+    internal static PlayerReplayFrame DeserializeFrame(string data)
     {
         var flags = Flags.Deserialize(data[0..2]);
         var bytes = Convert.FromBase64String(data[2..]);
