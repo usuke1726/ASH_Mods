@@ -15,6 +15,11 @@ internal class EmoteAction : BaseAction, IInvokableInAction
     }
     public override IEnumerator Invoke(IConversation conversation)
     {
+        Emote(conversation, speaker, emotion);
+        yield break;
+    }
+    internal static void Emote(IConversation conversation, string speaker, Emotes emotion)
+    {
         if (Character.TryGetCharacter(conversation, speaker, out var character))
         {
             switch (emotion)
@@ -35,7 +40,6 @@ internal class EmoteAction : BaseAction, IInvokableInAction
         {
             Debug($"failed to get character!!");
         }
-        yield break;
     }
 }
 

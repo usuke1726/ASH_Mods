@@ -83,6 +83,15 @@
     "node.MoneySavedUp.EndingCont.HasClimbedOnce.04": "あと一回だけ　山頂に登るか…",
     "node.MoneySavedUp.EndingCont.HasNotClimbed.04": "せっかく　この島に来たんだ\n山頂に一度　登ってみようか…",
 
+    "node.LeadEndingCont.01": "ふぅ…",
+    "node.LeadEndingCont.02": "何だかんだ言って　案外何とかなったな…",
+    "node.LeadEndingCont.03": "無事に400コインも貯まった",
+    "node.LeadEndingCont.04": "色々な経験もできた",
+    "node.LeadEndingCont.05": "もう　この島に思い残すことはないか…",
+    "node.LeadEndingCont.06": "いや",
+    "node.LeadEndingCont.HasClimbedOnce.07": "あと一回だけ　山頂に登るか…",
+    "node.LeadEndingCont.HasNotClimbed.07": "せっかく　この島に来たんだ\n山頂に一度　登ってみようか…",
+
     "node.Peak.HighMidFirst.01": "ふぅ…",
     "node.Peak.HighMidFirst.02": "やっと　山頂に着いたか…",
     "node.Peak.HighMidFirst.03": "これが",

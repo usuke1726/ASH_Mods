@@ -87,23 +87,22 @@ internal class DialogueController : MonoBehaviour
             {
                 if (nextNode != null)
                 {
-                    if (currentNode.onConversationFinish != null)
-                    {
-                        currentConversation.onConversationFinish -= currentNode.onConversationFinish;
-                    }
+                    CleanUpCurrentNode(false);
                     SetupNode(nextNode);
                     nextNode = null;
                     continue;
                 }
                 else if (NodeData.CoinReached.IsActive)
                 {
-                    if (currentNode.onConversationFinish != null)
-                    {
-                        currentConversation.onConversationFinish -= currentNode.onConversationFinish;
-                        currentNode.onConversationFinish();
-                    }
+                    CleanUpCurrentNode();
                     NodeData.CoinReached.SetSpeaker(currentConversation.originalSpeaker);
                     SetupNode(NodeData.CoinReached.node);
+                    continue;
+                }
+                else if (NodeData.LeadEndingCont.IsActive)
+                {
+                    CleanUpCurrentNode();
+                    SetupNode(NodeData.LeadEndingCont.node);
                     continue;
                 }
                 else break;
@@ -111,13 +110,21 @@ internal class DialogueController : MonoBehaviour
             yield return action.Invoke(currentConversation);
             if (action is OptionAction option) LastSelected = option.selected;
         }
-        if (currentNode.resetEmotions)
-        {
-            yield return new EmoteAction(Emotes.Normal, Character.Player).Invoke(currentConversation);
-            yield return new EmoteAction(Emotes.Normal, Character.Original).Invoke(currentConversation);
-        }
         forceKillCurrentDialogue = null;
         currentConversation.Kill();
+    }
+    private void CleanUpCurrentNode(bool callEvent = true)
+    {
+        if (currentNode.onConversationFinish != null)
+        {
+            currentConversation.onConversationFinish -= currentNode.onConversationFinish;
+            if (callEvent) currentNode.onConversationFinish();
+        }
+        if (currentNode.resetEmotions)
+        {
+            EmoteAction.Emote(currentConversation, Character.Player, Emotes.Normal);
+            EmoteAction.Emote(currentConversation, Character.Original, Emotes.Normal);
+        }
     }
 
     private void OnNewGameNode()
