@@ -38,6 +38,7 @@ internal class RumorGuy : NodeEntry
             lines(1, 16, digit2, [2, 7, 8, 11, 14, 16], [
                 new(15, emote(Emotes.Happy, Original)),
             ]),
+            cont(-3),
             done(),
         ], condition: () => _bJA && NodeDone(BeforeJA2) && NodeYet(BeforeJA3)),
 
@@ -48,6 +49,7 @@ internal class RumorGuy : NodeEntry
 
         new(AfterJA1, [
             done(),
+            cont(-3),
             lines(1, 4, digit2, [], [new(4, emote(Emotes.Happy, Original))], replacer: Const.formatJATrigger),
             emote(Emotes.Normal, Original),
             @if(() => NodeDone(BeforeJA4),
@@ -93,6 +95,7 @@ internal class RumorGuy : NodeEntry
                 )
             ),
             emote(Emotes.Normal, Original),
+            cont(-3),
             lines(5, 8, digit2, [6, 8]),
             @if(() => _L, lines(9, 10, digit2("L", ""), [9], [
                 new(10, emote(Emotes.Happy, Original)),

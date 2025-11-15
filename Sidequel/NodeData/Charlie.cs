@@ -40,6 +40,7 @@ internal class Charlie : NodeEntry
             lineif(() => Flags.JATriggeredByJon, "Jon.02", "Alex.02", Original),
             lines(3, 7, digit2, [3, 7], [new(6, emote(Emotes.Happy, Original))]),
             done(),
+            cont(-3),
         ], condition: () => _aJA && NodeYet(AfterJA1)),
 
         new(AfterJA2, [

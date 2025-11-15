@@ -96,6 +96,7 @@ internal class Jen : NodeEntry
             ]),
             lineif(() => _HM, "HM06", "L06", Player),
             lines(7, 9, digit2, [9], [new(9, item(Items.Pencil, 1))]),
+            cont(-3),
             lineif(() => _HM, "HM10", "L10", Player),
             line(11, Original),
             done(Const.Events.ScaleEvent),

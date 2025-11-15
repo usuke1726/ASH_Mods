@@ -25,6 +25,7 @@ internal class CompassGuy : NodeEntry
                 new(7, item(Items.Compass)),
                 new(7, emote(Emotes.Normal, Original))
             ]),
+            cont(-3),
             @if(() => _HM,
                 lines(10, 20, digit2("HM", ""), [10, 11, 12, 13, 19, 20]),
                 lines(10, 12, digit2("L", ""), [10, 11], [new(12, emote(Emotes.Happy, Original))])

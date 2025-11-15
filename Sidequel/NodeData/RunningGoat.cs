@@ -76,6 +76,8 @@ internal class RunningGoat : NodeEntry
             ),
             emote(Emotes.Happy, Original),
             lines(3, 4, digit2, [4]),
+            cont(-5, condition: () => NodeYet(AfterGoldMedal)),
+            done(),
         ], condition: () => NodeDone(Const.Events.GoldMedal)),
     ];
 }

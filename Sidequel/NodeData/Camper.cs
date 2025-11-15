@@ -43,6 +43,7 @@ internal class Camper : NodeEntry
             ]),
             tag(Const.STags.HasBorrowedFishingRodOnce, true),
             done(),
+            cont(-10),
         ], condition: () => NodeYet(High2) && _ML && NodeYet(BorrowRod1)),
 
         new(BorrowRod2, [
@@ -54,6 +55,7 @@ internal class Camper : NodeEntry
             ]),
             tag(Const.STags.HasBorrowedFishingRodOnce, true),
             done(),
+            cont(-10),
         ], condition: () => NodeDone(High2) && _ML && NodeYet(BorrowRod2)),
 
         new(MidBorrowingRod, [

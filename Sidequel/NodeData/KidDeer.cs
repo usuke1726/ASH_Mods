@@ -73,6 +73,8 @@ internal class KidDeer : NodeEntry
 
         new(Start4, [
             lines(1, 2, digit2, [2], [new(1, emote(Emotes.Happy, Original))]),
+            cont(-10, condition: () => NodeYet(Start4)),
+            done(),
         ], condition: () => NodeDone(Start2) && !CanStartAny && showedCount >= Start4Border),
 
         new(ItemFound, [

@@ -43,13 +43,18 @@ internal class Tim : NodeEntry
 
         new(Start2, [
             @if(() => NodeDone(HighMidStart1), line("HighMidStart1Done", Original)),
+            done(HighMidStart1),
+            done(LowStart1),
             lines(1, 4, digit2, []),
+            cont(-3),
             @if(() => _HM,
                 lines(1, 9, digit2("HM", ""), [1, 7, 8]),
                 lines(1, 7, digit2("L", ""), [1, 2, 6, 7])
             ),
             done(),
-        ], condition: () => NodeDone(LowStart1) && NodeYet(Start2)),
+        ], condition: () => (NodeDone(LowStart1) || (
+            _HM && NodeYet(HighMidStart1) && Alex.HasAlexMoved
+        )) && NodeYet(Start2)),
 
         new(Start3, [
             lines(1, 4, digit2, [3]),
@@ -68,6 +73,7 @@ internal class Tim : NodeEntry
                 lines(1, 8, digit2("H", ""), [1, 2, 4, 5, 8]),
                 lines(1, 9, digit2("M", ""), [1, 2, 3, 5, 6, 9])
             ),
+            cont(-5),
             done(),
         ], condition: () => _aJA && !TriggeredByJon && _HM && NodeYet(HighMidAfterJA2)),
     ];

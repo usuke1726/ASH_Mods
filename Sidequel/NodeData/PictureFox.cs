@@ -70,6 +70,7 @@ internal class PictureFox : NodeEntry
                 new(4, emote(Emotes.Happy, Original)),
             ]),
             command(() => acceptedTime = Time.time),
+            cont(-5),
             done(AfterJA1),
         ], condition: () => false),
 

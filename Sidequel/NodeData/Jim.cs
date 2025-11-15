@@ -92,6 +92,7 @@ internal class Jim : NodeEntry
                 new(48, item(Items.JimsAddressNote)),
                 new(52, emote(Emotes.Happy, Original)),
             ]),
+            cont(-20),
             done(),
         ], condition: () => NodeDone(AfterJA1) && NodeYet(AfterJA2), priority: 10),
 

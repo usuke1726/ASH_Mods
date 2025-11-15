@@ -65,6 +65,7 @@ internal class Jon : NodeEntry
                 new(22, emote(Emotes.Normal, Player)),
                 new(26, emote(Emotes.Happy, Original)),
             ]),
+            cont(-5),
             done(),
         ], condition: () => _bJA && NodeDone(BeforeJA1) && NodeYet(BeforeJA2)),
 
@@ -98,6 +99,7 @@ internal class Jon : NodeEntry
             ]),
             tag(Const.STags.JADone, true),
             tag(Const.STags.JATriggeredByJon, true),
+            cont(-5),
             done(),
         ], condition: () => _bJA && NodeDone(BeforeJA3)),
 
@@ -182,6 +184,7 @@ internal class Jon : NodeEntry
             line("01", Player),
             lines(digit2("MidCartersConfession"), Player, useId: false),
             lines(2, 6, digit2, []),
+            cont(-20),
             done(),
         ], condition: () => false),
 
@@ -193,6 +196,7 @@ internal class Jon : NodeEntry
         new(LowCartersConfessionToJon, [
             lines(digit2("LowCartersConfession"), Player, useId: false),
             lines(digit2, []),
+            cont(-20),
             done(),
         ], condition: () => false),
 
@@ -307,6 +311,7 @@ internal class Jon : NodeEntry
 
         new(OldPicture, [
             lines(1, 4, digit2, []),
+            cont(-10),
             done(),
         ], condition: () => Items.Has(Items.OldPicture) && NodeYet(OldPicture), priority: 5),
 
@@ -321,6 +326,7 @@ internal class Jon : NodeEntry
             line("O1.01", Original),
             item([Items.SouvenirMedal, Items.Coin], [-1, 10]),
             line("O1.02", Original),
+            cont(-5),
             done(),
             end(),
             anchor("refuse"),

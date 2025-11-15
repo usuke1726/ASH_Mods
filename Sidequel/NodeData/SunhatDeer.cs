@@ -53,10 +53,13 @@ internal class SunhatDeer : NodeEntry
 
         new(MidLow5, [
             lines(1, 5, digit2, [3, 4, 5]),
+            cont(-3, condition: () => NodeYet(MidLow5)),
+            done(),
         ], condition: () => NodeDone(MidLow4) && !HasBorrowedOnce),
 
         new(MidLow6, [
             lines(1, 6, digit2, [1, 2, 3, 5], [new(6, emote(Emotes.Happy, Original))]),
+            cont(-3),
             done(),
         ], condition: () => NodeDone(MidLow4) && HasBorrowedOnce && NodeYet(MidLow6), priority: 1),
 

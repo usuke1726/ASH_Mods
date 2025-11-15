@@ -50,6 +50,7 @@ internal class HydrationDog : NodeEntry
             lines(1, 8, digit2, [3, 8], [
                 new(7, emote(Emotes.Happy, Original)),
             ], replacer: Const.formatJATrigger),
+            cont(-3),
             done(),
         ], condition: () => _aJA && NodeYet(AfterJA1)),
 

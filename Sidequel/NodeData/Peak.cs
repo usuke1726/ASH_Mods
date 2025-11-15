@@ -33,6 +33,8 @@ internal class Peak : NodeEntry
         new(Entry, [
             command(() => isActive = false),
             wait(2f),
+            cont(-5, condition: () => NodeYet(Entry)),
+            done(),
             next(() => {
                 if(wasFirstClimbing){
                     return _HM ? HighMidFirst : Low;

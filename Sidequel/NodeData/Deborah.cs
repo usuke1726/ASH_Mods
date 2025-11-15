@@ -39,6 +39,7 @@ internal class Deborah : NodeEntry
                 new(10, emote(Emotes.Happy, Original)),
                 new(11, item(Items.Coin, 50)),
             ]),
+            cont(-10),
             done(),
         ], condition: () => NodeDone(Start1) && _L && NodeYet(Low1)),
 
@@ -94,6 +95,7 @@ internal class Deborah : NodeEntry
                 new(3, emote(Emotes.Normal, Original)),
                 new(4, emote(Emotes.Happy, Original)),
             ]),
+            cont(-5),
             done(AntiqueFigure1),
         ], condition: () => false),
 

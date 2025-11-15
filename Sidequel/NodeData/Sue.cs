@@ -62,6 +62,7 @@ internal class Sue : NodeEntry
             lines(12, 28, digit2, [14, 17, 24, 27, 28]),
             item(Items.RunningShoes),
             lines(29, 30, digit2, [30], [new(29, emote(Emotes.Happy, Original))]),
+            cont(-10),
             done(),
             command(OnEnd),
         ], condition: () => _aJA && NodeYet(AfterJA)),

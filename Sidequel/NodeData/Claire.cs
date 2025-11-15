@@ -44,6 +44,7 @@ internal class Claire : NodeEntry
             item(Items.Coin, 50),
             lines(15, 22, digit2, [15, 16, 18, 19, 21, 22]),
             done(),
+            cont(-15),
         ], condition: () => _aJA && NodeYet(AfterJA1)),
 
         new(AfterJA2, [
@@ -55,8 +56,12 @@ internal class Claire : NodeEntry
                 _ => "lt100"
             }),
             lines(1, 4, digit1("SavedUp"), [1, 2, 4], [new(3, emote(Emotes.Happy, Original))], anchor: "SavedUp"),
+            cont(-5, condition: () => NodeYet(AfterJA2)),
+            done(),
             end(),
             lines(1, 4, digit1("ge300"), [1, 2, 4], [new(3, emote(Emotes.Happy, Original))], anchor: "ge300"),
+            cont(-5, condition: () => NodeYet(AfterJA2)),
+            done(),
             end(),
             lines(1, 3, digit1("ge200"), [1, 3], [new(2, emote(Emotes.Happy, Original))], anchor: "ge200"),
             end(),

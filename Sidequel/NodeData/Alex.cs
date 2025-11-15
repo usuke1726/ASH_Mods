@@ -47,6 +47,7 @@ internal class Alex : NodeEntry
             lines(26, 28, digit2, Player),
             tag(Const.STags.JADone, true),
             tag(Const.STags.JATriggeredByJon, false),
+            cont(-5),
             command(() => Tim.timeTriggeredJAByAlex = Time.time),
         ], condition: () => _bJA),
 
@@ -126,6 +127,7 @@ internal class Alex : NodeEntry
                 new(17, emote(Emotes.Normal, Original)),
                 new(26, emote(Emotes.Happy, Original)),
             ]),
+            cont(-20),
             done(),
         ], condition: () => false),
 
@@ -140,6 +142,7 @@ internal class Alex : NodeEntry
         new(LowCartersConfessionToAlex, [
             lines(digit2("LowCartersConfession"), Player, useId: false),
             lines(digit2, []),
+            cont(-20),
             done(),
         ], condition: () => false),
 

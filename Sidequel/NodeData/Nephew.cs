@@ -25,6 +25,7 @@ internal class Nephew : NodeEntry
 
         new(AfterJA1, [
             lines(1, 12, digit2, [3, 6, 8, 9, 12]),
+            cont(-3),
             done(),
         ], condition: () => _aJA && NodeYet(AfterJA1)),
 

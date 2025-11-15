@@ -44,6 +44,7 @@ internal class Taylor : NodeEntry
                 lines(3, 4, digit2("L", ""), [3, 4])
             ),
             lines(5, 19, digit2, [8, 12, 18, 19]),
+            cont(-3),
             done(),
         ], condition: () => _aJA && NodeDone(Start2) && NodeYet(AfterJA1)),
 

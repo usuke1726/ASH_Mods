@@ -127,6 +127,7 @@ internal class May : NodeEntry
                 new(5, item(Items.Coin, 40)),
             ]),
             done(Const.Events.Patrol),
+            cont(-15),
             command(PassingStateRegistory.OnEventDone),
         ], condition: () => IsPatrolActive && IsPatrolFinishing),
 

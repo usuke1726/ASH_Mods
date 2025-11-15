@@ -32,6 +32,7 @@ internal class RunningLizard : NodeEntry
 
         new(AfterJA1, [
             lines(1, 9, digit2, [3, 6, 8]),
+            cont(-3),
             done(),
         ], condition: () => _aJA && NodeYet(AfterJA1), priority: -1),
 

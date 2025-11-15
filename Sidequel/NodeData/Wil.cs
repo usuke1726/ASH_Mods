@@ -76,6 +76,7 @@ internal class Wil : NodeEntry
                 new(7, emote(Emotes.Happy, Original)),
                 new(9, item(Items.Coin, 30)),
             ]),
+            cont(-10),
         ], condition: () => false),
 
         new(BoatInspectionRefuse, [
@@ -126,6 +127,7 @@ internal class Wil : NodeEntry
                 new(2, emote(Emotes.Happy, Original)),
             ]),
             command(() => soldCardInThisGame = true),
+            cont(-5),
             done(TradingCard1),
         ], condition: () => false),
 

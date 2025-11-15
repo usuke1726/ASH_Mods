@@ -77,6 +77,7 @@ internal class Sam : NodeEntry
                 new(7, item(Items.Coin, 30)),
                 new(8, emote(Emotes.Happy, Original)),
             ]),
+            cont(-10),
             done(Const.Events.Sunscreen),
         ], condition: () => NodeActive(Const.Events.Sunscreen) && HasStrongSunscreen, priority: 10),
 

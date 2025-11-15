@@ -63,6 +63,7 @@ internal class BeachstickKid : NodeEntry
             item(Items.Coin, 20),
             lines(13, 18, digit2, [13, 14, 17, 18]),
             state(StickEvent, NodeStates.Done),
+            cont(-5),
         ], condition: () => NodeIP(StickEvent) && (
             Items.Num(Items.Stick) >= 4 || (BeachstickGameStartPoint.HoldsStick && Items.Num(Items.Stick) >= 3)
         ), priority: 5),
@@ -279,6 +280,7 @@ internal class BeachstickGameEnd : StartNodeEntry
             command(UpdateHighscore),
             command(Unface),
             done(),
+            cont(-10),
         ], condition: () => NodeYet(End2) && CurrentGameScore >= TargetScore),
 
         new(End3, [
@@ -293,6 +295,7 @@ internal class BeachstickGameEnd : StartNodeEntry
             command(UpdateHighscore),
             command(Unface),
             done(),
+            cont(-10),
         ], condition: () => NodeDone(End1) && NodeYet(End3) && CurrentGameScore < TargetScore),
 
         new(End4, [

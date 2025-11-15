@@ -112,6 +112,7 @@ internal class Avery : NodeEntry
                 new(15, item(Items.WalkieTalkie)),
                 new(15, emote(Emotes.Happy, Original)),
             ]),
+            cont(-10),
         ], condition: () => RaceWon && isFirstRace, priority: 10),
 
         new(FirstRaceLose, [
@@ -128,6 +129,7 @@ internal class Avery : NodeEntry
                 new(16, item(Items.WalkieTalkie)),
                 new(16, emote(Emotes.Happy, Original)),
             ]),
+            cont(-10),
         ], condition: () => RaceLosed && isFirstRace, priority: 10),
 
         new(RaceStart, [

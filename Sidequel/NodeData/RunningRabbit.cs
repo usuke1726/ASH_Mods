@@ -41,6 +41,7 @@ internal class RunningRabbit : NodeEntry
         new(AfterJA, [
             lines(1, 2, digit2, [], replacer: Const.formatJATrigger),
             lines(3, 8, digit2, [4, 8]),
+            cont(-3),
             lineif(() => _HM, "HM09", "L09", Player),
             done(),
         ], condition: () => _aJA && NodeYet(AfterJA), priority: 1),
@@ -86,6 +87,8 @@ internal class RunningRabbit : NodeEntry
             lines(2, 6, digit2, [3, 4, 6], [
                 new(5, emote(Emotes.Happy, Original)),
             ]),
+            cont(-5, condition: () => NodeYet(AfterGoldMedal)),
+            done(),
         ], condition: () => NodeDone(Const.Events.GoldMedal), priority: 10),
     ];
 }

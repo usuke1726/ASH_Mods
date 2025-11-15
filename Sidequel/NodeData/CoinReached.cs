@@ -16,6 +16,7 @@ internal class CoinReached : NodeEntry
     internal static Node node = new(Id, [
         command(() => IsActive = false),
         wait(1f),
+        cont(-10),
         lines(1, 3, digit2, Player),
         wait(1f),
         line(4, Player),

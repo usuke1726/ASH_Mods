@@ -35,6 +35,7 @@ internal class ShipWorker : NodeEntry
                 new(3, emote(Emotes.Happy, Original)),
                 new(4, emote(Emotes.Normal, Original)),
             ]),
+            cont(-3),
             done(),
         ], condition: () => NodeDone(Start1) && NodeYet(Start2)),
 
@@ -48,6 +49,7 @@ internal class ShipWorker : NodeEntry
                 new(16, emote(Emotes.Normal, Original)),
                 new(19, emote(Emotes.Happy, Original)),
             ]),
+            cont(-3),
             done(),
         ], condition: () => _aJA && NodeDone(Start2) && NodeYet(AfterJA1)),
 
@@ -186,6 +188,8 @@ internal class SellFishNode : NodeEntry
         new(Rare, [
             command(() => coins = rareFishPrices[fish.species.name]),
             lines(i => $"ShipWorker.Fish.{FishNames.ToI18nKey(fish.species)}.{i:00}", ShipWorker1, replacer: s => s.Replace("{{Coin}}", $"{coins}"), useId: false),
+            cont(-10, condition: () => NodeYet(Rare)),
+            done(),
             item(() => Items.Coin, () => coins),
             next(() => AfterSold),
         ], condition: () => false),

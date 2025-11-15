@@ -30,6 +30,7 @@ internal class Artist : NodeEntry
 
         new(Mid2, [
             lines(1, 58, digit2, [2, 3, 4, 12, 13, 14, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 29, 30, 33, 34, 35, 36, 37, 38, 41, 48, 49, 51, 52, 53, 58]),
+            cont(-5),
             done(),
         ], condition: () => _M && NodeDone(HighMid1) && NodeYet(Mid2)),
 
@@ -41,6 +42,7 @@ internal class Artist : NodeEntry
                 new(38, emote(Emotes.Normal, Player)),
                 new(41, emote(Emotes.Normal, Original)),
             ]),
+            cont(-10),
             @if(() => _M,
                 lines(43, 53, digit2("M", ""), [43, 44, 45, 48, 49, 53], [
                     new(51, emote(Emotes.Happy, Original)),
