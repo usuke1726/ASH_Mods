@@ -23,17 +23,6 @@ internal class Peak : NodeEntry
             moon.gameObject.SetActive(value);
         }
     }
-#pragma warning disable IDE1006
-    private Node node(string id, List<BaseAction> actions) => new(id, actions, condition: () => isActive, priority: int.MaxValue, onConversationFinish: OnEnd);
-#pragma warning restore IDE1006
-    private class Mes(string line) : BaseAction(ActionType.Line)
-    {
-        public override IEnumerator Invoke(IConversation conversation)
-        {
-            conversation.currentSpeaker = Context.player.transform;
-            yield return conversation.ShowLine(line);
-        }
-    }
     internal const string Entry = "Peak.Entry";
     internal const string HighMidFirst = "Peak.HighMidFirst";
     internal const string High = "Peak.High";
@@ -46,9 +35,9 @@ internal class Peak : NodeEntry
             wait(2f),
             next(() => {
                 if(wasFirstClimbing){
-                    return _H ? High : _M ? Mid : Low;
-                }else{
                     return _HM ? HighMidFirst : Low;
+                }else{
+                    return _H ? High : _M ? Mid : Low;
                 }
             }),
         ], condition: () => isActive, priority: int.MaxValue),
@@ -62,21 +51,21 @@ internal class Peak : NodeEntry
                 new(9, wait(2f)),
             ]),
             wait(1f),
-        ], condition: () => false),
+        ], condition: () => false, onConversationFinish: OnEnd),
         new(High, [
             command(() => CameraActive = true),
             lines(1, 4, digit2, Player, [
                 new(3, wait(2f)),
             ]),
             command(() => CameraActive = false),
-        ], condition: () => false),
+        ], condition: () => false, onConversationFinish: OnEnd),
         new(Mid, [
             command(() => CameraActive = true),
             lines(1, 4, digit2, Player, [
                 new(3, wait(2f)),
             ]),
             command(() => CameraActive = false),
-        ], condition: () => false),
+        ], condition: () => false, onConversationFinish: OnEnd),
 
         new(Low, [
             command(() => CameraActive = true),
@@ -108,6 +97,8 @@ internal class Peak : NodeEntry
             if(endingActive){
                 endingActive = false;
                 System.Ending.Controller.StartScene();
+            }else{
+                OnEnd();
             }
         }),
     ];
