@@ -74,7 +74,7 @@ internal static class Cont
         var wasNotEndingCont = !IsEndingCont;
         value += val;
         Save();
-        if (wasNotEndingCont && IsEndingCont) OnReachedEndingCont();
+        if (wasNotEndingCont && IsEndingCont) OnReachedEndingCont?.Invoke();
     }
 }
 
