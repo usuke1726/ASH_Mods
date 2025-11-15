@@ -63,7 +63,7 @@ internal class Camper : NodeEntry
         new(ReturnRod, [
             lines(1, 2, digit2, []),
             option(["O1", "O2"]),
-            @if(() => LastSelected == 0, "return"),
+            @if(() => LastSelected == 1, "return"),
             lines(1, 2, digit2("O1"), [], [new(1, emote(Emotes.Happy, Original))]),
             end(),
             anchor("return"),
