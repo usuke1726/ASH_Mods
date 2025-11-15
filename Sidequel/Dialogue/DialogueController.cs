@@ -85,14 +85,28 @@ internal class DialogueController : MonoBehaviour
             var action = currentNode.NextAction();
             if (action is NodeCompleteAction end && end.End())
             {
-                if (nextNode == null) break;
-                if (currentNode.onConversationFinish != null)
+                if (nextNode != null)
                 {
-                    currentConversation.onConversationFinish -= currentNode.onConversationFinish;
+                    if (currentNode.onConversationFinish != null)
+                    {
+                        currentConversation.onConversationFinish -= currentNode.onConversationFinish;
+                    }
+                    SetupNode(nextNode);
+                    nextNode = null;
+                    continue;
                 }
-                SetupNode(nextNode);
-                nextNode = null;
-                continue;
+                else if (NodeData.CoinReached.IsActive)
+                {
+                    if (currentNode.onConversationFinish != null)
+                    {
+                        currentConversation.onConversationFinish -= currentNode.onConversationFinish;
+                        currentNode.onConversationFinish();
+                    }
+                    NodeData.CoinReached.SetSpeaker(currentConversation.originalSpeaker);
+                    SetupNode(NodeData.CoinReached.node);
+                    continue;
+                }
+                else break;
             }
             yield return action.Invoke(currentConversation);
             if (action is OptionAction option) LastSelected = option.selected;

@@ -73,7 +73,11 @@ internal static class DataHandler
         var value = Math.Max(collected[item.id] + amount, 0);
         collected[item.id] = value;
         if (item.id == Items.GoldenFeather) OnGoldenFeathersChanged(value);
-        else if (item.id == Items.Coin) Context.levelUI.statusBar.ShowCollection(item.item).HideAndKill(3f);
+        else if (item.id == Items.Coin)
+        {
+            Context.levelUI.statusBar.ShowCollection(item.item).HideAndKill(3f);
+            if (Items.CoinsNum >= 400) NodeData.CoinReached.OnReached();
+        }
         WriteToSaveData();
     }
     internal static void AddCollected(string id, int amount, bool equipAction = false)
