@@ -108,5 +108,23 @@
     "node.RumorGuy.AfterJA3.01": "他には？",
     "node.RumorGuy.AfterJA3.02": "うーん",
     "node.RumorGuy.AfterJA3.03": "これで　おしまいね",
-    "node.RumorGuy.AfterJA3.04": "そうか"
+    "node.RumorGuy.AfterJA3.04": "そうか",
+
+    "node.RumorGuy.CuteEmptyCan.01": "宝箱から　何か見つけてきた？",
+    "node.RumorGuy.CuteEmptyCan.MoreThanOne.01": "まあ　いくつか見つけてきたが…",
+    "node.RumorGuy.CuteEmptyCan.MoreThanOne.02": "例えばこんなのは　どうだ？",
+    "node.RumorGuy.CuteEmptyCan.OnlyOne.01": "ああ　こんなの見つけたぜ",
+    "node.RumorGuy.CuteEmptyCan.02": "何コレ　空きカン？",
+    "node.RumorGuy.CuteEmptyCan.03": "結構かわいい　デザインじゃない！",
+    "node.RumorGuy.CuteEmptyCan.04": "これに　いくら出せる？",
+    "node.RumorGuy.CuteEmptyCan.05": "そうね…",
+    "node.RumorGuy.CuteEmptyCan.06": "5コインくらい　かしら",
+    "node.RumorGuy.CuteEmptyCan.07": "売ってくれるの？",
+    "node.RumorGuy.CuteEmptyCan.O1": "ああ　いいぜ",
+    "node.RumorGuy.CuteEmptyCan.O2": "やっぱ　売らねぇ",
+    "node.RumorGuy.CuteEmptyCan.O1.01": "やった！",
+    "node.RumorGuy.CuteEmptyCan.O1.02": "取引成立ね",
+    "node.RumorGuy.CuteEmptyCan.O1.03": "またね！",
+    "node.RumorGuy.CuteEmptyCan.O1.04": "おう",
+    "node.RumorGuy.CuteEmptyCan.O2.01": "あら　残念…"
 }

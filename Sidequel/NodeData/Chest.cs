@@ -53,6 +53,7 @@ internal class Chest : NodeEntry
             line("item2-1", Player),
             anchor("getItem"),
             tag(Const.STags.HasGotItemFromChestOnce, true),
+            tag(Const.STags.ItemCountFromChest, () => GetInt(Const.STags.ItemCountFromChest) + 1),
             @if(
                 () => itemInChest.Amount == 1,
                 item(() => itemInChest.Item.id),

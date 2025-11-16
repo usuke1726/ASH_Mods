@@ -13,6 +13,7 @@ internal class RumorGuy : NodeEntry
     internal const string AfterJA1 = "RumorGuy.AfterJA1";
     internal const string AfterJA2 = "RumorGuy.AfterJA2";
     internal const string AfterJA3 = "RumorGuy.AfterJA3";
+    internal const string CuteEmptyCan = "RumorGuy.CuteEmptyCan";
     protected override Characters? Character => Characters.RumorGuy;
     protected override Node[] Nodes => [
         new(BeforeJA1, [
@@ -106,6 +107,31 @@ internal class RumorGuy : NodeEntry
         new(AfterJA3, [
             lines(1, 4, digit2, [1, 4]),
         ], condition: () => NodeDone(AfterJA2)),
+
+        new(CuteEmptyCan, [
+            line(1, Original),
+            @if(() => GetInt(Const.STags.ItemCountFromChest) > 1,
+                lines(1, 2, digit2("MoreThanOne"), Player),
+                lines(1, 1, digit2("OnlyOne"), Player)
+            ),
+            lines(2, 7, digit2, [4], [
+                new(3, emote(Emotes.Happy, Original)),
+                new(4, emote(Emotes.Normal, Original)),
+            ]),
+            option(["O1", "O2"]),
+            @if(() => LastSelected == 0, "accept"),
+            lines(1, 1, digit2("O2"), []),
+            state(NodeStates.Refused),
+            end(),
+            anchor("accept"),
+            lines(1, 4, digit2("O1"), [4], [
+                new(1, emote(Emotes.Happy, Original)),
+                new(3, emote(Emotes.Normal, Original)),
+                new(3, item([Items.CuteEmptyCan, Items.Coin], [-1, 5])),
+                new(3, emote(Emotes.Happy, Original)),
+            ]),
+            done(),
+        ], condition: () => NodeDone(AfterJA1) && Items.Has(Items.CuteEmptyCan) && NodeYet(CuteEmptyCan), priority: 5),
     ];
 }
 
