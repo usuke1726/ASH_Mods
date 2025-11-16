@@ -110,6 +110,7 @@ internal class DialogueController : MonoBehaviour
             yield return action.Invoke(currentConversation);
             if (action is OptionAction option) LastSelected = option.selected;
         }
+        CleanUpCurrentNode();
         forceKillCurrentDialogue = null;
         currentConversation.Kill();
     }
