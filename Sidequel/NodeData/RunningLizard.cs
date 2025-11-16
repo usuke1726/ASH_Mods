@@ -1,6 +1,8 @@
 ﻿
+using HarmonyLib;
 using ModdingAPI;
 using Sidequel.Dialogue;
+using UnityEngine;
 
 namespace Sidequel.NodeData;
 
@@ -53,5 +55,28 @@ internal class RunningLizard : NodeEntry
             lines(1, 2, digit2, []),
         ], condition: () => NodeDone(Const.Events.GoldMedal)),
     ];
+
+    private static bool eventSet = false;
+    internal override void OnGameStarted()
+    {
+        if (!eventSet)
+        {
+            eventSet = true;
+            GoldMedalEnd.OnPreparing += () =>
+            {
+                var ch = Ch(Characters.RunningLizard);
+                ch.transform.position = new(618.991f, 130.3616f, 423.1335f);
+                ch.transform.localRotation = Quaternion.Euler(0, 172.5071f, 0);
+                Sidequel.Character.Pose.Set(ch.transform, Poses.Standing);
+                var path = ch.transform.GetComponent<PathNPCMovement>();
+                path.maxSpeed = 0.001f;
+                path.enabled = false;
+                ch.transform.GetComponentInChildren<Rigidbody>().isKinematic = true;
+                var range = ch.transform.GetComponent<RangedInteractable>();
+                range.range = 4f;
+                Traverse.Create(range).Field("rangeSqr").SetValue(16f);
+            };
+        }
+    }
 }
 

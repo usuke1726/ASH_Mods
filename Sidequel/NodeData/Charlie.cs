@@ -1,6 +1,7 @@
 ﻿
 using ModdingAPI;
 using Sidequel.Dialogue;
+using UnityEngine;
 
 namespace Sidequel.NodeData;
 
@@ -75,15 +76,22 @@ internal class Charlie : NodeEntry
 
         new(AfterGoldMedal, [
             lines(digit2, Original),
-        ], condition: () => goldMedalEventDoneInThisGame, priority: 10),
+        ], condition: () => GoldMedalEnd.EventDoneInThisGame, priority: 10),
     ];
-    private bool goldMedalEventDoneInThisGame = false;
+    private static bool eventSet = false;
     internal override void OnGameStarted()
     {
-        Flags.OnStateChanged(Const.Events.GoldMedal, info =>
+        if (!eventSet)
         {
-            goldMedalEventDoneInThisGame = info.value == NodeStates.Done;
-        });
+            eventSet = true;
+            GoldMedalEnd.OnPreparing += () =>
+            {
+                var ch = Ch(Characters.Charlie2);
+                ch.transform.position = new(620.7261f, 132.8165f, 408.0128f);
+                ch.transform.localRotation = Quaternion.Euler(0, 15.2164f, 0);
+                Sidequel.Character.Pose.Set(ch.transform, Poses.Standing);
+            };
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿
 using ModdingAPI;
 using Sidequel.Dialogue;
+using Sidequel.Dialogue.Actions;
 using UnityEngine;
 using Shadow = UnityEngine.Rendering.ShadowCastingMode;
 
@@ -214,7 +215,7 @@ internal class Wil : NodeEntry
                 deer.position = new(627.5654f, 130.601f, 413.8763f);
                 CastShadows = true;
                 Sidequel.Character.Pose.Set(deer, Poses.Standing);
-                book.gameObject.SetActive(false);
+                //book.gameObject.SetActive(false);
             };
         }
     }
@@ -272,9 +273,54 @@ internal class GoldMedalEnd : NodeEntry
 {
     internal const string Entry = "GoldMedal.End";
     internal const string Wil = "DadBoatDeer1";
+    internal const string Goat = "RunningGoat";
+    internal const string Lizard = "RunningLizard";
+    internal const string Rabbit = "RunningRabbit";
+    internal const string Charlie = "Charlie2";
     internal static bool EventDoneInThisGame { get; private set; } = false;
     internal static event Action OnPreparing = null!;
+    private readonly Dictionary<string, ICanLook> lookAtDict = [];
     protected override Characters? Character => null;
+    private CommandAction look(string? speaker) => new(() =>
+    {
+        if (speaker != null)
+        {
+            if (!ModdingAPI.Character.TryGet(speaker, out var character)) return;
+            foreach (var pair in lookAtDict)
+            {
+                pair.Value.lookAt = pair.Key == speaker ? null : character.transform;
+            }
+        }
+        else
+        {
+            foreach (var pair in lookAtDict)
+            {
+                if (pair.Key == speaker) continue;
+                pair.Value.lookAt = null;
+            }
+        }
+    });
+    private IEnumerable<BaseAction> lines(int start, int end, string[] speakers, List<Tuple<int, IInvokableInAction>> actions)
+    {
+        int actionsIdx = 0;
+        List<BaseAction> ret = [];
+        for (int i = start; i <= end; i++)
+        {
+            while (actionsIdx < actions.Count)
+            {
+                var action = actions[actionsIdx];
+                if (action.Item1 != i) break;
+                actionsIdx++;
+                var a = action.Item2 as BaseAction;
+                Assert(a != null, "cannot cast to BaseAction");
+                ret.Add(a!);
+            }
+            var sp = speakers[i - start];
+            ret.Add(look(sp));
+            ret.Add(line(i, sp));
+        }
+        return ret;
+    }
     protected override Node[] Nodes => [
         new(Entry, [
             command(() => {
@@ -282,7 +328,20 @@ internal class GoldMedalEnd : NodeEntry
             }),
             done(Const.Events.GoldMedal),
             wait(1f),
-            lines(digit2, Wil),
+            .. lines(1, 9, [
+                Wil,
+                Player,
+                Wil,
+                Goat,
+                Lizard,
+                Rabbit,
+                Charlie,
+                Player,
+                Wil,
+            ], [
+
+            ]),
+            look(null),
             item(Items.Coin, 150),
             cont(-20),
         ], condition: () => false),
@@ -298,6 +357,15 @@ internal class GoldMedalEnd : NodeEntry
     internal override void OnGameStarted()
     {
         EventDoneInThisGame = false;
+        ModdingAPI.Character.OnSetupDone(() =>
+        {
+            lookAtDict[Player] = Ch(Characters.Claire).transform.GetComponentInChildren<PlayerIKAnimator>();
+            lookAtDict[Wil] = Ch(Characters.DadBoatDeer1).transform.GetComponentInChildren<NPCIKAnimator>();
+            lookAtDict[Goat] = Ch(Characters.RunningGoat).transform.GetComponentInChildren<NPCIKAnimator>();
+            lookAtDict[Rabbit] = Ch(Characters.RunningRabbit).transform.GetComponentInChildren<NPCIKAnimator>();
+            lookAtDict[Lizard] = Ch(Characters.RunningLizard).transform.GetComponentInChildren<NPCIKAnimator>();
+            lookAtDict[Charlie] = Ch(Characters.Charlie2).transform.GetComponentInChildren<NPCIKAnimator>();
+        });
     }
 }
 
