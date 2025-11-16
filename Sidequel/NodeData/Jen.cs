@@ -4,6 +4,7 @@ using ModdingAPI;
 using QuickUnityTools.Input;
 using Sidequel.Dialogue;
 using Sidequel.System;
+using Sidequel.System.Fishing;
 using UnityEngine;
 
 namespace Sidequel.NodeData;
@@ -222,13 +223,20 @@ internal class FishCollectPromptPatch
     [HarmonyPatch("Update")]
     internal static bool Patch(FishCollectPrompt __instance)
     {
-        if (!State.IsActive || !AfterFishing.IsReady) return true;
+        if (!State.IsActive || (!AfterFishing.IsReady && !BillScene.RunningCoroutine)) return true;
         var input = Traverse.Create(__instance).Field("input").GetValue<FocusableUserInput>();
         if (input.WasDismissPressed())
         {
-            AfterFishing.hasCaughtFishJustNow = true;
             GameObject.Destroy(__instance.gameObject);
-            Dialogue.DialogueController.instance.StartConversation(null);
+            if (BillScene.RunningCoroutine)
+            {
+                BillScene.OnPromptClosed();
+            }
+            else
+            {
+                AfterFishing.hasCaughtFishJustNow = true;
+                Dialogue.DialogueController.instance.StartConversation(null);
+            }
             return false;
         }
         return true;

@@ -92,3 +92,46 @@ internal class FishItemActionsPatch
     }
 }
 
+[HarmonyPatch(typeof(Player))]
+internal class UseItemPatch
+{
+    [HarmonyPrefix()]
+    [HarmonyPatch("UseItem")]
+    internal static bool UseItem(Player __instance)
+    {
+        if (!State.IsActive || BillScene.RunningCoroutine) return true;
+        var heldItem = __instance.heldItem;
+        if (heldItem == null) return true;
+        if (!heldItem.name.StartsWith("FishingRod")) return true;
+        var cooldown = Traverse.Create(__instance).Field("useItemCooldown").GetValue<Timer>();
+        if (cooldown != null && !cooldown.IsDone()) return false;
+        return BillScene.TryToStart();
+    }
+}
+
+[HarmonyPatch(typeof(FishingActions))]
+internal class FishingActionsPatch
+{
+    [HarmonyPrefix()]
+    [HarmonyPatch("CatchFish")]
+    internal static void CatchFish()
+    {
+        if (BillScene.RunningCoroutine) BillScene.OnGotFish();
+    }
+}
+[HarmonyPatch(typeof(Fish))]
+internal class FishPatch
+{
+    [HarmonyPrefix()]
+    [HarmonyPatch(MethodType.Constructor, [typeof(FishSpecies), typeof(bool)])]
+    internal static bool Prefix(FishSpecies fishSpecies, bool rare, Fish __instance)
+    {
+        if (!BillScene.RunningCoroutine) return true;
+        __instance.species = fishSpecies;
+        __instance.size = fishSpecies.size.min;
+        __instance.rare = false;
+        Traverse.Create(__instance).Field("speciesName").SetValue(fishSpecies.name);
+        return false;
+    }
+}
+

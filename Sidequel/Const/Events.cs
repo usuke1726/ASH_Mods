@@ -10,6 +10,7 @@ partial class Const
         internal const string ScaleEvent = "ScaleEvent";
         internal const string Sunscreen = "SunscreenEvent";
         internal const string Patrol = "PatrolEvent";
+        internal const string Fishing = "Fishing";
     }
 }
 
