@@ -15,7 +15,7 @@ internal class Taylor : NodeEntry
     protected override Characters? Character => Characters.Taylor;
     protected override Node[] Nodes => [
         new(Start1, [
-            lines(1, 12, digit2, [2, 4, 10, 12], [
+            lines(1, 12, digit2, [2, 4, 10], [
                 new(6, emote(Emotes.Happy, Original)),
                 new(9, emote(Emotes.Normal, Original)),
             ]),
