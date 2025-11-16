@@ -8,7 +8,7 @@
     "node.PictureFox.BeforeJA1.07": "なら　1枚　100コインだ",
     "node.PictureFox.BeforeJA1.08": "えっ　そんな値段するの！？",
     "node.PictureFox.BeforeJA1.09": "40コインくらいだと　思ってたのに…",
-    "node.PictureFox.BeforeJA1.10": "こっちも　カネを　稼がなくちゃ　ならねぇ事情が　あるんでな",
+    "node.PictureFox.BeforeJA1.10": "こっちも　\nカネを　稼がなくちゃ　ならねぇ\n事情が　あるんでな",
     "node.PictureFox.BeforeJA1.11": "下げても　80コインまでだ",
     "node.PictureFox.BeforeJA1.12": "うーーーん…",
     "node.PictureFox.BeforeJA1.13": "ごめん　やっぱり　諦めるよ",
@@ -16,7 +16,7 @@
 
     "node.PictureFox.BeforeJA2.01": "そんなに　羽根が　欲しいのかよ？",
     "node.PictureFox.BeforeJA2.02": "うん",
-    "node.PictureFox.BeforeJA2.03": "また　山頂に登ろうかなって　思ってたんだけど",
+    "node.PictureFox.BeforeJA2.03": "また　山頂に登ろうかなって\n思ってたんだけど",
     "node.PictureFox.BeforeJA2.04": "やっぱり　クレアに　頼もうかな…",
     "node.PictureFox.BeforeJA2.05": "でも　何度もは　流石に　悪いかなぁ",
     "node.PictureFox.BeforeJA2.06": "うーん　どうしよう…",
@@ -26,7 +26,7 @@
     "node.PictureFox.AfterJA1.L02": "なんだ？",
     "node.PictureFox.AfterJA1.03": "{{JATrigger}}から　聞いたよ",
     "node.PictureFox.AfterJA1.04": "それでね",
-    "node.PictureFox.AfterJA1.05": "これは単に　いらなくなっただけの　ものなんだけど…",
+    "node.PictureFox.AfterJA1.05": "これは単に　いらなくなっただけの\nものなんだけど…",
     "node.PictureFox.AfterJA1.06": "この双眼鏡をあげる！",
     "node.PictureFox.AfterJA1.07": "いや　もらえねぇよ",
     "node.PictureFox.AfterJA1.08": "その代わり　提案があるんだけど",
@@ -62,11 +62,11 @@
     "node.PictureFox.AfterJA3.04": "…9枚でも登れたんじゃないか？",
     "node.PictureFox.AfterJA3.05": "いや　ムリだよ！！",
 
-    "node.PictureFox.AfterJA4.01": "やっぱり　他の場所へ　写真撮りに　行こうかなぁ",
+    "node.PictureFox.AfterJA4.01": "やっぱり　他の場所へ\n写真撮りに　行こうかなぁ",
     "node.PictureFox.AfterJA4.02": "うーん　どうしよ…",
 
     "node.PictureFox.AfterJA5.01": "羽根はそろったけど",
-    "node.PictureFox.AfterJA5.02": "やっぱり　もう少し　準備を整えてから　登ることにしたよ",
+    "node.PictureFox.AfterJA5.02": "やっぱり\nもう少し　準備を整えてから\n登ることにしたよ",
     "node.PictureFox.AfterJA5.03": "万が一に　備えておかないとね！",
     "node.PictureFox.AfterJA5.04": "そうか"
 }

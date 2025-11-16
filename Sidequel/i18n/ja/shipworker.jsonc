@@ -1,6 +1,6 @@
 {
     "node.ShipWorker.Start1.01": "やあ！",
-    "node.ShipWorker.Start1.02": "そういえば　キミは　明後日　帰るんだったね！",
+    "node.ShipWorker.Start1.02": "そういえば\nキミは　明後日　帰るんだったね！",
     "node.ShipWorker.Start1.03": "この島は　十分　堪能できたかい？",
     "node.ShipWorker.Start1.HM04": "…",
     "node.ShipWorker.Start1.HM05": "まぁな…",
@@ -9,7 +9,7 @@
     "node.ShipWorker.Start1.07": "あと2日　くいのない　ようにな！",
 
     "node.ShipWorker.Start2.01": "ああ　そうだ",
-    "node.ShipWorker.Start2.02": "もし　一足先に　帰らなくちゃ　ならなくなっても",
+    "node.ShipWorker.Start2.02": "もし　一足先に\n帰らなくちゃ　ならなくなっても",
     "node.ShipWorker.Start2.03": "こっちは　問題なく　対応できるからな！",
     "node.ShipWorker.Start2.04": "そのときは　オレに　声をかけてくれ",
     "node.ShipWorker.Start2.05": "ああ　分かった",
@@ -19,7 +19,7 @@
     "node.ShipWorker.BeforeJA.03": "ああ…",
 
     "node.ShipWorker.AfterJA1.01": "そういえば",
-    "node.ShipWorker.AfterJA1.02": "プライベートな話に　突っ込んじまうようで　悪いが",
+    "node.ShipWorker.AfterJA1.02": "プライベートな話に\n突っ込んじまうようで　悪いが",
     "node.ShipWorker.AfterJA1.03": "キミが　お金に困ってるって　聞いたよ",
     "node.ShipWorker.AfterJA1.04": "…",
     "node.ShipWorker.AfterJA1.05": "帰りの船の　代金　もらってたけど",

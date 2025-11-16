@@ -1,5 +1,5 @@
 {
-    "node.sign.RubberFlower.01": "ヘリアンサス　ディサルタンティス　「ゴムの花」",
+    "node.sign.RubberFlower.01": "ヘリアンサス　ディサルタンティス\n「ゴムの花」",
     "node.sign.RubberFlower.02": "ホークピーク州立公園　公式植物",
     "node.sign.RubberFlower.03": "この特殊な種は　水を注ぐと\n水風船のように　ふくらみ\n<color=yellow>一瞬で開花</color>します！",
     "node.sign.RubberFlower.04": "公園内にある　<color=yellow>バケツ</color>で\n是非　お試しください！",
@@ -10,8 +10,8 @@
     "node.sign.RubberFlower.HMFirst.03": "バケツなんて　持っていっても　バレねぇだろ",
     "node.sign.RubberFlower.HMFirst.04": "これで　登山が　ラクになるってか？",
     "node.sign.RubberFlower.HMFirst.05": "でも　まぁ",
-    "node.sign.RubberFlower.HMFirst.06": "流石に　水を入れたまま　登るのは無理そうだな",
-    "node.sign.RubberFlower.HM07": "流石に　水を入れたまま　登るのは無理そうだな",
+    "node.sign.RubberFlower.HMFirst.06": "流石に　水を入れたまま\n登るのは無理そうだな",
+    "node.sign.RubberFlower.HM07": "流石に　水を入れたまま\n登るのは無理そうだな",
     "node.sign.RubberFlower.L07": "…",
     "node.sign.RubberFlower.L08": "結局",
     "node.sign.RubberFlower.L09": "このバケツ　使う意味なかったな",

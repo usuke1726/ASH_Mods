@@ -34,8 +34,8 @@
     "node.chest.item.FishHook.03": "ちょっと　試してみるか",
 
     "node.chest.item.AntiqueFigure.HM01": "うーん",
-    "node.chest.item.AntiqueFigure.HM02": "オレにとっちゃ　ただの古ぼけたガラクタだけど",
-    "node.chest.item.AntiqueFigure.HM03": "こういうやつって　案外　高値で　売れるのかも？",
+    "node.chest.item.AntiqueFigure.HM02": "オレにとっちゃ\nただの古ぼけたガラクタだけど",
+    "node.chest.item.AntiqueFigure.HM03": "こういうやつって　案外\n高値で　売れるのかも？",
     "node.chest.item.AntiqueFigure.HM04": "一応　もらっとくか",
     "node.chest.item.AntiqueFigure.L01": "うーん",
     "node.chest.item.AntiqueFigure.L02": "オレは　別に　いらないけど",
@@ -53,11 +53,11 @@
 
     "node.chest.item.CuteEmptyCan.HM01": "空きカンか",
     "node.chest.item.CuteEmptyCan.HM02": "お菓子か　何かが　入っていたんだろうな",
-    "node.chest.item.CuteEmptyCan.HM03": "それにしても　かわいらしい　デザインじゃねーか",
+    "node.chest.item.CuteEmptyCan.HM03": "それにしても　かわいらしい\nデザインじゃねーか",
     "node.chest.item.CuteEmptyCan.HM04": "意外とこういうのって　売れたりする…？",
     "node.chest.item.CuteEmptyCan.L01": "空きカンか",
     "node.chest.item.CuteEmptyCan.L02": "お菓子か　何かが　入っていたんだろうな",
-    "node.chest.item.CuteEmptyCan.L03": "それにしても　かわいらしい　デザインじゃねーか",
+    "node.chest.item.CuteEmptyCan.L03": "それにしても　かわいらしい\nデザインじゃねーか",
     "node.chest.item.CuteEmptyCan.L04": "せっかくだし　誰かに　あげるか",
 
     "node.chest.item.TradingCard.01": "おお　トレカか",

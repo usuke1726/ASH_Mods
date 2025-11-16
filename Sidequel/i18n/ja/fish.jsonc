@@ -36,7 +36,7 @@
     "node.ShipWorker.Fish.ClaireHasFished.quiteValuable 04": "だから　5コインで　カンベンしてくれな！",
     "node.ShipWorker.Fish.ClaireHasFished.04": "代わりに　エサと交換してあげよう！",
 
-    "node.ShipWorker.Fish.CarterHasSold.01": "そのサカナは　さっき　キミが持ってきてくれたね！",
+    "node.ShipWorker.Fish.CarterHasSold.01": "そのサカナは　さっき\nキミが持ってきてくれたね！",
     "node.ShipWorker.Fish.CarterHasSold.02": "コインの代わりに　エサをあげよう！",
 
     // rare species specific messages
@@ -80,7 +80,7 @@
     "node.ShipWorker.Fish.PumpkinSeed.03": "{{Coin}}コインを　やるよ！",
     "node.ShipWorker.Fish.RainbowTrout.01": "何だ　これは！？",
     "node.ShipWorker.Fish.RainbowTrout.02": "虹色の　ニジマス…！？",
-    "node.ShipWorker.Fish.RainbowTrout.03": "こんな　はっきりした虹色の　個体がいたとは！",
+    "node.ShipWorker.Fish.RainbowTrout.03": "こんな　はっきりした虹色の\n個体がいたとは！",
     "node.ShipWorker.Fish.RainbowTrout.04": "お前さん　間違いなく　強運の持ち主だな！",
     "node.ShipWorker.Fish.RainbowTrout.05": "{{Coin}}コインで　買い取ろう！",
     "node.ShipWorker.Fish.SpottedBrookTrout.01": "ほう！アルビノ　まだらカワマスか！",
