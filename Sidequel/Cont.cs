@@ -67,12 +67,13 @@ internal static class Cont
     }
     internal static void Add(int val)
     {
+        var newValue = Math.Max(value + val, 0);
 #if DEBUG
-        if (val >= 0) Monitor.Log($"== val is expected to be negative == (val: {val})\n\tStackTrace:\n{Environment.StackTrace}", LL.Error);
-        Monitor.Log($"== Cont Updated: {value,3} -> {value + val,3} ({val})", LL.Debug, true);
+        Assert(val < 0, $"updateCont value is expected to be negative (val: {val})");
+        Monitor.Log($"== Cont Updated: {value,3} -> {newValue,3} ({val})", LL.Debug, true);
 #endif
         var wasNotEndingCont = !IsEndingCont;
-        value += val;
+        value = newValue;
         Save();
         if (wasNotEndingCont && IsEndingCont) OnReachedEndingCont?.Invoke();
     }
