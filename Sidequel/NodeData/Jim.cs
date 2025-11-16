@@ -1,6 +1,7 @@
 ﻿
 using ModdingAPI;
 using Sidequel.Dialogue;
+using UnityEngine;
 
 namespace Sidequel.NodeData;
 
@@ -23,6 +24,9 @@ internal class Jim : NodeEntry
     private bool IsClimbing => path.nextNode is >= 1 and <= 16;
     private bool IsDescending => path.nextNode is 0 or >= 19;
     protected override Characters? Character => Characters.OutlookPointGuy;
+    private static readonly float afterJA2border = Mathf.Lerp(Const.Cont.LowBorderValue, Const.Cont.MidBorderValue, 0.3f) + 0.1f;
+    private static bool IsJA2Active => Cont.Value <= afterJA2border;
+    private float afterJA1Time = -1;
     protected override Node[] Nodes => [
         new(BeforeJA1, [
             lines(1, 2, digit2, [2], [new(1, emote(Emotes.Happy, Original))]),
@@ -76,11 +80,13 @@ internal class Jim : NodeEntry
                 new(5, emote(Emotes.Happy, Original)),
                 new(7, emote(Emotes.Normal, Original)),
             ]),
+            command(() => afterJA1Time = Time.time),
             done(),
         ], condition: () => _aJA && NodeYet(AfterJA1), priority: -1),
 
         new(AfterJA2, [
-            lines(1, 52, digit2, [4, 5, 15, 16, 19, 20, 21, 22, 23, 26, 27, 28, 29, 34, 35, 39, 43, 44, 50, 51], [
+            lineif(() => afterJA1Time > 0 && Time.time - afterJA1Time < 20, "Immediately.01", "01", Original),
+            lines(2, 52, digit2, [4, 5, 15, 16, 19, 20, 21, 22, 23, 26, 27, 28, 29, 34, 35, 39, 43, 44, 50, 51], [
                 new(3, emote(Emotes.Happy, Original)),
                 new(8, emote(Emotes.Normal, Original)),
                 new(11, emote(Emotes.Happy, Original)),
@@ -94,7 +100,7 @@ internal class Jim : NodeEntry
             ]),
             cont(-20),
             done(),
-        ], condition: () => NodeDone(AfterJA1) && NodeYet(AfterJA2), priority: 10),
+        ], condition: () => IsJA2Active && NodeDone(AfterJA1) && NodeYet(AfterJA2), priority: 10),
 
         new(AfterJA3, [
             lines(1, 8, digit2, [1, 3, 4, 8]),

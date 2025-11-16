@@ -84,7 +84,8 @@
     "node.Jim.AfterJA1.13": "そうか…",
     "node.Jim.AfterJA1.14": "まあ　そこは　聞かないでおくよ",
 
-    "node.Jim.AfterJA2.01": "そうだ！",
+    "node.Jim.AfterJA2.Immediately.01": "そうだ！",
+    "node.Jim.AfterJA2.01": "そうだ　言い忘れてた！",
     "node.Jim.AfterJA2.02": "お前さ　帰ってから　手が空くようなら",
     "node.Jim.AfterJA2.03": "そんときに　頼みたい仕事が　あるんだよね！",
     "node.Jim.AfterJA2.04": "！",
