@@ -94,6 +94,13 @@
     "node.RunningGoat.GoldMedal4.02": "いや　もう少しだけ　待っててくれ",
     "node.RunningGoat.GoldMedal4.03": "ああ　分かった",
 
+    "node.RunningGoat.GoldMedalByRabbit.01": "よう",
+    "node.RunningGoat.GoldMedalByRabbit.02": "今　このメダルについて\n聞いて回ってるんだけど…",
+    "node.RunningGoat.GoldMedalByRabbit.03": "へぇ　これは立派なメダルだな",
+    "node.RunningGoat.GoldMedalByRabbit.04": "ここに書いてある\nアンダー・フリートって人物　知ってる？",
+    "node.RunningGoat.GoldMedalByRabbit.05": "いや　知らないな…",
+    "node.RunningGoat.GoldMedalByRabbit.06": "そうか　邪魔したな",
+
     "node.RunningGoat.AfterGoldMedal.TriggeredByGoat.01": "いやー　あのメダル",
     "node.RunningGoat.AfterGoldMedal.TriggeredByGoat.02": "予想通り　めちゃくちゃ\n貴重な代物だったな！",
     "node.RunningGoat.AfterGoldMedal.TriggeredByRabbit.01": "あんなに　貴重な代物が\nこの島に埋もれてたとは！",

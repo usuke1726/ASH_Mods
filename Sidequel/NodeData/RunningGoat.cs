@@ -15,6 +15,7 @@ internal class RunningGoat : NodeEntry
     internal const string GoldMedal2 = "RunningGoat.GoldMedal2";
     internal const string GoldMedal3 = "RunningGoat.GoldMedal3";
     internal const string GoldMedal4 = "RunningGoat.GoldMedal4";
+    internal const string GoldMedalByRabbit = "RunningGoat.GoldMedalByRabbit";
     internal const string AfterGoldMedal = "RunningGoat.AfterGoldMedal";
     protected override Characters? Character => Characters.RunningGoat;
     protected override Node[] Nodes => [
@@ -56,16 +57,25 @@ internal class RunningGoat : NodeEntry
 
         new(GoldMedal2, [
             lines(1, 5, digit2, [1, 2, 5]),
-        ], condition: () => NodeIP(Const.Events.GoldMedal)),
+        ], condition: () => NodeIP(Const.Events.GoldMedal) && GetBool(Const.STags.GoldMedalTriggeredByGoat)),
 
         new(GoldMedal3, [
             lines(1, 10, digit2, [1, 3, 4, 6, 8, 9]),
             done(),
-        ], condition: () => NodeS1(Const.Events.GoldMedal) && NodeYet(GoldMedal3)),
+        ], condition: () => NodeS1(Const.Events.GoldMedal) && NodeYet(GoldMedal3) && GetBool(Const.STags.GoldMedalTriggeredByGoat)),
 
         new(GoldMedal4, [
             lines(1, 3, digit2, [2]),
-        ], condition: () => NodeS1(Const.Events.GoldMedal) && NodeDone(GoldMedal3)),
+        ], condition: () => (
+            NodeS1(Const.Events.GoldMedal) && NodeDone(GoldMedal3) && GetBool(Const.STags.GoldMedalTriggeredByGoat)
+        ) || (
+            NodeDone(GoldMedalByRabbit) && NodeActive(Const.Events.GoldMedal)
+        )),
+
+        new(GoldMedalByRabbit, [
+            lines(1, 6, digit2, [1, 2, 4, 6]),
+            done(),
+        ], condition: () => NodeActive(Const.Events.GoldMedal) && !GetBool(Const.STags.GoldMedalTriggeredByGoat) && NodeYet(GoldMedalByRabbit), priority: 10),
 
         new(AfterGoldMedal, [
             @if(() => GetBool(Const.STags.GoldMedalTriggeredByGoat),

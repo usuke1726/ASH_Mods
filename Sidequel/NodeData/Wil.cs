@@ -182,7 +182,9 @@ internal class Wil : NodeEntry
                 new(46, emote(Emotes.Normal, Original)),
                 new(46, emote(Emotes.Normal, Player)),
             ]),
-        ], condition: () => NodeS1(Const.Events.GoldMedal), onConversationFinish: GoldMedalEnd.Activate),
+            transition(GoldMedalEnd.Prepare),
+            next(() => GoldMedalEnd.Entry, ch: null),
+        ], condition: () => NodeS1(Const.Events.GoldMedal), priority: 10),
 
         new(AfterGoldMedal, [
             lines(digit2, Original),
@@ -209,7 +211,7 @@ internal class Wil : NodeEntry
             eventSet = true;
             GoldMedalEnd.OnPreparing += () =>
             {
-                deer.position = new(627.5654f, 130.1681f, 413.8763f);
+                deer.position = new(627.5654f, 130.601f, 413.8763f);
                 CastShadows = true;
                 Sidequel.Character.Pose.Set(deer, Poses.Standing);
                 book.gameObject.SetActive(false);
@@ -270,23 +272,22 @@ internal class GoldMedalEnd : NodeEntry
 {
     internal const string Entry = "GoldMedal.End";
     internal const string Wil = "DadBoatDeer1";
-    private static bool isActive = false;
     internal static bool EventDoneInThisGame { get; private set; } = false;
     internal static event Action OnPreparing = null!;
     protected override Characters? Character => null;
     protected override Node[] Nodes => [
         new(Entry, [
             command(() => {
-                isActive = false;
                 EventDoneInThisGame = true;
             }),
             done(Const.Events.GoldMedal),
-            transition(Prepare),
             wait(1f),
             lines(digit2, Wil),
-        ], condition: () => isActive, priority: int.MaxValue),
+            item(Items.Coin, 150),
+            cont(-20),
+        ], condition: () => false),
     ];
-    private static void Prepare()
+    internal static void Prepare()
     {
         var player = Context.player;
         player.transform.position = new(624.4018f, 131.1851f, 419.817f);
@@ -297,11 +298,6 @@ internal class GoldMedalEnd : NodeEntry
     internal override void OnGameStarted()
     {
         EventDoneInThisGame = false;
-    }
-    internal static void Activate()
-    {
-        isActive = true;
-        Dialogue.DialogueController.instance.StartConversation(null);
     }
 }
 

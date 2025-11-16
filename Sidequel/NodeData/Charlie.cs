@@ -65,13 +65,13 @@ internal class Charlie : NodeEntry
             lines(34, 37, digit2, [37]),
             state(Const.Events.GoldMedal, NodeStates.Stage1),
             done(),
-        ], condition: () => NodeIP(Const.Events.GoldMedal) && NodeYet(GoldMedal1)),
+        ], condition: () => NodeIP(Const.Events.GoldMedal) && NodeYet(GoldMedal1), priority: 10),
 
         new(GoldMedal2, [
             lines(1, 3, digit2, [2]),
             @if(() => NodeYet(GoldMedal2), lines(4, 6, digit2("First"), [6])),
             done(),
-        ], condition: () => NodeS1(Const.Events.GoldMedal)),
+        ], condition: () => NodeS1(Const.Events.GoldMedal), priority: 10),
 
         new(AfterGoldMedal, [
             lines(digit2, Original),
