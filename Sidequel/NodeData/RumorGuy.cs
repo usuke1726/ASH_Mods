@@ -130,6 +130,7 @@ internal class RumorGuy : NodeEntry
                 new(3, item([Items.CuteEmptyCan, Items.Coin], [-1, 5])),
                 new(3, emote(Emotes.Happy, Original)),
             ]),
+            cont(-3),
             done(),
         ], condition: () => NodeDone(AfterJA1) && Items.Has(Items.CuteEmptyCan) && NodeYet(CuteEmptyCan), priority: 5),
     ];
