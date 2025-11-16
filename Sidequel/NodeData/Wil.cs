@@ -281,7 +281,8 @@ internal class GoldMedalEnd : NodeEntry
     internal static event Action OnPreparing = null!;
     private readonly Dictionary<string, ICanLook> lookAtDict = [];
     protected override Characters? Character => null;
-    private CommandAction look(string? speaker) => new(() =>
+    private CommandAction look(string? speaker) => new(() => LookAt(speaker));
+    private void LookAt(string? speaker)
     {
         if (speaker != null)
         {
@@ -299,7 +300,7 @@ internal class GoldMedalEnd : NodeEntry
                 pair.Value.lookAt = null;
             }
         }
-    });
+    }
     private IEnumerable<BaseAction> lines(int start, int end, string[] speakers, List<Tuple<int, IInvokableInAction>> actions)
     {
         int actionsIdx = 0;
@@ -328,21 +329,119 @@ internal class GoldMedalEnd : NodeEntry
             }),
             done(Const.Events.GoldMedal),
             wait(1f),
-            .. lines(1, 9, [
+            .. lines(1, 20, [
                 Wil,
-                Player,
+                Rabbit,
+                Wil,
+                Wil,
+                Wil, // 5
+                Charlie,
+                Wil,
+                Wil,
+                Wil,
+                Wil, // 10
+                Goat,
                 Wil,
                 Goat,
+                Wil,
+                Wil, // 15
                 Lizard,
+                Lizard,
+                Wil,
+                Wil,
+                Wil, // 20
+            ], [
+                new(18, emote(Emotes.Happy, Wil)),
+                new(19, emote(Emotes.Normal, Wil)),
+            ]),
+            transition(() => LookAt(Wil)),
+            wait(1f),
+            line(21, Charlie),
+            line(22, Charlie),
+            line(23, Wil),
+            emote(Emotes.Happy, Wil),
+            line(24, Wil),
+            emote(Emotes.Surprise, Player),
+            emote(Emotes.Happy, Rabbit),
+            emote(Emotes.Happy, Charlie),
+            emote(Emotes.Happy, Goat),
+            emote(Emotes.Happy, Lizard),
+            .. lines(25, 62, [
+                Goat, // 25
+                Goat,
+                Wil,
+                Wil,
+                Wil,
+                Rabbit, // 30
+                Wil,
+                Wil,
+                Wil,
+                Player,
+                Charlie, // 35
                 Rabbit,
-                Charlie,
+                Lizard,
+                Lizard,
+                Lizard,
+                Lizard, // 40
+                Player,
+                Player,
+                Lizard,
+                Lizard,
+                Lizard, // 45
+                Player,
+                Lizard,
+                Player,
+                Player,
+                Player, // 50
+                Lizard,
+                Lizard,
+                Goat,
+                Goat,
+                Charlie, // 55
+                Wil,
+                Rabbit,
+                Lizard,
+                Player,
+                Player, // 60
                 Player,
                 Wil,
             ], [
-
+                new(26, emote(Emotes.Normal, Goat)),
+                new(26, emote(Emotes.Normal, Wil)),
+                new(26, emote(Emotes.Normal, Player)),
+                new(26, emote(Emotes.Normal, Rabbit)),
+                new(26, emote(Emotes.Normal, Lizard)),
+                new(26, emote(Emotes.Normal, Charlie)),
+                new(29, emote(Emotes.Happy, Wil)),
+                new(30, emote(Emotes.Happy, Rabbit)),
+                new(31, emote(Emotes.Normal, Wil)),
+                new(31, emote(Emotes.Normal, Rabbit)),
+                new(35, emote(Emotes.Happy, Charlie)),
+                new(36, emote(Emotes.Normal, Charlie)),
+                new(55, emote(Emotes.Happy, Charlie)),
+                new(56, emote(Emotes.Happy, Wil)),
+                new(57, emote(Emotes.Happy, Rabbit)),
+                new(58, emote(Emotes.Normal, Charlie)),
+                new(58, emote(Emotes.Normal, Wil)),
+                new(58, emote(Emotes.Normal, Rabbit)),
+            ]),
+            transition(() => LookAt(null)),
+            wait(1f),
+            look(Player),
+            line(63, Wil),
+            item(Items.Coin, 150),
+            .. lines(64, 69, [
+                Player,
+                Player,
+                Player,
+                Wil,
+                Wil,
+                Player,
+            ], [
+                new(67, emote(Emotes.Happy, Wil)),
+                new(68, emote(Emotes.Normal, Wil)),
             ]),
             look(null),
-            item(Items.Coin, 150),
             cont(-20),
         ], condition: () => false),
     ];

@@ -109,16 +109,17 @@ internal class RunningRabbit : NodeEntry
             GoldMedalEnd.OnPreparing += () =>
             {
                 var ch = Ch(Characters.RunningRabbit);
-                ch.transform.position = new(614.8049f, 129.1047f, 412.9645f);
-                ch.transform.localRotation = Quaternion.Euler(0, 51.9669f, 0);
                 Sidequel.Character.Pose.Set(ch.transform, Poses.Standing);
                 var path = ch.transform.GetComponent<PathNPCMovement>();
                 path.maxSpeed = 0.001f;
                 path.enabled = false;
-                ch.transform.GetComponentInChildren<Rigidbody>().isKinematic = true;
+                ch.transform.GetComponent<CapsuleCollider>().enabled = true;
+                ch.transform.GetComponent<Rigidbody>().isKinematic = true;
                 var range = ch.transform.GetComponent<RangedInteractable>();
                 range.range = 4f;
                 Traverse.Create(range).Field("rangeSqr").SetValue(16f);
+                ch.transform.position = new(614.8049f, 129.1047f, 412.9645f);
+                ch.transform.localRotation = Quaternion.Euler(0, 51.9669f, 0);
             };
         }
     }
