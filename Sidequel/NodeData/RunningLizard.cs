@@ -74,7 +74,7 @@ internal class RunningLizard : NodeEntry
                 var range = ch.transform.GetComponent<RangedInteractable>();
                 range.range = 4f;
                 Traverse.Create(range).Field("rangeSqr").SetValue(16f);
-                ch.transform.position = new(618.991f, 130.3616f, 423.1335f);
+                ch.transform.position = new(672.7437f, 140.1992f, 617.9913f);
                 ch.transform.localRotation = Quaternion.Euler(0, 172.5071f, 0);
             };
         }

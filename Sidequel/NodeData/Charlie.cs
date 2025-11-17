@@ -87,7 +87,7 @@ internal class Charlie : NodeEntry
             GoldMedalEnd.OnPreparing += () =>
             {
                 var ch = Ch(Characters.Charlie2);
-                ch.transform.position = new(620.7261f, 132.8165f, 408.0128f);
+                ch.transform.position = new(671.7817f, 142.576f, 600.3674f);
                 ch.transform.localRotation = Quaternion.Euler(0, 15.2164f, 0);
                 Sidequel.Character.Pose.Set(ch.transform, Poses.Standing);
             };

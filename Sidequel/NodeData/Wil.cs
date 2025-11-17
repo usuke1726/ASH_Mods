@@ -212,7 +212,8 @@ internal class Wil : NodeEntry
             eventSet = true;
             GoldMedalEnd.OnPreparing += () =>
             {
-                deer.position = new(627.5654f, 130.601f, 413.8763f);
+                deer.position = new(679.7266f, 140.3578f, 605.7441f);
+                deer.localRotation = Quaternion.Euler(0, 321.4959f, 0);
                 CastShadows = true;
                 Sidequel.Character.Pose.Set(deer, Poses.Standing);
                 //book.gameObject.SetActive(false);
@@ -427,10 +428,13 @@ internal class GoldMedalEnd : NodeEntry
             ]),
             transition(() => LookAt(null)),
             wait(1f),
-            look(Player),
+            look(Wil),
             line(63, Wil),
-            item(Items.Coin, 150),
-            .. lines(64, 69, [
+            line(64, Wil),
+            look(Player),
+            line(65, Wil),
+            item([Items.GoldMedal, Items.Coin], [-1, 150]),
+            .. lines(66, 71, [
                 Player,
                 Player,
                 Player,
@@ -438,8 +442,8 @@ internal class GoldMedalEnd : NodeEntry
                 Wil,
                 Player,
             ], [
-                new(67, emote(Emotes.Happy, Wil)),
-                new(68, emote(Emotes.Normal, Wil)),
+                new(69, emote(Emotes.Happy, Wil)),
+                new(70, emote(Emotes.Normal, Wil)),
             ]),
             look(null),
             cont(-20),
@@ -448,8 +452,8 @@ internal class GoldMedalEnd : NodeEntry
     internal static void Prepare()
     {
         var player = Context.player;
-        player.transform.position = new(624.4018f, 131.1851f, 419.817f);
-        player.transform.localRotation = Quaternion.Euler(0, 224.7949f, 0);
+        player.transform.position = new(680.2937f, 139.6488f, 614.275f);
+        player.transform.localRotation = Quaternion.Euler(0, 232.4028f, 0);
         System.Music.FadeOutCurrentMusic(0.1f);
         OnPreparing?.Invoke();
     }

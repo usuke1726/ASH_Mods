@@ -118,7 +118,7 @@ internal class RunningRabbit : NodeEntry
                 var range = ch.transform.GetComponent<RangedInteractable>();
                 range.range = 4f;
                 Traverse.Create(range).Field("rangeSqr").SetValue(16f);
-                ch.transform.position = new(614.8049f, 129.1047f, 412.9645f);
+                ch.transform.position = new(665.7082f, 140.2142f, 604.9339f);
                 ch.transform.localRotation = Quaternion.Euler(0, 51.9669f, 0);
             };
         }
