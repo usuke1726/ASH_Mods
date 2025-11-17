@@ -315,6 +315,7 @@ internal static class Data
         ItemWrapperBase.TryLoad(Items.WalkieTalkie);
         ItemWrapperBase.TryLoad(Items.Compass);
         ItemWrapperBase.TryLoad(Items.RunningShoes);
+        ItemWrapperBase.TryLoad(Items.CampingPermit);
     }
     internal static int? FishingRodOnKeyboardState { get; private set; } = null;
 }

@@ -13,6 +13,7 @@ internal static class DataHandler
     private static readonly IReadOnlyDictionary<string, int> initialCollected = new Dictionary<string, int>()
     {
         [Items.WristWatch] = 1,
+        [Items.CampingPermit] = 1,
         [Items.Coin] = 10,
         [Items.GoldenFeather] = 4,
     };

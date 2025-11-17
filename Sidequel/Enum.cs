@@ -16,6 +16,7 @@ internal static class Items
     public static readonly string WalkieTalkie = "WalkieTalkie";
     public static readonly string Compass = "Compass";
     public static readonly string RunningShoes = "RunningShoes";
+    public static readonly string CampingPermit = "CampingPermit";
 
     // New items
     public static readonly string GoldMedal = "GoldMedal";

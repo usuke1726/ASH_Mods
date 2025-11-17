@@ -7,6 +7,10 @@
     "item.GoldenFeather.namePlural": "黄金の羽根",
     "item.GoldenFeather.description": "カネにならない役立たず。\n誰も買っちゃくれない。",
 
+    "item.CampingPermit.name": "",
+    "item.CampingPermit.namePlural": "",
+    "item.CampingPermit.description": "この島に滞在するために必要なもの。\n明後日までには　ここを発たないといけない。",
+
     "item.Watch.name": "腕時計",
     "item.Watch.namePlural": "腕時計",
     "item.Watch.description": "拾った腕時計。やや古ぼけているが、\n売れば多少のカネにはなるかもしれない。",
