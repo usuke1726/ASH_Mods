@@ -308,7 +308,7 @@ internal static class Data
     internal static void LoadOriginalItems()
     {
         ItemWrapperBase.TryLoad(Items.FishingRod);
-        ItemWrapperBase.TryLoad(Items.Stick);
+        ItemWrapperBase.TryLoad(Items.Stick, GetStickState);
         ItemWrapperBase.TryLoad(Items.Pickaxe);
         ItemWrapperBase.TryLoad(Items.Coin, GetCoinState);
         ItemWrapperBase.TryLoad(Items.GoldenFeather, GetFeatherState);
@@ -342,6 +342,12 @@ internal static class Data
     {
         if (Cont.IsLow) return 2;
         if (Flags.NodeDone(Deborah.Start1) || Flags.NodeDone(RumorGuy.BeforeJA3)) return 1;
+        return null;
+    }
+    private static int? GetStickState()
+    {
+        if (Flags.NodeDone(BeachstickGameEnd.End2) || Flags.NodeDone(BeachstickGameEnd.End3)) return 2;
+        if (!Flags.NodeYet(BeachstickKid.Start)) return 1;
         return null;
     }
     private static int? GetSouvenirMedalState()
