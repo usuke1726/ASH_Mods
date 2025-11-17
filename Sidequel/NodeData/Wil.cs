@@ -188,7 +188,11 @@ internal class Wil : NodeEntry
         ], condition: () => NodeS1(Const.Events.GoldMedal), priority: 10),
 
         new(AfterGoldMedal, [
-            lines(digit2, Original),
+            lines(1, 8, digit2, [2, 5, 6, 7], [
+                new(1, emote(Emotes.Happy, Original)),
+                new(3, emote(Emotes.Normal, Original)),
+                new(8, emote(Emotes.Happy, Original)),
+            ]),
         ], condition: () => GoldMedalEnd.EventDoneInThisGame, priority: int.MaxValue),
     ];
 

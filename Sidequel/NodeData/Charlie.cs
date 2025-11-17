@@ -75,7 +75,11 @@ internal class Charlie : NodeEntry
         ], condition: () => NodeS1(Const.Events.GoldMedal), priority: 10),
 
         new(AfterGoldMedal, [
-            lines(digit2, Original),
+            lines(1, 5, digit2, [2, 3, 5], [
+                new(1, emote(Emotes.Happy, Original)),
+            ]),
+            cont(-3, condition: () => NodeYet(AfterGoldMedal)),
+            done(),
         ], condition: () => GoldMedalEnd.EventDoneInThisGame, priority: 10),
     ];
     private static bool eventSet = false;

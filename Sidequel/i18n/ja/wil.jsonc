@@ -195,9 +195,14 @@
     "node.Wil.GoldMedal2.50": "カーター　ちょっと　ついてきてくれ！",
     "node.Wil.GoldMedal2.51": "お、おう！",
 
-    "node.Wil.AfterGoldMedal.01": "(ここのセリフは後で書くよ！)",
-    "node.Wil.AfterGoldMedal.02": "(「すごいものに\n出くわした！」って感じで)",
-    "node.Wil.AfterGoldMedal.03": "(すごく興奮してるんだ！)",
+    "node.Wil.AfterGoldMedal.01": "いやー　それにしても\nすごい大発見だよな！",
+    "node.Wil.AfterGoldMedal.02": "そうだな",
+    "node.Wil.AfterGoldMedal.03": "ただ　しかし",
+    "node.Wil.AfterGoldMedal.04": "何でこのメダルが\nこの島にあったんだろうね…？",
+    "node.Wil.AfterGoldMedal.05": "さあな…",
+    "node.Wil.AfterGoldMedal.06": "昔　ここに住んでた　とか？",
+    "node.Wil.AfterGoldMedal.07": "それよりも　今までずっと\n見つかってなかったことが　驚きだよ",
+    "node.Wil.AfterGoldMedal.08": "確かにな！",
 
     "node.GoldMedal.End.01": "これは　大変なことに　なったぞ！！",
     "node.GoldMedal.End.02": "えーと…\n一体　何が分かったの？",
