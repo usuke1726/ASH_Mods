@@ -16,6 +16,6 @@ internal static class State
         };
     }
     public static void Activate() => IsActive = true;
-    public static void SetNewGame() => IsNewGame = true;
+    public static void SetNewGame(bool isNewGame) => IsNewGame = isNewGame;
 }
 

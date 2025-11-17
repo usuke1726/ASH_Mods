@@ -16,6 +16,7 @@ internal class Setup
         Binoculars.Setup(helper);
         Music.Setup(helper);
         Patrol.PassingStateRegistory.Setup(helper);
+        Title.Setup(helper);
     }
 }
 

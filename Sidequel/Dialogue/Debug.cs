@@ -172,8 +172,8 @@ internal class Debug : MonoBehaviour
         private static Action? unregister2 = null!;
         internal static void Setup(IModHelper helper)
         {
-            ModdingAPI.KeyBind.KeyBind.RegisterKeyBind("P", NewGame, out var parseResult1, name: "StartNewSidequel");
-            ModdingAPI.KeyBind.KeyBind.RegisterKeyBind("I", LoadGame, out var parseResult2, name: "StartSidequel");
+            ModdingAPI.KeyBind.KeyBind.RegisterKeyBind("P(LeftShift)", NewGame, out var parseResult1, name: "StartNewSidequel");
+            ModdingAPI.KeyBind.KeyBind.RegisterKeyBind("I(LeftShift)", LoadGame, out var parseResult2, name: "StartSidequel");
             ModdingAPI.KeyBind.KeyBind? keybind1 = null;
             ModdingAPI.KeyBind.KeyBind? keybind2 = null;
             if (parseResult1.Success)
@@ -217,7 +217,7 @@ internal class Debug : MonoBehaviour
             if (!CanStart(true)) return;
             Unregister();
             Monitor.Log($"===== Sidequel NewGame starting... =====", LL.Warning, true);
-            State.SetNewGame();
+            State.SetNewGame(true);
             NewGameController.StartGame();
         }
         private static void LoadGame()
@@ -225,6 +225,7 @@ internal class Debug : MonoBehaviour
             if (!CanStart(false)) return;
             Unregister();
             Monitor.Log($"===== Sidequel Continue starting... =====", LL.Warning, true);
+            State.SetNewGame(false);
             NewGameController.StartGame();
         }
         private static bool CanStart(bool isNewGame)
