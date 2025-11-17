@@ -26,6 +26,7 @@ internal class CoinReached : NodeEntry
         lines(1, 3, digit2("NotEndingCont"), Player),
         end(),
         anchor("ending"),
+        done(LeadEndingCont.Id),
         lines(1, 3, digit2("EndingCont"), Player),
         lineif(() => GetBool(Const.STags.HasClimbedPeakOnce), "EndingCont.HasClimbedOnce.04", "EndingCont.HasNotClimbed.04", Player),
     ]);
