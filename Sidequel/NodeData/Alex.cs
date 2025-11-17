@@ -140,7 +140,10 @@ internal class Alex : NodeEntry
         ], condition: () => TriggeredByJon && _L && !ConfessionDone && NodeDone(AfterJA1)),
 
         new(LowCartersConfessionToAlex, [
-            lines(digit2("LowCartersConfession"), Player, useId: false),
+            lines(1, 22, digit2("LowCartersConfession"), Player, useId: false),
+            wait(1f),
+            lines(23, 32, digit2("LowCartersConfession"), Player, useId: false),
+            wait(1.5f),
             lines(digit2, []),
             cont(-20),
             done(),

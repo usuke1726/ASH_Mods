@@ -189,12 +189,19 @@ internal class Jon : NodeEntry
         ], condition: () => false),
 
         new(LowAfterJA2, [
+            lines(1, 20, digit2, [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 17, 18, 20], [
+                new(16, emote(Emotes.Happy, Original)),
+                new(17, emote(Emotes.Normal, Original)),
+            ]),
             done(),
             next(() => LowCartersConfessionToJon),
         ], condition: () => _aJA && !_JAJon && _L && NodeDone(AfterJA1) && NodeYet(HighAfterJA2) && NodeYet(MidAfterJA2)),
 
         new(LowCartersConfessionToJon, [
-            lines(digit2("LowCartersConfession"), Player, useId: false),
+            lines(1, 22, digit2("LowCartersConfession"), Player, useId: false),
+            wait(1f),
+            lines(23, 32, digit2("LowCartersConfession"), Player, useId: false),
+            wait(1.5f),
             lines(digit2, []),
             cont(-20),
             done(),
