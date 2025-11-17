@@ -2,18 +2,26 @@
     "item.Coin.name": "コイン",
     "item.Coin.namePlural": "コイン",
     "item.Coin.description": "生きるために欠かせないアイテム。\n早く学費を稼がなくては…",
+    "item.Coin.1.description": "もうすぐで学費が貯まりそうだ。\nあと　もう少し…",
+    "item.Coin.2.description": "ついに学費が貯まった！\nとりあえずは　一安心だ…",
+    "item.Coin.3.description": "生きるために必要だけど、\nこれにすがらなくても　もう大丈夫そうだ。",
 
     "item.GoldenFeather.name": "黄金の羽根",
     "item.GoldenFeather.namePlural": "黄金の羽根",
     "item.GoldenFeather.description": "カネにならない役立たず。\n誰も買っちゃくれない。",
+    "item.GoldenFeather.1.description": "やっと1枚売れた！代わりに島の探索がキツく\nなってしまったが、これもカネのためだ。",
+    "item.GoldenFeather.2.description": "この島での思い出は、みんな\nコイツのおかげだったのかもしれない。",
 
     "item.CampingPermit.name": "",
     "item.CampingPermit.namePlural": "",
     "item.CampingPermit.description": "この島に滞在するために必要なもの。\n明後日までには　ここを発たないといけない。",
+    "item.CampingPermit.1.description": "滞在期間を長めにとっておいて良かった。\n最後に山頂に登ってから帰るとしよう。",
 
     "item.Watch.name": "腕時計",
     "item.Watch.namePlural": "腕時計",
     "item.Watch.description": "拾った腕時計。やや古ぼけているが、\n売れば多少のカネにはなるかもしれない。",
+    "item.Watch.1.description": "デボラの落とし物。ずっと持っているのは\n心がいたむが、これも学費のためだ…",
+    "item.Watch.2.description": "デボラの落とし物。\nやっぱり返しに行こう！",
 
     // 空文字はオリジナル版と同じものを使うという意味。
     "item.FishingRod.name": "",
@@ -56,6 +64,7 @@
     "item.SouvenirMedal.name": "州立公園　記念メダル",
     "item.SouvenirMedal.namePlural": "州立公園　記念メダル",
     "item.SouvenirMedal.description": "山の絵とイニシャルが刻印されている、\nどこにでもありそうな　うすっぺらいメダル。",
+    "item.SouvenirMedal.1.description": "山の絵とイニシャルが刻印されている。\nこのデザインは旧モデルらしい。",
 
     "item.FishHook.name": "つりばり",
     "item.FishHook.namePlural": "つりばり",
@@ -68,6 +77,7 @@
     "item.OldPicture.name": "古い写真",
     "item.OldPicture.namePlural": "古い写真",
     "item.OldPicture.description": "オヤジとジョンの昔の写真。\nまさか二人が知り合いだったとは…",
+    "item.OldPicture.1.description": "近すぎて見切れてる この若い2人からは、\n写真に似た 懐かしいにおいが 感じられる。",
 
     "item.CuteEmptyCan.name": "キュートな空きカン",
     "item.CuteEmptyCan.namePlural": "キュートな空きカン",

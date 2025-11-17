@@ -1,4 +1,6 @@
 ﻿
+using Sidequel.NodeData;
+
 namespace Sidequel.Item;
 
 internal static class Data
@@ -106,7 +108,8 @@ internal static class Data
                 111110001111
                 111111111111
                 000000000000
-                """
+                """,
+                GetOldPictureState
             ),
             new(
                 id: Items.AntiqueFigure,
@@ -157,7 +160,8 @@ internal static class Data
                 000111111000
                 000000000000
                 000000000000
-                """
+                """,
+                GetSouvenirMedalState
             ),
             new(
                 id: Items.FishHook,
@@ -259,7 +263,8 @@ internal static class Data
                 001011010100
                 001000000100
                 001111111100
-                """
+                """,
+                GetTradingCardState
             ),
             new(
                 id: Items.Pencil,
@@ -305,9 +310,9 @@ internal static class Data
         ItemWrapperBase.TryLoad(Items.FishingRod);
         ItemWrapperBase.TryLoad(Items.Stick);
         ItemWrapperBase.TryLoad(Items.Pickaxe);
-        ItemWrapperBase.TryLoad(Items.Coin);
-        ItemWrapperBase.TryLoad(Items.GoldenFeather);
-        ItemWrapperBase.TryLoad(Items.WristWatch);
+        ItemWrapperBase.TryLoad(Items.Coin, GetCoinState);
+        ItemWrapperBase.TryLoad(Items.GoldenFeather, GetFeatherState);
+        ItemWrapperBase.TryLoad(Items.WristWatch, GetWatchState);
         ItemWrapperBase.TryLoad(Items.Fish);
         ItemWrapperBase.TryLoad(Items.Bait);
         ItemWrapperBase.TryLoad(Items.FishEncyclopedia);
@@ -315,8 +320,41 @@ internal static class Data
         ItemWrapperBase.TryLoad(Items.WalkieTalkie);
         ItemWrapperBase.TryLoad(Items.Compass);
         ItemWrapperBase.TryLoad(Items.RunningShoes);
-        ItemWrapperBase.TryLoad(Items.CampingPermit);
+        ItemWrapperBase.TryLoad(Items.CampingPermit, GetPermitState);
     }
     internal static int? FishingRodOnKeyboardState { get; private set; } = null;
+    private static int? GetCoinState()
+    {
+        var coinSavedup = Items.CoinsNum >= 400 || Items.CoinsSavedUp;
+        if (coinSavedup) return Cont.IsEndingCont ? 3 : 2;
+        return Items.CoinsNum >= 300 ? 1 : null;
+    }
+    private static int? GetFeatherState()
+    {
+        if (Cont.IsLow) return 2;
+        return Items.Num(Items.GoldenFeather) < 4 ? 1 : null;
+    }
+    private static int? GetPermitState()
+    {
+        return Cont.IsEndingCont && Items.CoinsSavedUp ? 1 : null;
+    }
+    private static int? GetWatchState()
+    {
+        if (Cont.IsLow) return 2;
+        if (Flags.NodeDone(Deborah.Start1) || Flags.NodeDone(RumorGuy.BeforeJA3)) return 1;
+        return null;
+    }
+    private static int? GetSouvenirMedalState()
+    {
+        return Flags.NodeYet(Jon.SouvenirMedal) ? null : 1;
+    }
+    private static int? GetOldPictureState()
+    {
+        return Flags.NodeYet(Jon.OldPicture) ? null : 1;
+    }
+    private static int? GetTradingCardState()
+    {
+        return Flags.NodeYet(Wil.TradingCard1) ? null : 1;
+    }
 }
 

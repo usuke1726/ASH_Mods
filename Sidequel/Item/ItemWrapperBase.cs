@@ -57,7 +57,7 @@ internal class ItemWrapperBase
     }
     private I18nKeys GetI18nKeys()
     {
-        var idx = state == null ? "" : $"{state}";
+        var idx = state == null ? "" : $".{state}";
         var pref = $"item.{id}{idx}";
         return new($"{pref}.name", $"{pref}.namePlural", $"{pref}.description");
     }

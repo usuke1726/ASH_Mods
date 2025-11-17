@@ -113,6 +113,7 @@ internal class DialogueController : MonoBehaviour
         CleanUpCurrentNode();
         forceKillCurrentDialogue = null;
         currentConversation.Kill();
+        Item.DataHandler.UpdateItemStates();
     }
     private void CleanUpCurrentNode(bool callEvent = true)
     {

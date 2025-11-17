@@ -78,6 +78,7 @@ internal static class DataHandler
         {
             Context.levelUI.statusBar.ShowCollection(item.item).HideAndKill(3f);
             if (Items.CoinsNum >= 400) NodeData.CoinReached.OnReached();
+            UpdateItemStates();
         }
         WriteToSaveData();
     }
