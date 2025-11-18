@@ -132,7 +132,7 @@ internal class Alex : NodeEntry
         ], condition: () => false),
 
         new(MidAfterConfession, [
-            lines(digit2, []),
+            lines(1, 5, digit2, [3, 5], [new(4, emote(Emotes.Happy, Original))]),
         ], condition: () => TriggeredByJon && _M && ConfessionDone && !Items.CoinsSavedUp),
 
         new(LowAfterJA2, [
@@ -150,7 +150,7 @@ internal class Alex : NodeEntry
         ], condition: () => false),
 
         new(LowAfterConfession, [
-            lines(digit2, []),
+            lines(1, 7, digit2, [3, 4, 7], [new(5, emote(Emotes.Happy, Original))]),
         ], condition: () => ConfessionDone && !Items.CoinsSavedUp),
 
         new(AfterCoinCompletion1, [

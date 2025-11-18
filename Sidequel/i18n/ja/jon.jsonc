@@ -252,8 +252,10 @@
     "node.Jon.MidCartersConfessionToJon.05": "(言葉づかいを　じっくり入念に\n考えていきたいんだ)",
     "node.Jon.MidCartersConfessionToJon.06": "(少し　待っててな…！)",
 
-    "node.Jon.MidAfterConfession.01": "(ここのセリフも　後で考えるよ)",
-    "node.Jon.MidAfterConfession.02": "(色々と　すまんな！)",
+    "node.Jon.MidAfterConfession.01": "よう！",
+    "node.Jon.MidAfterConfession.02": "無理は　してないよな？",
+    "node.Jon.MidAfterConfession.03": "ああ　何とかやっているよ",
+    "node.Jon.MidAfterConfession.04": "それなら　いいんだ！",
 
     "node.Jon.LowAfterJA2.01": "まあ　それでも　話くらいは聞くよ",
     "node.Jon.LowAfterJA2.02": "色々　苦労もしてきただろう？",
@@ -286,8 +288,13 @@
     "node.Jon.AfterCoinCompletion2.01": "(これから考えるからね！)",
     "node.Jon.AfterCoinCompletion2.02": "(コインがたまった後の会話だよ！)",
 
-    "node.Jon.LowAfterConfession.01": "(ここのセリフも　後で考えるよ)",
-    "node.Jon.LowAfterConfession.02": "(色々と　すまんな！)",
+    "node.Jon.LowAfterConfession.01": "よう！",
+    "node.Jon.LowAfterConfession.02": "調子はどう？",
+    "node.Jon.LowAfterConfession.03": "まあ　悪くはないよ",
+    "node.Jon.LowAfterConfession.04": "まだ　カネは貯まってないけど\n何とかなりそうなんだ",
+    "node.Jon.LowAfterConfession.05": "そうか　それは良いことだ！",
+    "node.Jon.LowAfterConfession.06": "うまくいくことを　願ってるよ",
+    "node.Jon.LowAfterConfession.07": "おう",
 
     "node.Jon.Sunscreen1.01": "よお",
     "node.Jon.Sunscreen1.MetFirst.02": "やあ　ひさしぶりだね！",

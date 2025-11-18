@@ -208,11 +208,15 @@ internal class Jon : NodeEntry
         ], condition: () => false),
 
         new(MidAfterConfession, [
-            lines(digit2, []),
+            lines(1, 4, digit2, [3], [new(4, emote(Emotes.Happy, Original))]),
         ], condition: () => NodeDone(MidCartersConfessionToJon) && _M),
 
         new(LowAfterConfession, [
-            lines(digit2, []),
+            lines(1, 7, digit2, [3, 4, 7], [
+                new(1, emote(Emotes.Happy, Original)),
+                new(2, emote(Emotes.Normal, Original)),
+                new(5, emote(Emotes.Happy, Original)),
+            ]),
         ], condition: () => (NodeDone(MidCartersConfessionToJon) || NodeDone(LowCartersConfessionToJon)) && _L),
 
         new(AfterCoinCompletion1, [

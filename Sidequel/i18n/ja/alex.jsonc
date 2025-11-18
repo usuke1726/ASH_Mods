@@ -203,8 +203,11 @@
     "node.Alex.MidCartersConfessionToAlex.26": "それじゃあね！",
     "node.Alex.MidCartersConfessionToAlex.27": "ああ　またな",
 
-    "node.Alex.MidAfterConfession.01": "(ここのセリフは　これから考えるわ！)",
-    "node.Alex.MidAfterConfession.02": "(ちょっと　待っててね)",
+    "node.Alex.MidAfterConfession.01": "あら　カーター！",
+    "node.Alex.MidAfterConfession.02": "調子は　どう？",
+    "node.Alex.MidAfterConfession.03": "ああ　何とかやっているよ",
+    "node.Alex.MidAfterConfession.04": "それで　いいのよ\n引き続き　この調子でね！",
+    "node.Alex.MidAfterConfession.05": "ああ…",
 
     "node.Alex.LowAfterJA2.01": "そうだ！それなら",
     "node.Alex.LowAfterJA2.02": "わたしの友達に　仕事の紹介を\n頼んでみようかしら",
@@ -231,8 +234,13 @@
     "node.Alex.LowCartersConfessionToAlex.02": "(言葉づかいも　色々　練りたいものね…)",
     "node.Alex.LowCartersConfessionToAlex.03": "(ちょっと　待っててね)",
 
-    "node.Alex.LowAfterConfession.01": "(ここのセリフは　これから考えるわ！)",
-    "node.Alex.LowAfterConfession.02": "(ちょっと　待っててね)",
+    "node.Alex.LowAfterConfession.01": "あら　カーター！",
+    "node.Alex.LowAfterConfession.02": "調子はどう？",
+    "node.Alex.LowAfterConfession.03": "まあ　悪くはないよ",
+    "node.Alex.LowAfterConfession.04": "まだ　カネは貯まってないけど\n何とかなりそうなんだ",
+    "node.Alex.LowAfterConfession.05": "前向きになってくれて　良かった！",
+    "node.Alex.LowAfterConfession.06": "あと　もう少しよ　頑張って！",
+    "node.Alex.LowAfterConfession.07": "おう",
 
     "node.Alex.AfterCoinCompletion1.01": "こんにちは　カーター！",
     "node.Alex.AfterCoinCompletion1.02": "よう　アレックス",
