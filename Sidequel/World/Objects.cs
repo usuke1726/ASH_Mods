@@ -44,6 +44,10 @@ internal class Objects
         {
             crack.gameObject.SetActive(false);
         }
+        foreach (var crack in GameObject.FindObjectsOfType<BuriedChest>())
+        {
+            crack.gameObject.SetActive(false);
+        }
         string[] removedItemPrefixes = [
             "ShellPickup",
             "ToyShovelPickup",
