@@ -101,9 +101,9 @@ internal class Avery : NodeEntry
         ], condition: () => false, onConversationFinish: CheckForRaceReady),
 
         new(FirstRaceWin, [
-            command(AveryPositionFixer.Dispose),
+            command(AveryPositionFixerAfterRace.Dispose),
             command(() => isFirstRace = false),
-            command(() => raceController = null),
+            command(() => RaceController = null),
             lines(1, 16, digit2, [5, 6, 7, 8, 16], [
                 new(8, emote(Emotes.Happy, Player)),
                 new(9, emote(Emotes.Happy, Original)),
@@ -116,9 +116,9 @@ internal class Avery : NodeEntry
         ], condition: () => RaceWon && isFirstRace, priority: 10),
 
         new(FirstRaceLose, [
-            command(AveryPositionFixer.Dispose),
+            command(AveryPositionFixerAfterRace.Dispose),
             command(() => isFirstRace = false),
-            command(() => raceController = null),
+            command(() => RaceController = null),
             lines(1, 16, digit2, [2, 3, 6, 8, 12, 17], [
                 new(1, emote(Emotes.Happy, Original)),
                 new(2, emote(Emotes.EyesClosed, Player)),
@@ -156,16 +156,16 @@ internal class Avery : NodeEntry
         ], condition: () => false, onConversationFinish: CheckForRaceReady),
 
         new(RaceWin, [
-            command(AveryPositionFixer.Dispose),
-            command(() => raceController = null),
+            command(AveryPositionFixerAfterRace.Dispose),
+            command(() => RaceController = null),
             lines(1, 8, digit2, [3, 7], [
                 new(4, emote(Emotes.Happy, Original)),
             ]),
         ], condition: () => RaceWon && !isFirstRace, priority: 10),
 
         new(RaceLose, [
-            command(AveryPositionFixer.Dispose),
-            command(() => raceController = null),
+            command(AveryPositionFixerAfterRace.Dispose),
+            command(() => RaceController = null),
             lines(1, 8, digit2, [2, 4, 7], [
                 new(1, emote(Emotes.Happy, Original)),
             ]),
@@ -194,8 +194,9 @@ internal class Avery : NodeEntry
             done(),
         ], condition: () => NodeS1(Const.Events.GoldMedal) && NodeDone(GoldMedal1) && NodeYet(GoldMedal3)),
     ];
-    private RaceController? raceController = null;
-    private Transform raceOpponent = null!;
+    internal static RaceController? RaceController { get; private set; } = null;
+    internal static void DestroyRaceController() => RaceController = null;
+    private static Transform raceOpponent = null!;
     private bool isFirstRace = false;
     private void CheckForRaceReady()
     {
@@ -203,22 +204,30 @@ internal class Avery : NodeEntry
         raceReady = false;
         isFirstRace = !GetBool(RacedOnce);
         System.STags.SetBool(RacedOnce, true);
-        raceController = raceOpponent!.GetComponent<RaceController>();
+        RaceController = raceOpponent!.GetComponent<RaceController>();
+        var raceData = RaceController.currentRaceData;
+        PositionWatcher.Dispose();
+        Assert(raceData != null, "raceData is null!!");
+        RaceController.SetupRaceData(raceData);
         var begin = typeof(RaceController).GetMethod("BeginRace", BindingFlags.NonPublic | BindingFlags.Instance);
-        begin.Invoke(raceController, []);
+        begin.Invoke(RaceController, []);
     }
-    private bool RaceFinished => raceController != null && _tags.GetBool(raceController.finishedRaceTag);
-    private bool RaceWon => RaceFinished && _tags.GetBool(raceController!.raceWonTag);
-    private bool RaceLosed => RaceFinished && !_tags.GetBool(raceController!.raceWonTag);
-    private bool RaceAbandoned => RaceFinished && _tags.GetBool(raceController!.abandonRaceTag);
+
+    internal static bool RaceActive => RaceController != null && _tags.GetBool(RaceController.startedRaceTag) && !_tags.GetBool(RaceController.finishedRaceTag);
+    internal static bool RaceFinished => RaceController != null && _tags.GetBool(RaceController.finishedRaceTag);
+    internal static bool RaceWon => RaceFinished && _tags.GetBool(RaceController!.raceWonTag);
+    internal static bool RaceLosed => RaceFinished && !_tags.GetBool(RaceController!.raceWonTag);
+    internal static bool RaceAbandoned => RaceFinished && _tags.GetBool(RaceController!.abandonRaceTag);
     private static Vector3 startPosition = new(51.9104f, 57.5393f, 337.0358f);
     private bool AveryAtStartPoint()
     {
         var distance = (raceOpponent.transform.position.SetY(0) - startPosition.SetY(0)).sqrMagnitude;
-        return distance < 10;
+        return distance < 100;
     }
-    private void PlaceRacers()
+    internal static void PlaceRacers()
     {
+        AveryPositionFixerAfterRace.Dispose();
+        PositionWatcher.Dispose();
         Context.player.transform.position = new(46.2891f, 57.5667f, 342.6601f);
         Context.player.transform.localRotation = Quaternion.Euler(0, 177.2422f, 0);
         raceOpponent.position = new(46.0936f, 57.5393f, 337.4354f);
@@ -235,25 +244,38 @@ internal class Avery : NodeEntry
             raceOpponent = Ch(Characters.Avery).transform;
             Assert(raceOpponent != null, "raceOpponent is null");
             var controller = raceOpponent!.GetComponent<RaceController>();
-            _tags.WatchBool(controller.finishedRaceTag, _ => AveryPositionFixer.Setup());
+            _tags.WatchBool(controller.finishedRaceTag, f => { if (f) AveryPositionFixerAfterRace.Setup(); });
         });
         Traverse.Create(Context.player).Field("hasRunningShoes").SetValue(GetBool(ShoesEquipped));
+        WalkieTalkie.OnRequiredStartingRaceFromCall(() =>
+        {
+            raceReady = true;
+            CheckForRaceReady();
+        });
     }
-    private class AveryPositionFixer : MonoBehaviour
+    internal class AveryPositionFixerAfterRace : MonoBehaviour
     {
         // エイブリーが遠くにいるときにゴールすると、謎のvelocityが発生し、エイブリーが崖から落ちてしまう。この不具合を解消するためにこのオブジェクトを用意する。
         private Rigidbody body = null!;
         private Vector3 position = Vector3.zero;
-        private static AveryPositionFixer? instance = null;
+        private static AveryPositionFixerAfterRace? instance = null;
+        internal static bool isAbandoned = false;
         internal static void Setup()
         {
-            instance ??= new GameObject("Sidequel_AveryPositionFixer").AddComponent<AveryPositionFixer>();
+            instance ??= new GameObject("Sidequel_AveryPositionFixer").AddComponent<AveryPositionFixerAfterRace>();
+            if (isAbandoned)
+            {
+                Dispose();
+                isAbandoned = false;
+            }
         }
         internal static void Dispose()
         {
             if (instance == null) return;
             GameObject.Destroy(instance.gameObject);
             instance = null;
+            PositionWatcher.Setup();
+            Debug($"disposed averyPositionFixer");
         }
         private void Awake()
         {
@@ -264,6 +286,34 @@ internal class Avery : NodeEntry
         {
             body.velocity = body.velocity.SetX(0).SetZ(0);
             body.position = position.SetY(body.position.y);
+        }
+    }
+    internal class PositionWatcher : MonoBehaviour
+    {
+        private float timer = 5f;
+        private static PositionWatcher? instance = null;
+        internal static void Setup()
+        {
+            instance = new GameObject("AveryPositionWatcher").AddComponent<PositionWatcher>();
+        }
+        internal static void Dispose()
+        {
+            if (instance == null) return;
+            GameObject.Destroy(instance.gameObject);
+            instance = null;
+            Debug($"disposed averyPositionWatcher");
+        }
+        private void Update()
+        {
+            if (RaceActive) Dispose();
+            timer -= Time.deltaTime;
+            if (timer > 0) return;
+            timer = 5f;
+            var player = Context.player.transform;
+            if (player.position.z < 1000 && player.position.y < 390) return;
+            if (WalkieTalkieEntry.IsAtValidPosition) return;
+            Debug($"reset avery position", LL.Warning);
+            WalkieTalkieEntry.Coordinator.PlaceRacer(null!);
         }
     }
 }
