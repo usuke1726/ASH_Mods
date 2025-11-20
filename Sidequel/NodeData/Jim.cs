@@ -24,7 +24,7 @@ internal class Jim : NodeEntry
     private bool IsClimbing => path.nextNode is >= 1 and <= 16;
     private bool IsDescending => path.nextNode is 0 or >= 19;
     protected override Characters? Character => Characters.OutlookPointGuy;
-    private static readonly float afterJA2border = Mathf.Lerp(Const.Cont.LowBorderValue, Const.Cont.MidBorderValue, 0.3f) + 0.1f;
+    private static readonly float afterJA2border = Const.Cont.LowBorderValue + 30.1f;
     private static bool IsJA2Active => Cont.Value <= afterJA2border;
     private float afterJA1Time = -1;
     protected override Node[] Nodes => [

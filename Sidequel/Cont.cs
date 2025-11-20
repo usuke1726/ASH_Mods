@@ -71,6 +71,7 @@ internal static class Cont
 #if DEBUG
         Assert(val < 0, $"updateCont value is expected to be negative (val: {val})");
         Monitor.Log($"== Cont Updated: {value,3} -> {newValue,3} ({val})", LL.Debug, true);
+        Assert(Flags.AfterJA || IsHigh, "It should be only HighCont on the BeforeJA state!");
 #endif
         var wasNotEndingCont = !IsEndingCont;
         value = newValue;
