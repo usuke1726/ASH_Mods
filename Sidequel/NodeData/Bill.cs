@@ -52,6 +52,20 @@ internal class Bill : NodeEntry
             done(),
         ], condition: () => _ML && HasFishingRod && NodeYet(Const.Events.Fishing) && !BillScene.IsActive && NodeYet(MidLowAfterGettingRod)),
 
+        new(Hook, [
+            lines(1, 20, digit2, [1, 3, 7, 11, 13, 14, 15, 18], [
+                new(16, emote(Emotes.Happy, Original)),
+                new(17, emote(Emotes.Normal, Original)),
+                new(18, item([Items.FishHook, Items.Coin], [-1, 5])),
+                new(18, emote(Emotes.Happy, Player)),
+                new(19, emote(Emotes.Normal, Player)),
+            ]),
+            lineif(() => GetBool(Const.STags.HasBorrowedFishingRodOnce), "HasRod.21", "NotHasRod.21", Player),
+            lines(22, 25, digit2, [22, 23, 25], [new(24, emote(Emotes.Happy, Original))]),
+            cont(-5),
+            done(),
+        ], condition: () => Items.Has(Items.FishHook) && NodeYet(Hook), priority: -1),
+
         new(StartFishing, [
             lines(1, 2, digit2, []),
             option(["O1", "O2"]),
