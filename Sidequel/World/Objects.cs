@@ -20,6 +20,11 @@ internal class Objects
         NPCs.Find("ToughBirdNPC (1)").gameObject.SetActive(false);
         NPCs.Find("PolarBearNPC").gameObject.SetActive(false);
         NPCs.Find("CampfireFriends").gameObject.SetActive(true);
+        NPCs.Find("YellAtNode").GetComponent<RangedInteractable>().enabled = false;
+        foreach (Transform child in NPCs.Find("ArtistQuest"))
+        {
+            child.gameObject.SetActive(child.name == "Artist1");
+        }
         new GameObject("Sidequel_ClimbersRemover").AddComponent<ClimbersRemover>();
         RemoveItems();
         ModdingAPI.Character.OnSetupDone(() =>
