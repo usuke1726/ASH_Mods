@@ -137,6 +137,7 @@ internal class Title
     private static void CleanUp()
     {
         setupDone = false;
+        IsSidequelMode = false;
         world = null!;
         worldObjects.Clear();
         camera = null!;
