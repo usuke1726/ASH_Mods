@@ -104,10 +104,20 @@ internal class Avery : NodeEntry
             command(AveryPositionFixerAfterRace.Dispose),
             command(() => isFirstRace = false),
             command(() => RaceController = null),
-            lines(1, 16, digit2, [5, 6, 7, 8, 16], [
+            lines(1, 9, digit2, [5, 6, 7, 8], [
                 new(8, emote(Emotes.Happy, Player)),
                 new(9, emote(Emotes.Happy, Original)),
-                new(12, emote(Emotes.Normal, Player)),
+            ]),
+            emote(Emotes.Normal, Player),
+            @if(() => !GetBool(Const.STags.HasWonAveryOnce),
+                lines(1, 6, digit2("Avery.RaceWin.Reward"), [2, 6], [
+                    new(1, cont(-10)),
+                    new(2, item(Items.Coin, 60)),
+                    new(3, emote(Emotes.Normal, Original)),
+                ], useId: false)
+            ),
+            tag(Const.STags.HasWonAveryOnce, true),
+            lines(10, 16, digit2, [16], [
                 new(12, emote(Emotes.Normal, Original)),
                 new(15, item(Items.WalkieTalkie)),
                 new(15, emote(Emotes.Happy, Original)),
@@ -158,8 +168,19 @@ internal class Avery : NodeEntry
         new(RaceWin, [
             command(AveryPositionFixerAfterRace.Dispose),
             command(() => RaceController = null),
-            lines(1, 8, digit2, [3, 7], [
+            lines(1, 5, digit2, [3, 7], [
                 new(4, emote(Emotes.Happy, Original)),
+            ]),
+            @if(() => !GetBool(Const.STags.HasWonAveryOnce),
+                lines(1, 6, digit2("Avery.RaceWin.Reward"), [2, 6], [
+                    new(1, cont(-10)),
+                    new(2, item(Items.Coin, 60)),
+                    new(3, emote(Emotes.Normal, Original)),
+                ], useId: false)
+            ),
+            tag(Const.STags.HasWonAveryOnce, true),
+            lines(6, 8, digit2, [7], [
+                new(6, emote(Emotes.Happy, Original)),
             ]),
         ], condition: () => RaceWon && !isFirstRace, priority: 10),
 

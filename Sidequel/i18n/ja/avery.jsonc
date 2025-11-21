@@ -137,6 +137,13 @@
     "node.Avery.RaceWin.07": "ああ　そのうちな",
     "node.Avery.RaceWin.08": "またね！",
 
+    "node.Avery.RaceWin.Reward.01": "それじゃ　約束の報酬ね！",
+    "node.Avery.RaceWin.Reward.02": "おお　結構気前いいな",
+    "node.Avery.RaceWin.Reward.03": "この前パルクール大会に\n参加したときの賞金なの！",
+    "node.Avery.RaceWin.Reward.04": "アタシを負かしたんだから\nもらって然るべきだわ！",
+    "node.Avery.RaceWin.Reward.05": "まあ　全額では　ないんだけどね…",
+    "node.Avery.RaceWin.Reward.06": "別にいいよ　サンキューな",
+
     "node.Avery.RaceLose.01": "やった　勝ったわ！",
     "node.Avery.RaceLose.02": "お前　すげぇ速ぇな",
     "node.Avery.RaceLose.03": "ふふん　やっぱり　経験の差かしらね！",
