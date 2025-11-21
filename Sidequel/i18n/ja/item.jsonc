@@ -57,7 +57,8 @@
 
     "item.RunningShoes.name": "",
     "item.RunningShoes.namePlural": "",
-    "item.RunningShoes.description": "",
+    "item.RunningShoes.description": "スーに　もらった靴。\n売るつもりなので　はかずに取ってある。",
+    "item.RunningShoes.1.description": "売るのはやめて自分で使うことにした。\n<color=#B6FF63>{{RunButton}}</color>長押しで走る。",
 
     "item.GoldMedal.name": "金メダル",
     "item.GoldMedal.namePlural": "金メダル",

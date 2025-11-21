@@ -1,5 +1,6 @@
 ﻿
 using Sidequel.NodeData;
+using Sidequel.System;
 
 namespace Sidequel.Item;
 
@@ -319,7 +320,7 @@ internal static class Data
         ItemWrapperBase.TryLoad(Items.Bucket);
         ItemWrapperBase.TryLoad(Items.WalkieTalkie);
         ItemWrapperBase.TryLoad(Items.Compass);
-        ItemWrapperBase.TryLoad(Items.RunningShoes);
+        ItemWrapperBase.TryLoad(Items.RunningShoes, GetShoesState);
         ItemWrapperBase.TryLoad(Items.CampingPermit, GetPermitState);
     }
     internal static int? FishingRodOnKeyboardState { get; private set; } = null;
@@ -328,6 +329,10 @@ internal static class Data
         var coinSavedup = Items.CoinsNum >= 400 || Items.CoinsSavedUp;
         if (coinSavedup) return Cont.IsEndingCont ? 3 : 2;
         return Items.CoinsNum >= 300 ? 1 : null;
+    }
+    private static int? GetShoesState()
+    {
+        return STags.GetBool(Avery.ShoesEquipped) ? 1 : null;
     }
     private static int? GetFeatherState()
     {
