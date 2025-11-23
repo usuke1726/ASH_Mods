@@ -41,6 +41,7 @@ internal class Controller : MonoBehaviour
         }),
         new(11.8f, () => FadeOutScreen.SetTextColor(textColor)),
         new(134.5f, Ship.Activate),
+        new(134.5f, SkipKeyWatcher.Deactivate),
         new(EndTime - 12f, () => FadeOutScreen.SetTextColor(null)),
         new(EndTime - 10f, () => FadeOutScreen.FadeOut(3f)),
         new(EndTime, () => {
@@ -224,6 +225,8 @@ internal class Controller : MonoBehaviour
         {
             instance = new GameObject("Sidequel_EndingSkipKeyWatcher").AddComponent<SkipKeyWatcher>();
         }
+        private bool deactivated = false;
+        internal static void Deactivate() => instance.deactivated = true;
         private void Awake()
         {
             input = GameUserInput.CreateInput(gameObject);
@@ -242,14 +245,19 @@ internal class Controller : MonoBehaviour
         private const float ACoeff = 1f / FadeInOutTime;
         private void Update()
         {
-            if (input.GetJumpButton().isPressed && input.GetUseItemButton().isPressed)
+            if (!deactivated && input.GetJumpButton().isPressed && input.GetUseItemButton().isPressed)
             {
                 if (lastHoldStartTime < 0) lastHoldStartTime = Time.time;
                 var time = Time.time - lastHoldStartTime;
                 if (time >= ActivatingTime) OnFired();
             }
             else lastHoldStartTime = -1;
-            if (IsHoldingAnyKey())
+            if (deactivated)
+            {
+                timeout = -1;
+                showing = false;
+            }
+            else if (IsHoldingAnyKey())
             {
                 timeout = 3.0f;
                 showing = true;
@@ -279,11 +287,12 @@ internal class Controller : MonoBehaviour
             if (UnityEngine.Input.anyKey) return true;
             return false;
         }
+        private void OnDestroy() => instance = null!;
         private void OnFired()
         {
+            Deactivate();
             HasFired = true;
             FiredTime = Time.time;
-            text.gameObject.SetActive(false);
             if (FadeOutScreen.IsFadingIn)
             {
                 Timer.Register(1, () => FadeOutScreen._FadeOutBody(2f));
@@ -306,7 +315,6 @@ internal class Controller : MonoBehaviour
                 FadeOutScreen._FadeInTextBody("the end", 3f);
             });
             Music.FadeOutCurrentMusic2(5f);
-            GameObject.Destroy(gameObject);
         }
     }
     private class FadeOutScreen : MonoBehaviour
