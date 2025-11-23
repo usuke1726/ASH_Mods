@@ -111,6 +111,7 @@ internal class Peak : NodeEntry
         moon = peakCutscene.Find("Moon");
         peakCutscene.Find("TopUpdraft").gameObject.SetActive(false);
         peakCutscene.Find("Bubbles").gameObject.SetActive(false);
+        peakCutscene.Find("BubbleSounds").gameObject.SetActive(false);
         camera = peakCutscene.Find("SnowTipTopPos/SitCutsceneCam");
         camera.GetComponent<Animator>().speed = 2f;
     }
