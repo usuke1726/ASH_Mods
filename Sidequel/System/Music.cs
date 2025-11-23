@@ -1,4 +1,5 @@
 ﻿
+using HarmonyLib;
 using ModdingAPI;
 using UnityEngine;
 
@@ -67,6 +68,42 @@ internal class Music
         }
         Debug("start to fadeout music");
         manager.UnregisterAll();
+    }
+    internal static void FadeOutCurrentMusic2(float? time = null) => FadeOutController.StartFadeOut(time);
+    private class FadeOutController : MonoBehaviour
+    {
+        private static FadeOutController? instance = null;
+        private ActiveMusicSet musicSet = null!;
+        private static float? fadeOutTime = null;
+        private float startTime;
+        private float time;
+        private Traverse tr = null!;
+        internal static void StartFadeOut(float? time = null)
+        {
+            if (instance != null) return;
+            fadeOutTime = time;
+            instance = new GameObject("Sidequel_MusicFadeOutContrller").AddComponent<FadeOutController>();
+            Debug("start to fadeout music (type 2)");
+        }
+        private void Awake()
+        {
+            var manager = Singleton<MusicManager>.instance;
+            musicSet = manager.GetActiveMusicSet(manager.currentMusicSet);
+            time = fadeOutTime ?? musicSet.musicSetData.fadeOutTime;
+            startTime = Time.time;
+            tr = Traverse.Create(musicSet).Field("volume");
+        }
+        private void Update()
+        {
+            var volume = Mathf.Clamp((startTime + time - Time.time) / time, 0, 1);
+            tr.SetValue(volume);
+            if (volume < 0.01f)
+            {
+                GameObject.Destroy(gameObject);
+                instance = null;
+                FadeOutCurrentMusic(1f);
+            }
+        }
     }
 }
 

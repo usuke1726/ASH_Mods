@@ -7,6 +7,7 @@
     "ModConfigMenu.additionalConfirmMessage": "(※Sidequelのデータも消去されます！)",
     "ModConfigMenu.confirmOverwritingSaveData.y": "つづける",
     "ModConfigMenu.confirmOverwritingSaveData.n": "ちょっとまって！",
+    "Ending.SkipButtonMessage": "{{JumpButton}}+{{UseItemButton}}長押しでスキップ",
     "JATrigger.Jon": "ジョン",
     "JATrigger.Alex": "アレックス"
 }

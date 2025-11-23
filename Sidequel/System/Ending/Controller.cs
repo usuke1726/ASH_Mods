@@ -3,6 +3,8 @@
 
 using System.Collections;
 using ModdingAPI;
+using QuickUnityTools.Input;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -30,6 +32,7 @@ internal class Controller : MonoBehaviour
         new(11.8f, () => {
             CutsceneController.Next(12.5f);
             Music.MuteExceptBGM();
+            SkipKeyWatcher.Create();
             GameObject.Destroy(player!.gameObject);
         }),
         new(12f, () => {
@@ -152,6 +155,7 @@ internal class Controller : MonoBehaviour
                 if (i == schedules.Count) break;
                 schedule = schedules[i];
             }
+            if (SkipKeyWatcher.HasFired && Time.time - SkipKeyWatcher.FiredTime >= 10f) break;
             yield return new WaitForFixedUpdate();
         }
         SceneManager.LoadScene("TitleScene");
@@ -208,8 +212,110 @@ internal class Controller : MonoBehaviour
     }
     private static void StartReplay() => Object.ActivePlayerReplay.Play();
     private static void Continue() => Object.ActivePlayerReplay.Continue();
+    private class SkipKeyWatcher : MonoBehaviour
+    {
+        internal static bool IsActive { get; private set; } = false;
+        internal static bool HasFired { get; private set; } = false;
+        internal static float FiredTime { get; private set; } = 0;
+        private GameUserInput input = null!;
+        private static SkipKeyWatcher instance = null!;
+        private TextMeshProUGUI text = null!;
+        internal static void Create()
+        {
+            instance = new GameObject("Sidequel_EndingSkipKeyWatcher").AddComponent<SkipKeyWatcher>();
+        }
+        private void Awake()
+        {
+            input = GameUserInput.CreateInput(gameObject);
+            text = GameObject.Find("Cutscenes").transform.Find("ClosingCutscene/Canvas/Image/Text (1)").GetComponent<TextMeshProUGUI>();
+            var obj = Context.ui.CreateTextBoxContent("");
+            text.font = obj.textMesh.font;
+            GameObject.Destroy(obj.gameObject);
+            text.text = TextReplacer.ReplaceVariables(I18nLocalize("Ending.SkipButtonMessage"));
+            text.gameObject.SetActive(true);
+            text.color = new(0.5f, 0.5f, 0.5f, 0);
+            //text.fontSize = 12;
+        }
+        private float lastHoldStartTime = -1;
+        private const float ActivatingTime = 1f;
+        private const float FadeInOutTime = 0.5f;
+        private const float ACoeff = 1f / FadeInOutTime;
+        private void Update()
+        {
+            if (input.GetJumpButton().isPressed && input.GetUseItemButton().isPressed)
+            {
+                if (lastHoldStartTime < 0) lastHoldStartTime = Time.time;
+                var time = Time.time - lastHoldStartTime;
+                if (time >= ActivatingTime) OnFired();
+            }
+            else lastHoldStartTime = -1;
+            if (IsHoldingAnyKey())
+            {
+                timeout = 3.0f;
+                showing = true;
+            }
+            if (timeout > 0)
+            {
+                timeout -= Time.deltaTime;
+                if (timeout < 0) showing = false;
+            }
+            if (showing && text.color.a < 1f)
+            {
+                var a = Math.Clamp(text.color.a + Time.deltaTime * ACoeff, 0, 1);
+                text.color = text.color with { a = a };
+            }
+            else if (!showing && text.color.a > 0f)
+            {
+                var a = Math.Clamp(text.color.a - Time.deltaTime * ACoeff, 0, 1);
+                text.color = text.color with { a = a };
+            }
+        }
+        private bool showing = false;
+        private float timeout = 0;
+        private bool IsHoldingAnyKey()
+        {
+            ButtonState[] states = [input.button1, input.button2, input.button3, input.button4, input.leftBumper, input.rightBumper];
+            if (states.Any(s => s.isPressed)) return true;
+            if (UnityEngine.Input.anyKey) return true;
+            return false;
+        }
+        private void OnFired()
+        {
+            HasFired = true;
+            FiredTime = Time.time;
+            text.gameObject.SetActive(false);
+            if (FadeOutScreen.IsFadingIn)
+            {
+                Timer.Register(1, () => FadeOutScreen._FadeOutBody(2f));
+            }
+            else if (!FadeOutScreen.IsFadingOut)
+            {
+                FadeOutScreen._FadeOutBody(3f);
+            }
+            if (FadeOutScreen.IsTextFadingIn)
+            {
+                Timer.Register(1, () => FadeOutScreen._FadeOutTextBody(0.7f));
+            }
+            else if (!FadeOutScreen.IsTextFadingOut && FadeOutScreen.IsShowingText)
+            {
+                FadeOutScreen._FadeOutTextBody(0.7f);
+            }
+            Timer.Register(2, () =>
+            {
+                FadeOutScreen.SetTextColor(null);
+                FadeOutScreen._FadeInTextBody("the end", 3f);
+            });
+            Music.FadeOutCurrentMusic2(5f);
+            GameObject.Destroy(gameObject);
+        }
+    }
     private class FadeOutScreen : MonoBehaviour
     {
+        internal static bool IsShowingText => text.color.a > 0;
+        internal static bool IsTextFadingIn => instance.isTextFadingIn;
+        internal static bool IsTextFadingOut => instance.isTextFadingOut;
+        internal static bool IsFadingIn => instance.isFadingIn;
+        internal static bool IsFadingOut => instance.isFadingOut;
         private static FadeOutScreen instance = null!;
         private Image image = null!;
         private Color color;
@@ -290,12 +396,20 @@ internal class Controller : MonoBehaviour
         internal static void FadeOutText() => FadeOutText(null);
         internal static void FadeOutText(float? transitionTime)
         {
+            if (!SkipKeyWatcher.HasFired) _FadeOutTextBody(transitionTime);
+        }
+        internal static void _FadeOutTextBody(float? transitionTime)
+        {
             instance.textTransitionTime = transitionTime ?? DefaultTransitionTime;
             instance.textStartTime = Time.time;
             instance.isTextFadingOut = true;
         }
         internal static void FadeInText(string _text) => FadeInText(_text, null);
         internal static void FadeInText(string _text, float? transitionTime)
+        {
+            if (!SkipKeyWatcher.HasFired) _FadeInTextBody(_text, transitionTime);
+        }
+        internal static void _FadeInTextBody(string _text, float? transitionTime)
         {
             text.text = _text;
             text.color = text.color with { a = 0 };
@@ -306,6 +420,10 @@ internal class Controller : MonoBehaviour
         internal static void FadeOut() => FadeOut(null);
         internal static void FadeOut(float? transitionTime)
         {
+            if (!SkipKeyWatcher.HasFired) _FadeOutBody(transitionTime);
+        }
+        internal static void _FadeOutBody(float? transitionTime)
+        {
             // Debug($"start fading out");
             instance.transitionTime = transitionTime ?? DefaultTransitionTime;
             instance.startTime = Time.time;
@@ -314,6 +432,7 @@ internal class Controller : MonoBehaviour
         internal static void FadeIn() => FadeIn(null);
         internal static void FadeIn(float? transitionTime)
         {
+            if (SkipKeyWatcher.HasFired) return;
             // Debug($"start fading in");
             instance.transitionTime = transitionTime ?? DefaultTransitionTime;
             instance.startTime = Time.time;
