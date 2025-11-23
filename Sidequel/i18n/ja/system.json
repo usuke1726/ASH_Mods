@@ -8,6 +8,7 @@
     "ModConfigMenu.confirmOverwritingSaveData.y": "つづける",
     "ModConfigMenu.confirmOverwritingSaveData.n": "ちょっとまって！",
     "Ending.SkipButtonMessage": "{{JumpButton}}+{{UseItemButton}}長押しでスキップ",
+    "Ending.ThanksForPlaying": "遊んでくれて　ありがとう！",
     "JATrigger.Jon": "ジョン",
     "JATrigger.Alex": "アレックス"
 }

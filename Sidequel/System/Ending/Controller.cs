@@ -1,5 +1,6 @@
 ﻿
 //#define ADJUST_SPOT_POSITIONS
+#define ENDING_MESSAGE_ENABLED
 
 using System.Collections;
 using ModdingAPI;
@@ -44,6 +45,7 @@ internal class Controller : MonoBehaviour
         new(134.5f, SkipKeyWatcher.Deactivate),
         new(EndTime - 12f, () => FadeOutScreen.SetTextColor(null)),
         new(EndTime - 10f, () => FadeOutScreen.FadeOut(3f)),
+        new(EndTime - 7f, SkipKeyWatcher.PrepareEndMessage),
         new(EndTime, () => {
             Debug($"MOVIE END");
         }),
@@ -267,7 +269,12 @@ internal class Controller : MonoBehaviour
                 timeout -= Time.deltaTime;
                 if (timeout < 0) showing = false;
             }
-            if (showing && text.color.a < 1f)
+            if (showingEndMes && text.color.a < 1f)
+            {
+                var a = Math.Clamp(text.color.a + Time.deltaTime * 0.5f, 0, 1);
+                text.color = text.color with { a = a };
+            }
+            else if (showing && text.color.a < 1f)
             {
                 var a = Math.Clamp(text.color.a + Time.deltaTime * ACoeff, 0, 1);
                 text.color = text.color with { a = a };
@@ -278,6 +285,21 @@ internal class Controller : MonoBehaviour
                 text.color = text.color with { a = a };
             }
         }
+        internal static void PrepareEndMessage()
+        {
+#if ENDING_MESSAGE_ENABLED
+            if (instance.showingEndMes) return;
+            instance.showingEndMes = true;
+            var rect = instance.text.gameObject.GetComponent<RectTransform>();
+            rect.sizeDelta = rect.sizeDelta with { x = 350 };
+            instance.text.gameObject.transform.localPosition = new(-175.2788f, -30, 0);
+            instance.text.alignment = TextAlignmentOptions.Center;
+            instance.text.horizontalAlignment = HorizontalAlignmentOptions.Center;
+            instance.text.text = I18nLocalize("Ending.ThanksForPlaying");
+            instance.text.color = new(0.673f, 0.561f, 0, 0);
+#endif
+        }
+        private bool showingEndMes = false;
         private bool showing = false;
         private float timeout = 0;
         private bool IsHoldingAnyKey()
@@ -314,6 +336,7 @@ internal class Controller : MonoBehaviour
                 FadeOutScreen.SetTextColor(null);
                 FadeOutScreen._FadeInTextBody("the end", 3f);
             });
+            Timer.Register(5, PrepareEndMessage);
             Music.FadeOutCurrentMusic2(5f);
         }
     }
