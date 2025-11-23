@@ -19,7 +19,6 @@ internal class Title
         "Trees",
         "Trees (1)",
         "ScrollingPropsAnimator",
-        "AmbienceSounds",
     ];
     private static bool setupDone = false;
     private static Transform world = null!;
@@ -133,6 +132,8 @@ internal class Title
         light = lightObj.GetComponent<Light>();
         defaultLightRotation = light.transform.localRotation;
         defaultLightIntensity = light.intensity;
+
+        AmbienceSoundManager.Create();
     }
     private static void CleanUp()
     {
@@ -191,6 +192,31 @@ internal class Title
         else
         {
             NewGameController.StartGame();
+        }
+    }
+    private class AmbienceSoundManager : MonoBehaviour
+    {
+        private AudioSource audio = null!;
+        private float defaultVolume;
+        private const float FadingTime = 2f;
+        private const float FadingCoeff = 1.0f / FadingTime;
+        internal static void Create() => new GameObject("Sidequel_AmbienceSoundManager").AddComponent<AmbienceSoundManager>();
+        private void Awake()
+        {
+            audio = GameObject.Find("World/AmbienceSounds").GetComponent<AudioSource>();
+            defaultVolume = audio.volume;
+        }
+        private void Update()
+        {
+            var d = Time.deltaTime * FadingCoeff;
+            if (IsSidequelMode && audio.volume > 0)
+            {
+                audio.volume = Mathf.MoveTowards(audio.volume, 0, d);
+            }
+            else if (!IsSidequelMode && audio.volume < defaultVolume)
+            {
+                audio.volume = Mathf.MoveTowards(audio.volume, defaultVolume, d);
+            }
         }
     }
 }
