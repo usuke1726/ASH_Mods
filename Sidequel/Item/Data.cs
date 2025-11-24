@@ -304,6 +304,25 @@ internal static class Data
                 createWorldPrefab = System.Binoculars.BinocularsItem.CreateWorldPrefab,
                 priority = 8,
             },
+            new(
+                id: Items.EternalFeather,
+                iconData: """
+                010000111111
+                111011100110
+                010111011100
+                001110111010
+                001101110010
+                011011100111
+                010111000010
+                101110010010
+                101000010000
+                010000111000
+                010000010000
+                001000010000
+                """
+            ){
+                priority = -8,
+            },
         ];
     }
     internal static void LoadOriginalItems()

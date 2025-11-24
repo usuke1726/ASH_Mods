@@ -36,6 +36,7 @@ internal static class Items
     public static readonly string FishScale3 = "FishScale3";
     public static readonly string Binoculars = "Binoculars";
     public static readonly string Pencil = "Pencil";
+    public static readonly string EternalFeather = "EternalFeather";
 
     public static int Num(string id) => Item.DataHandler.GetCollected(id);
     public static int Num(Item.ItemWrapperBase item) => Item.DataHandler.GetCollected(item);

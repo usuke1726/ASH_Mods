@@ -11,6 +11,7 @@ internal class Setup
         if (done) return;
         done = true;
         DataHandler.Setup(helper);
+        SpecialFeather.Setup(helper);
     }
 }
 

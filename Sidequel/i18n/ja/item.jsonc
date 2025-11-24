@@ -126,6 +126,10 @@
     "item.Pencil.namePlural": "えんぴつ",
     "item.Pencil.description": "先のとがった　えんぴつ。\n今は　特に使い道はない。",
 
+    "item.EternalFeather.name": "永遠の羽根",
+    "item.EternalFeather.namePlural": "永遠の羽根",
+    "item.EternalFeather.description": "不気味に輝く羽根。これを持っていると\nいくらでも　元気がわいてくる！",
+
     "item.Binoculars.name": "双眼鏡",
     "item.Binoculars.namePlural": "双眼鏡",
     "item.Binoculars.description": "ズーム機能付きの双眼鏡。\nこれで色々な景色を見て回ろう！",
