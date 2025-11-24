@@ -35,6 +35,7 @@ internal class Debug : MonoBehaviour
         {
             System.STags.SetInt(Const.STags.Cont, value);
             typeof(Cont).GetField("value", BindingFlags.Static | BindingFlags.NonPublic).SetValue(null, value);
+            if (value <= Const.Cont.EndingBorderValue) Flags.SetNodeState(NodeData.LeadEndingCont.Id, NodeEntryBase.NodeStates.Done);
         }
     }
     public int Money
@@ -45,7 +46,11 @@ internal class Debug : MonoBehaviour
     public bool MoneySavedUp
     {
         get => System.STags.GetBool(Const.STags.CoinsSavedUp);
-        set => System.STags.SetBool(Const.STags.CoinsSavedUp, value);
+        set
+        {
+            System.STags.SetBool(Const.STags.CoinsSavedUp, value);
+            typeof(NodeData.CoinReached).GetProperty("IsActive", BindingFlags.Static | BindingFlags.SetProperty | BindingFlags.NonPublic).SetValue(null, false);
+        }
     }
     public GameObject z_Cutscenes { get; private set; } = null!;
     public GameObject z_NPCs { get; private set; } = null!;
@@ -193,6 +198,7 @@ internal class Debug : MonoBehaviour
             };
             helper.Events.Gameloop.GameStarted += (_, _) => Timer.Register(1f, () =>
             {
+                if (!State.IsActive) return;
                 var jadone = DebugInitialValues.JADone;
                 if (jadone != null) instance.JADone = (bool)jadone;
                 var cont = DebugInitialValues.Cont;
