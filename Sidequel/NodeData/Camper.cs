@@ -91,5 +91,12 @@ internal class Camper : NodeEntry
             ]),
         ], condition: () => NodeDone(ReturnRod) && !BorrowingRod),
     ];
+    internal override void OnGameStarted()
+    {
+        ModdingAPI.Character.OnSetupDone(() =>
+        {
+            Ch(Characters.Camper).animator.SetBool("Happy", true);
+        });
+    }
 }
 
