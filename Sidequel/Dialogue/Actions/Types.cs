@@ -17,5 +17,6 @@ public enum ActionType
     Wait,
     Cont,
     NodeState,
+    LookAt,
 }
 

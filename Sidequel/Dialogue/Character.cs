@@ -9,7 +9,7 @@ internal static class Character
     public static readonly string Original = "Original";
     public static bool TryGetCharacter(IConversation conversation, string name, out ModdingAPI.Character character)
     {
-        if (name == Original)
+        if (conversation != null && name == Original)
         {
             return ModdingAPI.Character.TryGet(conversation.originalSpeaker, out character);
         }

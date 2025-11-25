@@ -28,6 +28,7 @@ internal abstract class NodeEntryBase
     protected static AddMultipleItemsAction item(string[] itemIds, int[] amounts, string? anchor = null) => new(() => itemIds, () => amounts, anchor);
     protected static AddMultipleItemsAction item(Func<string[]> getItemIds, Func<int[]> getAmounts, string? anchor = null) => new(getItemIds, getAmounts, anchor);
     protected static EmoteAction emote(Emotes emotion, string speaker, string? anchor = null) => new(emotion, speaker, anchor);
+    protected static LookAtAction look(string character, string? target, string? anchor = null) => new(character, target, anchor);
     protected static GotoAction @goto(string target, string? anchor = null) => new(target, anchor);
     protected static IfAction @if(Func<bool> condition, string? trueAnchor, string? falseAnchor = null, string? anchor = null) => new(condition, trueAnchor, falseAnchor, anchor);
     protected static IfSingleAction @if(Func<bool> condition, IInvokableInAction? trueAction, IInvokableInAction? falseAction = null, string? anchor = null) => new(condition, trueAction, falseAction, anchor);

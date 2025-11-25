@@ -23,6 +23,7 @@ public class Character
     public Character(Character info) : this(info.character, info.transform) { }
     private IEmotionAnimator? emotionAnimator = null;
     private IPoseAnimator? poseAnimator = null;
+    private ICanLook? lookAtAnimator = null;
     private void SetupAnimator()
     {
         var animator1 = gameObject.GetComponentInChildren<NPCIKAnimator>();
@@ -30,6 +31,7 @@ public class Character
         {
             emotionAnimator = animator1;
             poseAnimator = animator1;
+            lookAtAnimator = animator1;
             return;
         }
         var animator2 = gameObject.GetComponentInChildren<PlayerIKAnimator>();
@@ -37,6 +39,7 @@ public class Character
         {
             emotionAnimator = animator2;
             poseAnimator = animator2;
+            lookAtAnimator = animator2;
             return;
         }
         Monitor.SLog($"== failed to get animator of character {character}!!", LogLevel.Error);
@@ -63,6 +66,15 @@ public class Character
         poseReleaseer?.Invoke();
         poseAnimator = null;
     }
+#pragma warning disable IDE1006
+    public Transform? lookAt
+    {
+        get => lookAtAnimator?.lookAt; set
+        {
+            if (lookAtAnimator != null) lookAtAnimator.lookAt = value;
+        }
+    }
+#pragma warning restore IDE1006
 
 
     private static bool setupDone = false;

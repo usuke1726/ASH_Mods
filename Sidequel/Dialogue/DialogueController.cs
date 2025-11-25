@@ -123,6 +123,7 @@ internal class DialogueController : MonoBehaviour
             if (callEvent) currentNode.onConversationFinish();
         }
         EmoteAction.CleanUp(currentConversation, currentNode.resetEmotions);
+        LookAtAction.CleanUp();
     }
 
     private void OnNewGameNode()
