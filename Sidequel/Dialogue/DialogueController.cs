@@ -122,11 +122,7 @@ internal class DialogueController : MonoBehaviour
             currentConversation.onConversationFinish -= currentNode.onConversationFinish;
             if (callEvent) currentNode.onConversationFinish();
         }
-        if (currentNode.resetEmotions)
-        {
-            EmoteAction.Emote(currentConversation, Character.Player, Emotes.Normal);
-            EmoteAction.Emote(currentConversation, Character.Original, Emotes.Normal);
-        }
+        EmoteAction.CleanUp(currentConversation, currentNode.resetEmotions);
     }
 
     private void OnNewGameNode()

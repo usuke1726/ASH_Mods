@@ -18,10 +18,23 @@ internal class EmoteAction : BaseAction, IInvokableInAction
         Emote(conversation, speaker, emotion);
         yield break;
     }
+    private static readonly HashSet<string> emotedCharacters = [];
+    internal static void CleanUp(IConversation conversation, bool resetEmotions)
+    {
+        if (resetEmotions)
+        {
+            foreach (var ch in emotedCharacters)
+            {
+                Emote(conversation, ch, Emotes.Normal);
+            }
+        }
+        emotedCharacters.Clear();
+    }
     internal static void Emote(IConversation conversation, string speaker, Emotes emotion)
     {
         if (Character.TryGetCharacter(conversation, speaker, out var character))
         {
+            emotedCharacters.Add(speaker);
             switch (emotion)
             {
                 case Emotes.Normal:
