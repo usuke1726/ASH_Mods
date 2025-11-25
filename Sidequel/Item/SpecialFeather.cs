@@ -14,7 +14,6 @@ internal class SpecialFeather : MonoBehaviour
         helper.Events.Gameloop.GameStarted += (_, _) =>
         {
             instance = null;
-            SpecialFeatherPatch.CheckIfGotFeather();
             SetupTowerViewerAtOutlookPoint();
             if (!State.IsActive || HasGotFeather) return;
             instance = new GameObject("Sidequel_SpecialFeatherController").AddComponent<SpecialFeather>();
@@ -167,14 +166,18 @@ internal class SpecialFeather : MonoBehaviour
 [HarmonyPatch(typeof(Player))]
 internal class SpecialFeatherPatch
 {
-    internal static void CheckIfGotFeather()
+    internal static void Setup(IModHelper helper)
     {
-        if (State.IsActive && Items.Has(Items.EternalFeather)) OnGotFeather();
+        helper.Events.Gameloop.GameStarted += (_, _) =>
+        {
+            if (State.IsActive && Items.Has(Items.EternalFeather)) OnGotFeather();
+        };
+        helper.Events.Gameloop.ReturnedToTitle += (_, _) => isActive = false;
     }
     internal static void OnGotFeather()
     {
         isActive = true;
-        OnSilverFeathersUpdated(Context.player, 2);
+        OnSilverFeathersUpdated(Context.player, 1);
     }
     private static bool isActive = false;
     [HarmonyPrefix()]
