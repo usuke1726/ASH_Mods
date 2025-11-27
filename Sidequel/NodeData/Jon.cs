@@ -361,7 +361,7 @@ internal class Jon : NodeEntry
     private void MoveForJA()
     {
         var ch = Ch(Characters.RangerJon);
-        ch.transform.position = new(419.0363f, 160.7466f, 543.8788f);
+        ch.transform.position = new(301.9707f, 115.6644f, 291.2642f);
         Sidequel.Character.Pose.Set(ch.transform, Poses.Standing);
     }
     private static string ReplaceFeathersNum(string s) => s.Replace("{{Num}}", $"{GetInt(Const.STags.FeathersCountOnClimbedPeak)}");
