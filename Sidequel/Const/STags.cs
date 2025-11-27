@@ -36,6 +36,7 @@ partial class Const
         internal const string BiggestFish = "BiggestFish";
         internal const string FishCatchCount = "FishCatchCount";
         internal const string ItemCountFromChest = "ItemCountFromChest";
+        internal const string HasCompletedGame = "HasCompletedGame";
     }
 }
 

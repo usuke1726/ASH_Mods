@@ -121,6 +121,7 @@ internal class Controller : MonoBehaviour
         new GameObject("Sidequel_Ending_FadeOutscreen").AddComponent<FadeOutScreen>();
         conversation = new TextBoxConversation(player);
         conversation.currentSpeaker = player;
+        Save();
         StartCoroutine(Coroutine());
     }
     private IEnumerator Coroutine()
@@ -162,6 +163,12 @@ internal class Controller : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         SceneManager.LoadScene("TitleScene");
+    }
+    private void Save()
+    {
+        STags.SetBool(Const.STags.HasCompletedGame, true);
+        World.PlayerPosition.OnEndingScene();
+        Context.globalData.SaveGameAsync();
     }
     private IEnumerator Talk1()
     {

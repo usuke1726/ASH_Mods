@@ -9,6 +9,7 @@ internal class PlayerPosition
     internal static void Setup(IModHelper helper)
     {
         System.STags.BeforeSaving += SavePlayerPos;
+        helper.Events.Gameloop.ReturnedToTitle += (_, _) => isEndingScene = false;
     }
     private static void SavePlayerPos()
     {
@@ -68,10 +69,22 @@ internal class PlayerPosition
     {
         return State.IsNewGame ? null! : System.STags.GetString(Const.STags.PlayerPosTag);
     }
+    private static bool isEndingScene = false;
+    internal static void OnEndingScene() => isEndingScene = true;
     private static string Serialize(Player player)
     {
-        var pos = player.body.position;
-        var rot = player.body.rotation.eulerAngles;
+        Vector3 pos, rot;
+        if (isEndingScene)
+        {
+            var p = InitialPosition();
+            pos = p.Item1;
+            rot = p.Item2;
+        }
+        else
+        {
+            pos = player.body.position;
+            rot = player.body.rotation.eulerAngles;
+        }
         return $"{pos.x},{pos.y},{pos.z},{rot.x},{rot.y},{rot.z}";
     }
     private static Tuple<Vector3, Vector3>? Deserialize(string data)
