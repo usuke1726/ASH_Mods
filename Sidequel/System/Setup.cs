@@ -12,7 +12,6 @@ internal class Setup
         done = true;
         SaveData.Setup(helper);
         STags.Setup(helper);
-        EndGameController.Setup(helper);
         Binoculars.Setup(helper);
         Music.Setup(helper);
         Patrol.PassingStateRegistory.Setup(helper);
