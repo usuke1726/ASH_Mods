@@ -18,7 +18,7 @@ internal static class NodeSelector
         Node? node = null;
         if (character != null)
         {
-            Debug($"== talking to the character {character.character}");
+            //Debug($"== talking to the character {character.character}");
             node = nodes.TryGetValue(character.character, out var list) ? list.Find(n => n.condition()) : null;
         }
         else

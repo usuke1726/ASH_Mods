@@ -17,7 +17,7 @@ internal class SaveData
     {
         helper.Events.System.BeforeSaving += (_, _) =>
         {
-            Monitor.Log($"BEFORE SAVING", LL.Warning);
+            //Monitor.Log($"BEFORE SAVING", LL.Warning);
             BeforeSaving();
         };
     }
@@ -39,7 +39,7 @@ internal class SaveData
     private static void Save()
     {
         var data = Serialize();
-        Debug($"saving saveData: {data}");
+        //Debug($"saving saveData: {data}");
         PlayerPrefsAdapter.SetString(SaveDataExistsKey, data);
     }
     private static void EnsureDataLoaded()

@@ -93,7 +93,7 @@ internal static class STags
         {
             var data = Context.globalData.gameData.tags.GetString(Const.BuiltinGameData.STagsIntDataTag);
             if (data == null) return;
-            Debug($"== load int:\n{data}");
+            LogData("load int", data);
             foreach (var item in Split(data))
             {
                 if (int.TryParse(item.Item2, out var val)) intValues[item.Item1] = val;
@@ -103,7 +103,7 @@ internal static class STags
         {
             var data = Context.globalData.gameData.tags.GetString(Const.BuiltinGameData.STagsFloatDataTag);
             if (data == null) return;
-            Debug($"== load float:\n{data}");
+            LogData("load float", data);
             foreach (var item in Split(data))
             {
                 if (float.TryParse(item.Item2, out var val)) floatValues[item.Item1] = val;
@@ -113,7 +113,7 @@ internal static class STags
         {
             var data = Context.globalData.gameData.tags.GetString(Const.BuiltinGameData.STagsStringDataTag);
             if (data == null) return;
-            Debug($"== load string:\n{data}");
+            LogData("load string", data);
             foreach (var item in Split(data))
             {
                 stringValues[item.Item1] = DeserializeStringValue(item.Item2);
@@ -123,7 +123,7 @@ internal static class STags
         {
             var data = Context.globalData.gameData.tags.GetString(Const.BuiltinGameData.STagsBoolDataTag);
             if (data == null) return;
-            Debug($"== load bool:\n{data}");
+            LogData("load bool", data);
             foreach (var item in Split(data))
             {
                 boolValues[item.Item1] = DeserializeBoolValue(item.Item2);
@@ -133,26 +133,34 @@ internal static class STags
         private static void SaveIntValues()
         {
             var data = Join(intValues.Select(pair => new Tuple<string, string>(pair.Key, pair.Value.ToString())));
-            Debug($"== save int:\n{data}");
+            LogData("save int", data);
             Context.globalData.gameData.tags.SetString(Const.BuiltinGameData.STagsIntDataTag, data);
         }
         private static void SaveFloatValues()
         {
             var data = Join(floatValues.Select(pair => new Tuple<string, string>(pair.Key, pair.Value.ToString())));
-            Debug($"== save float:\n{data}");
+            LogData("save float", data);
             Context.globalData.gameData.tags.SetString(Const.BuiltinGameData.STagsFloatDataTag, data);
         }
         private static void SaveStringValues()
         {
             var data = Join(stringValues.Select(pair => new Tuple<string, string>(pair.Key, SerializeStringValue(pair.Value))));
-            Debug($"== save string:\n{data}");
+            LogData("save string", data);
             Context.globalData.gameData.tags.SetString(Const.BuiltinGameData.STagsStringDataTag, data);
         }
         private static void SaveBoolValues()
         {
             var data = Join(boolValues.Select(pair => new Tuple<string, string>(pair.Key, SerializeBoolValue(pair.Value))));
-            Debug($"== save bool:\n{data}");
+            LogData("save bool", data);
             Context.globalData.gameData.tags.SetString(Const.BuiltinGameData.STagsBoolDataTag, data);
+        }
+
+        [Conditional("DEBUG")]
+        private static void LogData(string type, string data)
+        {
+            var len = data.Length;
+            var s = data[0..Math.Min(len, 100)];
+            Debug($"== {type} (length: {len}):\n{s}");
         }
 
         private static string SerializeStringValue(string value)
