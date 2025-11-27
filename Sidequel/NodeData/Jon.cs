@@ -356,7 +356,10 @@ internal class Jon : NodeEntry
 
     internal override void OnGameStarted()
     {
-        if (_aJA && _JAJon) MoveForJA();
+        ModdingAPI.Character.OnSetupDone(() =>
+        {
+            if (_aJA && _JAJon) MoveForJA();
+        });
     }
     private void MoveForJA()
     {

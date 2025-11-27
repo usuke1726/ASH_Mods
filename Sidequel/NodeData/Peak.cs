@@ -33,7 +33,7 @@ internal class Peak : NodeEntry
         new(Entry, [
             command(() => isActive = false),
             wait(2f),
-            cont(-5, condition: () => NodeYet(Entry)),
+            cont(-5, condition: () => NodeYet(Entry) && Cont.Value - Const.Cont.EndingBorderValue > 5),
             done(),
             next(() => {
                 if(wasFirstClimbing){

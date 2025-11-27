@@ -6,19 +6,20 @@ namespace Sidequel.NodeData;
 internal class RubberFlower : StartNodeEntry
 {
     protected override string StartNode => "BucketSignStart";
-    private static readonly string viewedOnceTag = "Node.RubberFlowerSignViewed";
-    protected override Node[] Nodes => [new("sign.RubberFlower", [
+    internal const string Tag = "sign.RubberFlower";
+    protected override Node[] Nodes => [new(Tag, [
         line(1, Original),
-        @if(() => STags.GetBool(viewedOnceTag), "1", null),
+        @if(() => NodeDone(Tag), "1", null),
         line(2, Original),
         line(3, Original, anchor: "1"),
         line(4, Original),
-        @if(() => STags.GetBool(viewedOnceTag), "2", null),
-        line(5, Original),
-        line(6, Original),
-        lines(7, 11, digit2, Player),
-        line(12, Player, anchor: "2"),
-        tag(viewedOnceTag, true)
+        @if(() => _L, "low"),
+        @if(() => NodeYet(Tag), lines(1, 6, digit2("HMFirst"), Player)),
+        lines(7, 7, digit2("HM", ""), Player),
+        done(),
+        end(),
+        anchor("low"),
+        lines(7, 9, digit2("L", ""), Player),
     ])];
 }
 
