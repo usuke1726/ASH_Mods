@@ -194,7 +194,7 @@ internal class May : NodeEntry
             state(Sunscreen1, NodeStates.InProgress),
         ], condition: () => false),
         new(SunscreenRefuse, [
-            lines(1, 7, digit2, []),
+            lines(1, 7, digit2, [1, 2, 3, 7]),
             state(Sunscreen1, NodeStates.Refused),
         ], condition: () => false),
     ];

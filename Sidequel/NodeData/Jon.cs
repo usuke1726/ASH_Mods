@@ -90,7 +90,7 @@ internal class Jon : NodeEntry
             ]),
             end(),
             anchor("talk"),
-            lines(1, 37, digit2, [1, 2, 6, 7, 15, 16, 18, 19, 26, 27, 34, 36, 37], [
+            lines(1, 37, digit2("O2"), [1, 2, 6, 7, 15, 16, 18, 19, 26, 27, 34, 36, 37], [
                 new(16, emote(Emotes.EyesClosed, Player)),
                 new(23, emote(Emotes.Normal, Player)),
                 new(33, emote(Emotes.Happy, Original)),
@@ -298,8 +298,8 @@ internal class Jon : NodeEntry
             option(["O1", "O2", "O3"]),
             @switch(() => LastSelected switch {
                 0 => "body",
-                1 => "refuse",
-                _ => "sunscreen2again",
+                1 => "sunscreen2again",
+                _ => "refuse",
             }),
 
             anchor("body"),
