@@ -52,7 +52,7 @@ internal class Artist : NodeEntry
                 ])
             ),
             done(),
-        ], condition: () => (_L && NodeDone(HighMid1)) || (_M && NodeDone(Mid2))),
+        ], condition: () => NodeYet(MidLow2) && ((_L && NodeDone(HighMid1)) || (_M && NodeDone(Mid2)))),
 
         new(MidLow3, [
             lines(1, 3, digit2, []),

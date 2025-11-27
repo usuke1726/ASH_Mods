@@ -37,7 +37,7 @@ internal class Wil : NodeEntry
                 new(11, emote(Emotes.Happy, Original)),
             ]),
             done(),
-        ], condition: () => _bJA && NodeYet(BeforeJA1)),
+        ], condition: () => _bJA && NodeYet(BeforeJA1), priority: int.MaxValue),
 
         new(BeforeJA2, [
             lines(1, 10, digit2, [2, 3, 6, 9], [
@@ -48,7 +48,7 @@ internal class Wil : NodeEntry
 
         new(BeforeJA3, [
             lines(1, 3, digit2, [3], [new(2, emote(Emotes.Happy, Original))]),
-        ], condition: () => _bJA && NodeDone(BeforeJA2)),
+        ], condition: () => _bJA && NodeDone(BeforeJA2), priority: -10),
 
         new(Nothing, [
             lines(1, 3, digit2, [3], [new(2, emote(Emotes.Happy, Original))]),
@@ -63,7 +63,7 @@ internal class Wil : NodeEntry
             lines(2, 4, digit2, []),
             option(["O1", "O2"]),
             next(() => LastSelected == 0 ? BoatInspectionAccept : BoatInspectionRefuse),
-        ], condition: () => _aJA && NodeYet(AfterJA1)),
+        ], condition: () => _aJA && NodeYet(AfterJA1), priority: int.MaxValue),
 
         new(BoatInspectionAccept, [
             done(AfterJA1),

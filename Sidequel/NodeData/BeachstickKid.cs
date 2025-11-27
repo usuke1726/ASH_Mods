@@ -33,7 +33,11 @@ internal class BeachstickKid : NodeEntry
             @if(() => LastSelected == 0, "Accept"),
             lines(1, 6, digit2("O4"), [5, 6]),
             anchor("Accept"),
-            lines(1, 21, digit2("Accept"), [3, 4, 6, 7, 8, 9, 11, 14, 15, 16, 18, 20]),
+            lines(1, 21, digit2("Accept"), [3, 4, 6, 7, 8, 9, 11, 14, 15, 16, 18, 20], [
+                new(2, emote(Emotes.Happy, Original)),
+                new(5, emote(Emotes.Normal, Original)),
+                new(19, emote(Emotes.Happy, Original)),
+            ]),
             state(StickEvent, NodeStates.InProgress),
             done(),
         ], condition: () => NodeYet(Start),

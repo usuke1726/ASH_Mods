@@ -55,7 +55,7 @@ internal class Jon : NodeEntry
                 lines(16, 17, digit2("NotClimbed"), [17])
             ),
             done(),
-        ], condition: () => _bJA && NodeYet(BeforeJA1)),
+        ], condition: () => _bJA && NodeYet(BeforeJA1), priority: int.MaxValue),
 
         new(BeforeJA2, [
             lines(1, 28, digit2, [1, 3, 4, 5, 6, 11, 15, 16, 17, 21, 22, 23, 27, 28], [
@@ -114,7 +114,7 @@ internal class Jon : NodeEntry
             }),
             lines(1, 6, digit2("ge350"), [1, 3, 6], [new(4, emote(Emotes.Happy, Original))], anchor: "ge350"),
             end(),
-            lines(1, 5, digit2("lt350largeinc"), [1, 3, 6], [new(3, emote(Emotes.Happy, Original))], anchor: "largeinc"),
+            lines(1, 5, digit2("lt350largeinc"), [1, 2, 5], [new(3, emote(Emotes.Happy, Original))], anchor: "largeinc"),
             end(),
             lines(1, 4, digit2("lt350smallinc"), [1, 2, 3], anchor: "smallinc"),
             @switch(() => {

@@ -155,7 +155,7 @@ internal class May : NodeEntry
                 1 => SunscreenAccept,
                 _ => SunscreenRefuse,
             }),
-        ], condition: () => NodeIP(Const.Events.Sunscreen) && NodeYet(Sunscreen1)),
+        ], condition: () => NodeIP(Const.Events.Sunscreen) && NodeYet(Sunscreen1), priority: 5),
         new(Sunscreen2, [
             lines(1, 3, digit2, [1], [
                 new(2, emote(Emotes.Happy, Original)),
@@ -167,7 +167,7 @@ internal class May : NodeEntry
                 1 => SunscreenAccept,
                 _ => SunscreenRefuse,
             }),
-        ], condition: () => NodeIP(Const.Events.Sunscreen) && NodeIP(Sunscreen1)),
+        ], condition: () => NodeIP(Const.Events.Sunscreen) && NodeIP(Sunscreen1), priority: 5),
 
         new(SunscreenHold, [
             emote(Emotes.Happy, Original),
