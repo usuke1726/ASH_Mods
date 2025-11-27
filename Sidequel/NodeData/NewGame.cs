@@ -1,5 +1,5 @@
 ﻿
-#define SKIP_NEWGAMENODE
+//#define SKIP_NEWGAMENODE
 
 using ModdingAPI;
 using Sidequel.Dialogue;
