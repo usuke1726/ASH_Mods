@@ -135,7 +135,7 @@ internal class Jon : NodeEntry
             lines(1, 2, digit2("lt350smallinc.other"), [], anchor: "other"),
             lineif(() => _HM, "lt350smallinc.other.HM03", "lt350smallinc.other.L03", Player),
             end(),
-        ], condition: () => _aJA && _JAJon),
+        ], condition: () => _aJA && _JAJon && !Items.CoinsSavedUp),
 
         new(AfterJA1, [
             tag(TalkedJonOnce, true),
