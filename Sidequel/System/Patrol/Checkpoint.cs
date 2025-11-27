@@ -1,5 +1,5 @@
 ﻿
-#define ENABLE_CHECKPOINT_DEBUGLINES
+//#define ENABLE_CHECKPOINT_DEBUGLINES
 
 using UnityEngine;
 
