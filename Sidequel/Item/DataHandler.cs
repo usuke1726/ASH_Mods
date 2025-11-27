@@ -45,13 +45,12 @@ internal static class DataHandler
             collected = [];
             hasLoaded = false;
             foreach (var item in items.Values) item.OnReturnedTitle();
-            items.Clear();
         };
     }
 
+    [Conditional("DEBUG")]
     internal static void ValidateItemId(string id)
     {
-        if (items.ContainsKey(id)) throw new Exception($"the item of id {id} already exists");
         if (Regex.IsMatch(id, @"[^a-zA-Z0-9 _-]")) throw new Exception($"invalid symbol is contained in \"{id}\"");
     }
     internal static void Register(ItemWrapperBase item) => items[item.id] = item;
