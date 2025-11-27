@@ -24,8 +24,12 @@ internal class ChestController
     }
     internal static void OnChestInteracted(string id)
     {
-        if (!items.ContainsKey(id)) return;
-        items.Remove(id);
+        if (!items.Any()) return;
+        int len = items.First().Key.Length;
+        if (id.Length < len) return;
+        var key = id[0..len];
+        if (!items.ContainsKey(key)) return;
+        items.Remove(key);
         WriteToTags();
     }
     private static void OnGameStarted()
