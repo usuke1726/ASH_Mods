@@ -116,8 +116,8 @@ internal class RunningRabbit : NodeEntry
                 ch.transform.GetComponent<CapsuleCollider>().enabled = true;
                 ch.transform.GetComponent<Rigidbody>().isKinematic = true;
                 var range = ch.transform.GetComponent<RangedInteractable>();
-                range.range = 4f;
-                Traverse.Create(range).Field("rangeSqr").SetValue(16f);
+                range.range = 5f;
+                Traverse.Create(range).Field("rangeSqr").SetValue(25f);
                 ch.transform.position = new(665.7082f, 140.2142f, 604.9339f);
                 ch.transform.localRotation = Quaternion.Euler(0, 51.9669f, 0);
             };

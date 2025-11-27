@@ -1,4 +1,5 @@
 ﻿
+using HarmonyLib;
 using ModdingAPI;
 using Sidequel.Dialogue;
 using Sidequel.Dialogue.Actions;
@@ -216,6 +217,9 @@ internal class Wil : NodeEntry
             eventSet = true;
             GoldMedalEnd.OnPreparing += () =>
             {
+                var range = deer.transform.GetComponent<RangedInteractable>();
+                range.range = 5f;
+                Traverse.Create(range).Field("rangeSqr").SetValue(25f);
                 deer.position = new(679.7266f, 140.3578f, 605.7441f);
                 deer.localRotation = Quaternion.Euler(0, 321.4959f, 0);
                 CastShadows = true;

@@ -109,8 +109,8 @@ internal class RunningGoat : NodeEntry
                 ch.transform.GetComponent<CapsuleCollider>().enabled = true;
                 ch.transform.GetComponent<Rigidbody>().isKinematic = true;
                 var range = ch.transform.GetComponent<RangedInteractable>();
-                range.range = 4f;
-                Traverse.Create(range).Field("rangeSqr").SetValue(16f);
+                range.range = 5f;
+                Traverse.Create(range).Field("rangeSqr").SetValue(25f);
                 ch.transform.position = new(665.7356f, 140.2126f, 614.4457f);
                 ch.transform.localRotation = Quaternion.Euler(0, 116.477f, 0);
             };

@@ -1,4 +1,5 @@
 ﻿
+using HarmonyLib;
 using ModdingAPI;
 using Sidequel.Dialogue;
 using UnityEngine;
@@ -91,7 +92,10 @@ internal class Charlie : NodeEntry
             GoldMedalEnd.OnPreparing += () =>
             {
                 var ch = Ch(Characters.Charlie2);
-                ch.transform.position = new(671.7817f, 142.576f, 600.3674f);
+                var range = ch.transform.GetComponent<RangedInteractable>();
+                range.range = 5f;
+                Traverse.Create(range).Field("rangeSqr").SetValue(25f);
+                ch.transform.position = new(672.8103f, 142.576f, 599.7147f);
                 ch.transform.localRotation = Quaternion.Euler(0, 15.2164f, 0);
                 Sidequel.Character.Pose.Set(ch.transform, Poses.Standing);
             };

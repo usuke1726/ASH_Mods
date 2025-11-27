@@ -72,8 +72,8 @@ internal class RunningLizard : NodeEntry
                 ch.transform.GetComponent<CapsuleCollider>().enabled = true;
                 ch.transform.GetComponent<Rigidbody>().isKinematic = true;
                 var range = ch.transform.GetComponent<RangedInteractable>();
-                range.range = 4f;
-                Traverse.Create(range).Field("rangeSqr").SetValue(16f);
+                range.range = 5f;
+                Traverse.Create(range).Field("rangeSqr").SetValue(25f);
                 ch.transform.position = new(672.7437f, 140.1992f, 617.9913f);
                 ch.transform.localRotation = Quaternion.Euler(0, 172.5071f, 0);
             };
