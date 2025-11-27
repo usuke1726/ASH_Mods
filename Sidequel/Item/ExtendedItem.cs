@@ -6,7 +6,7 @@ namespace Sidequel.Item;
 
 internal class ExtendedItem : ItemWrapperBase
 {
-    public CollectableItem.PickUpPrompt showPrompt = CollectableItem.PickUpPrompt.OnlyOnce;
+    public CollectableItem.PickUpPrompt showPrompt = CollectableItem.PickUpPrompt.Always;
     public bool cannotDrop = false;
     public bool cannotStash = false;
     public int priority = 0;

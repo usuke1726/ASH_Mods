@@ -214,7 +214,7 @@ internal static class Data
                 000111111000
                 000000000000
                 """
-            ){ showPrompt = CollectableItem.PickUpPrompt.Always },
+            ),
             new(
                 id: Items.FishScale2,
                 iconData: """
@@ -231,7 +231,7 @@ internal static class Data
                 000111111000
                 000000000000
                 """
-            ) { showPrompt = CollectableItem.PickUpPrompt.Always },
+            ),
             new(
                 id: Items.FishScale3,
                 iconData: """
@@ -248,7 +248,7 @@ internal static class Data
                 000111111000
                 000000000000
                 """
-            ) { showPrompt = CollectableItem.PickUpPrompt.Always },
+            ),
             new(
                 id: Items.TradingCard,
                 iconData: """
