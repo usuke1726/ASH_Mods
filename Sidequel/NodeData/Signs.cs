@@ -31,3 +31,12 @@ internal class OrangeIslandsSign : StartNodeEntry
     ])];
 }
 
+internal class Boat : StartNodeEntry
+{
+    protected override string StartNode => "NoBoatKeyStart";
+    internal const string Tag = "sign.Boat";
+    protected override Node[] Nodes => [new(Tag, [
+        lines(1, 1, digit2, Player),
+    ])];
+}
+
