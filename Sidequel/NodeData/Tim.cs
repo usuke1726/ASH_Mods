@@ -27,7 +27,13 @@ internal class Tim : NodeEntry
                 _ => Original
             }, [
                 new(7, emote(Emotes.EyesClosed, Original)),
+                new(10, look(AlexId, Original)),
+                new(10, look(Player, AlexId)),
+                new(10, look(Original, AlexId)),
                 new(13, emote(Emotes.Normal, Original)),
+                new(17, look(Original, null)),
+                new(18, look(Player, Original)),
+                new(22, look(Original, Player)),
             ]),
             done(),
             done(LowStart1),

@@ -147,6 +147,7 @@ internal class Fishing : NodeEntry
 
         node(MidLowFishing3, [
             done(Const.Events.Fishing),
+            look(Bill, Player),
             cont(-10),
             wait(1f),
             @switch(() => {
@@ -156,6 +157,7 @@ internal class Fishing : NodeEntry
             }),
             anchor("Swimming"),
             lines(1, 6, digit2($"{MidLowFishing}.Swimming"), sp([1, 2, 4, 6]), [
+                new(1, look(Player, Bill)),
                 new(1, emote(Emotes.Happy, Player)),
                 new(3, emote(Emotes.Happy, Bill)),
                 new(4, emote(Emotes.Normal, Player)),
@@ -165,6 +167,7 @@ internal class Fishing : NodeEntry
             end(),
             anchor("GotFish"),
             lines(1, 6, digit2($"{MidLowFishing}.GotFish"), sp([1, 3, 4, 5]), [
+                new(3, look(Player, Bill)),
                 new(3, emote(Emotes.Happy, Player)),
                 new(4, emote(Emotes.Normal, Player)),
                 new(6, emote(Emotes.Happy, Bill)),
@@ -173,6 +176,7 @@ internal class Fishing : NodeEntry
             end(),
             anchor("LoseFish"),
             lines(1, 6, digit2($"{MidLowFishing}.LoseFish"), sp([1, 3, 4, 5]), [
+                new(1, look(Player, Bill)),
                 new(6, emote(Emotes.Happy, Bill)),
             ], useId: false),
             emote(Emotes.Normal, Bill),
