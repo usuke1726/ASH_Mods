@@ -284,11 +284,6 @@ internal class Avery : NodeEntry
         internal static void Setup()
         {
             instance ??= new GameObject("Sidequel_AveryPositionFixer").AddComponent<AveryPositionFixerAfterRace>();
-            if (isAbandoned)
-            {
-                Dispose();
-                isAbandoned = false;
-            }
         }
         internal static void Dispose()
         {
@@ -305,6 +300,11 @@ internal class Avery : NodeEntry
         }
         private void FixedUpdate()
         {
+            if (isAbandoned)
+            {
+                Dispose();
+                isAbandoned = false;
+            }
             body.velocity = body.velocity.SetX(0).SetZ(0);
             body.position = position.SetY(body.position.y);
         }
