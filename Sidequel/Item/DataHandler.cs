@@ -137,9 +137,10 @@ internal static class DataHandler
             ? new(initialCollected)
             : Deserialize(Context.globalData.gameData.tags.GetString(Const.BuiltinGameData.ItemsSaveDataTag));
 #if DEBUG
-        if (DebugInitialValues.AdditionalItems != null)
+        var additionalItems = DebugInitialValuesBase.instance.AdditionalItems;
+        if (additionalItems != null)
         {
-            foreach (var pair in DebugInitialValues.AdditionalItems) collected[pair.Key] = pair.Value;
+            foreach (var pair in additionalItems) collected[pair.Key] = pair.Value;
         }
 #endif
     }

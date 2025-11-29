@@ -1,6 +1,7 @@
 ﻿
-//#define ADJUST_SPOT_POSITIONS
+//#define DEBUG_ADJUST_SPOT_POSITIONS
 #define ENDING_MESSAGE_ENABLED
+//#define DEBUG_PRINT_TIME
 
 using System.Collections;
 using ModdingAPI;
@@ -14,7 +15,7 @@ namespace Sidequel.System.Ending;
 
 internal class Controller : MonoBehaviour
 {
-#if DEBUG && ADJUST_SPOT_POSITIONS
+#if DEBUG && DEBUG_ADJUST_SPOT_POSITIONS
     private const float EndTime = 1200f;
 #else
     private const float EndTime = 149f;
@@ -63,7 +64,7 @@ internal class Controller : MonoBehaviour
             120f,
             135f,
         ]),
-#if DEBUG && ADJUST_SPOT_POSITIONS
+#if DEBUG && DEBUG_ADJUST_SPOT_POSITIONS
         //new(20f, () => CutsceneController.canMove = true),
 #endif
     ];
@@ -144,14 +145,18 @@ internal class Controller : MonoBehaviour
         int i = 0;
         Schedule schedule = schedules[0];
         startTime = Time.time;
+#if DEBUG && DEBUG_PRINT_TIME
         float countdown = Time.time + 1;
+#endif
         while (true)
         {
+#if DEBUG && DEBUG_PRINT_TIME
             if (Time.time > countdown)
             {
                 countdown = Time.time + 1;
                 Debug($"time {Time.time - startTime}");
             }
+#endif
             if (Time.time - startTime >= schedule.time)
             {
                 schedule.action();

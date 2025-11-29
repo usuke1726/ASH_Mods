@@ -75,7 +75,7 @@ internal class Debug : MonoBehaviour
     public enum WarpPoints
     {
         Claire = 1, Charlie, MeteorLaKe, Jon, Avery, Beachstick, Boat, Ship,
-        Sunhat, Home, Jim,
+        Sunhat, Home, Jim, Peak, PatsPoint
     }
     private static Dictionary<WarpPoints, Vector3> positions = new()
     {
@@ -89,6 +89,8 @@ internal class Debug : MonoBehaviour
         [WarpPoints.Ship] = new(744, 28, 743),
         [WarpPoints.Sunhat] = new(953, 11, 954),
         [WarpPoints.Home] = new(258, 268, 559),
+        [WarpPoints.Peak] = new(399.0902f, 601.9924f, 804.1075f),
+        [WarpPoints.PatsPoint] = new(872.8265f, 218.9995f, 84.9175f),
     };
     public WarpPoints z_WarpTo
     {
@@ -199,16 +201,18 @@ internal class Debug : MonoBehaviour
             helper.Events.Gameloop.GameStarted += (_, _) => Timer.Register(1f, () =>
             {
                 if (!State.IsActive) return;
-                var jadone = DebugInitialValues.JADone;
+                var values = DebugInitialValuesBase.instance;
+                var jadone = values.JADone;
                 if (jadone != null) instance.JADone = (bool)jadone;
-                var cont = DebugInitialValues.Cont;
+                var cont = values.Cont;
                 if (cont != null) instance.Cont = (int)cont;
-                var money = DebugInitialValues.Money;
+                var money = values.Money;
                 if (money != null) instance.Money = (int)money;
-                var moneySavedUp = DebugInitialValues.MoneySavedUp;
+                var moneySavedUp = values.MoneySavedUp;
                 if (moneySavedUp != null) instance.MoneySavedUp = (bool)moneySavedUp;
-                var p = DebugInitialValues.Point;
+                var p = values.Point;
                 if (p != null) instance.z_WarpTo = (WarpPoints)p;
+                values.OnGameStarted();
             });
         }
         internal static void Unregister()
