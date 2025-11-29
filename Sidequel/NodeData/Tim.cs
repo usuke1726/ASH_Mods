@@ -8,8 +8,8 @@ namespace Sidequel.NodeData;
 internal class Tim : NodeEntry
 {
     internal const string HighMidStart1 = "Tim.HighMidStart1";
-    internal const string LowStartWithoutAlex = "Tim.LowStartWithoutAlex";
-    internal const string LowStart1 = "Tim.LowStart1";
+    internal const string AfterConfessionToAlex = "Tim.AfterConfessionToAlex";
+    internal const string Start1 = "Tim.Start1";
     internal const string Start2 = "Tim.Start2";
     internal const string Start3 = "Tim.Start3";
     internal const string AfterJA1 = "Tim.AfterJA1";
@@ -36,21 +36,21 @@ internal class Tim : NodeEntry
                 new(22, look(Original, Player)),
             ]),
             done(),
-            done(LowStart1),
+            done(Start1),
         ], condition: () => _HM && NodeYet(HighMidStart1) && !Alex.HasAlexMoved && (_bJA || TriggeredByJon)),
 
-        new(LowStart1, [
+        new(Start1, [
             lines(1, 13, digit2, [1, 4, 5, 6, 9, 13], [
                 new(8, emote(Emotes.Happy, Original)),
                 new(12, emote(Emotes.Normal, Original)),
             ]),
             done(),
-        ], condition: () => NodeYet(HighMidStart1) && _aJA && _L && NodeYet(LowStart1)),
+        ], condition: () => NodeYet(HighMidStart1) && _aJA && NodeYet(Start1), priority: -5),
 
         new(Start2, [
             @if(() => NodeDone(HighMidStart1), line("HighMidStart1Done", Original)),
             done(HighMidStart1),
-            done(LowStart1),
+            done(Start1),
             lines(1, 4, digit2, []),
             cont(-3),
             @if(() => _HM,
@@ -58,9 +58,9 @@ internal class Tim : NodeEntry
                 lines(1, 7, digit2("L", ""), [1, 2, 6, 7])
             ),
             done(),
-        ], condition: () => (NodeDone(LowStart1) || (
-            _HM && NodeYet(HighMidStart1) && Alex.HasAlexMoved
-        )) && NodeYet(Start2)),
+        ], condition: () => (
+            NodeDone(Start1) || NodeDone(HighMidAfterJA2) || NodeDone(HighMidStart1)
+        ) && NodeYet(Start2)),
 
         new(Start3, [
             lines(1, 4, digit2, [3]),
@@ -70,6 +70,13 @@ internal class Tim : NodeEntry
             lines(1, 3, digit2, [3]),
             done(),
         ], condition: () => NodeYet(AfterJA1) && timeTriggeredJAByAlex > 0 && Time.time - timeTriggeredJAByAlex < 10, priority: int.MaxValue),
+
+        new(AfterConfessionToAlex, [
+            lines(1, 4, digit2, [3, 4]),
+            done(),
+            done(HighMidAfterJA2),
+            done(Start1),
+        ], condition: () => NodeDone(Alex.MidCartersConfessionToAlex) && NodeYet(AfterConfessionToAlex), priority: 20),
 
         new(HighMidAfterJA2, [
             line(1, Original),
@@ -81,7 +88,9 @@ internal class Tim : NodeEntry
             ),
             cont(-5),
             done(),
-        ], condition: () => _aJA && !TriggeredByJon && _HM && NodeYet(HighMidAfterJA2)),
+            done(HighMidStart1),
+            done(Start1),
+        ], condition: () => _aJA && !TriggeredByJon && _HM && NodeYet(HighMidAfterJA2), priority: 10),
     ];
 }
 
