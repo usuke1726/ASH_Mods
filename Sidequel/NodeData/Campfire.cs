@@ -106,7 +106,6 @@ internal class CampfireCharlie : StartNodeEntry
     private bool IsCharlieNearby => IsNearby(ModdingAPI.Characters.Charlie2, new(315.703f, 400.04f, 636.9765f));
     private bool IsAlexNearby => IsNearby(ModdingAPI.Characters.ClimbingRhino3, new(323.41f, 398.97f, 626.03f));
     private bool cachedCharlieNearBy;
-    private bool cachedAlexNearBy;
     protected override Node[] Nodes => [
         new(T1, [
             wait(0.5f),

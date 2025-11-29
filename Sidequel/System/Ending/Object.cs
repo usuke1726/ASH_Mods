@@ -113,7 +113,6 @@ internal class EndingPlayerInputPatch
 [HarmonyPatch(typeof(Player))]
 internal class EndingPlayerPatch
 {
-    private static Traverse startDrag = null!;
     [HarmonyPrefix()]
     [HarmonyPatch("Update")]
     internal static bool PlayerUpdate(Player __instance) => __instance.name != Object.DummyName;

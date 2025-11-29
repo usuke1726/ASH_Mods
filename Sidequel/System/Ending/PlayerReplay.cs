@@ -7,7 +7,6 @@ internal class EndingPlayerReplay : MonoBehaviour
 {
     private Player player = null!;
     private PlayerEffects effects = null!;
-    private Quaternion originalAnimatorRotation;
     private PlayerIKAnimator animator = null!;
     private Vector3 lastPosition = default;
     internal float time;
@@ -103,7 +102,6 @@ internal class EndingPlayerReplay : MonoBehaviour
     {
         IsPlaying = false;
         player.body.isKinematic = false;
-        animator.transform.localRotation = originalAnimatorRotation;
         _velocity = Vector3.zero;
         isSwimming = false;
         isGliding = false;

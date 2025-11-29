@@ -149,7 +149,6 @@ internal class Title
     }
     private static void NonNull(GameObject obj, string name) => Assert(obj != null, $"{name} is null");
     private static void NonNull(Transform obj, string name) => Assert(obj != null, $"{name} is null");
-    private static bool isActive = false;
     internal static void Setup(IModHelper helper)
     {
         helper.Events.Gameloop.GameStarted += (_, _) => CleanUp();
