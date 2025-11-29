@@ -179,8 +179,8 @@ internal class May : NodeEntry
         ], condition: () => false),
         new(SunscreenAccept, [
             line(1, Original),
-            @if(() => Items.CoinsNum < 30, "shortOnCash"),
-            item(Items.Coin, -30),
+            @if(() => Items.CoinsNum < 10, "shortOnCash"),
+            item(Items.Coin, -10),
             item(Items.WeakSunscreen),
             emote(Emotes.Happy, Original),
             line(2, Original),
