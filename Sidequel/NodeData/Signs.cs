@@ -14,12 +14,12 @@ internal class RubberFlower : StartNodeEntry
         line(3, Original, anchor: "1"),
         line(4, Original),
         @if(() => _L, "low"),
-        @if(() => NodeYet(Tag), lines(1, 6, digit2("HMFirst"), Player)),
-        lines(7, 7, digit2("HM", ""), Player),
+        @if(() => NodeYet(Tag), lines(1, 5, digit2("HMFirst"), Player)),
+        lines(1, 1, digit2("HM", ""), Player),
         done(),
         end(),
         anchor("low"),
-        lines(7, 9, digit2("L", ""), Player),
+        lines(1, 3, digit2("L", ""), Player),
     ])];
 }
 
