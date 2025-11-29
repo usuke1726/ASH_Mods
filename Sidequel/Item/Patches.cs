@@ -36,7 +36,7 @@ internal class GameDataPatch
     internal static bool AddCollected(CollectableItem item, int amount, bool equipAction)
     {
         if (!State.IsActive) return true;
-        Debug($"Add item as BaseItem: {item.name}");
+        //Debug($"Add item as BaseItem: {item.name}");
         DataHandler.AddCollected(item, amount, equipAction);
         return false;
     }

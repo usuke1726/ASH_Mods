@@ -37,7 +37,7 @@ internal class Checkpoint : MonoBehaviour
         var player = other.GetComponent<Player>();
         var isPlayer = player != null && (bool)player;
         if (!isPlayer) return;
-        Debug($"collided with player", LL.Warning);
+        Debug($"Passed checkpoint {Id}", LL.Warning);
         Passed = true;
         PassingStateRegistory.SetPassed(Id);
 #if DEBUG && ENABLE_CHECKPOINT_DEBUGLINES
