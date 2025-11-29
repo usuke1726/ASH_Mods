@@ -52,6 +52,7 @@ internal class Alex : NodeEntry
         ], condition: () => _bJA),
 
         new(JA2, [
+            command(Face),
             lines(1, 3, digit2, [2]),
             @switch(() => {
                 if(Items.CoinsNum >= 350) return "ge350";
@@ -132,6 +133,7 @@ internal class Alex : NodeEntry
         ], condition: () => false),
 
         new(MidAfterConfession, [
+            command(TryToFace),
             lines(1, 5, digit2, [3, 5], [new(4, emote(Emotes.Happy, Original))]),
         ], condition: () => TriggeredByJon && _M && ConfessionDone && !Items.CoinsSavedUp),
 
@@ -150,10 +152,12 @@ internal class Alex : NodeEntry
         ], condition: () => false),
 
         new(LowAfterConfession, [
+            command(TryToFace),
             lines(1, 7, digit2, [3, 4, 7], [new(5, emote(Emotes.Happy, Original))]),
         ], condition: () => ConfessionDone && !Items.CoinsSavedUp),
 
         new(AfterCoinCompletion1, [
+            command(TryToFace),
             lines(1, 11, digit2, [2, 4, 7, 8, 11], [
                 new(5, emote(Emotes.Happy, Original)),
                 new(7, emote(Emotes.Happy, Player)),
@@ -169,6 +173,7 @@ internal class Alex : NodeEntry
         ], condition: () => Items.CoinsSavedUp && NodeYet(AfterCoinCompletion1), priority: 10),
 
         new(AfterCoinCompletion2, [
+            command(TryToFace),
             lines(1, 3, digit2, [1]),
             @if(() => _HM,
                 lines(4, 7, digit2("HM", ""), [4, 7], [new(5, emote(Emotes.Happy, Original))]),
@@ -181,23 +186,42 @@ internal class Alex : NodeEntry
     private const string AlexTalkedAboutMay = "Alex.HasTalkedAboutMay";
     private bool ConfessionDone => NodeDone(MidCartersConfessionToAlex) || NodeDone(LowCartersConfessionToAlex);
     private bool TriggeredByJon => _aJA && _JAJon;
+    private ICanFace facer = null!;
+    private void Face() => facer.TurnToFace(Context.player.transform);
+    private void TryToFace()
+    {
+        if (IsStanding()) Face();
+    }
     internal override void OnGameStarted()
     {
-        HasAlexMoved = false;
-        if (_aJA && !_JAJon) MoveForJA();
+        ModdingAPI.Character.OnSetupDone(() =>
+        {
+            HasAlexMoved = false;
+            if (_aJA && !_JAJon) MoveForJA();
+            var ch = Ch(Characters.ClimbingRhino3);
+            facer = ch.gameObject.AddComponent<NPCFacer>();
+        });
     }
     private void MoveForJA()
     {
         var ch = Ch(Characters.ClimbingRhino3);
-        ch.transform.position = new(338.5625f, 41.038f, 168.6002f);
+        ch.transform.position = pos1;
         Sidequel.Character.Pose.Set(ch.transform, Poses.Standing);
     }
+    private bool IsStanding()
+    {
+        var ch = Ch(Characters.ClimbingRhino3);
+        List<Vector3> positions = [pos1, pos2];
+        return positions.Any(p => (ch.transform.position - p).sqrMagnitude < 100);
+    }
+    private static readonly Vector3 pos1 = new(338.5625f, 41.038f, 168.6002f);
+    private static readonly Vector3 pos2 = new(265.2325f, 268.2634f, 557.7928f);
     private void PrepareConfession()
     {
         Context.player.transform.position = new(258.5855f, 267.1069f, 560.9364f);
         Context.player.transform.localRotation = Quaternion.Euler(0, 109.1662f, 0);
         var ch = Ch(Characters.ClimbingRhino3);
-        ch.transform.position = new(265.2325f, 268.2634f, 557.7928f);
+        ch.transform.position = pos2;
         Sidequel.Character.Pose.Set(ch.transform, Poses.Standing);
         SetNext(MidCartersConfessionToAlex);
         HasAlexMoved = true;
