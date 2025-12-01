@@ -26,6 +26,7 @@ partial class Const
         internal const string HasGotFishScaleOnce = "HasGotFishScaleOnce";
         internal const string HasClimbedPeakOnce = "HasClimbedPeakOnce";
         internal const string HasWonAveryOnce = "HasWonAveryOnce";
+        internal const string HasPlayedBeachstickball = "HasPlayedBeachstickball";
         internal const string FeathersCountOnClimbedPeak = "FeathersCountOnClimbedPeak";
         internal const string HasCheckedChestOnce = "HasCheckedChestOnce";
         internal const string HasGotItemFromChestOnce = "HasGotItemFromChestOnce";

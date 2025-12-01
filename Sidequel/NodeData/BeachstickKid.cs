@@ -102,7 +102,7 @@ internal class BeachstickKid : NodeEntry
                 lines(1, 1, digit2, []),
                 lines(1, 1, digit2("NotHoldsStick"), [])
             ),
-        ], condition: () => NodeDone(MidLowAfterCompleted) && BeachstickGameStartPoint.IsWaitingStart),
+        ], condition: () => NodeDone(MidLowAfterCompleted) && !GetBool(Const.STags.HasPlayedBeachstickball)),
 
         new(AfterGame, [
             line(1, Original, replacer: s => s.Replace("{{BallHitsBest}}", $"{BeachstickGameEnd.Highscore}")),
@@ -110,7 +110,7 @@ internal class BeachstickKid : NodeEntry
                 lines(2, 3, digit2("lt50"), [2], [new(3, emote(Emotes.Happy, Original))]),
                 lines(2, 3, digit2("ge50"), [2], [new(3, emote(Emotes.Happy, Original))])
             ),
-        ], condition: () => NodeDone(MidLowAfterCompleted) && !BeachstickGameStartPoint.IsWaitingStart),
+        ], condition: () => NodeDone(MidLowAfterCompleted) && GetBool(Const.STags.HasPlayedBeachstickball)),
     ];
     internal override void OnGameStarted()
     {
@@ -204,7 +204,6 @@ internal class BeachstickKid : NodeEntry
 
 internal class BeachstickGameStartPoint : StartNodeEntry
 {
-    internal static bool IsWaitingStart { get; private set; } = false;
     private static VolleyballGameController controller = null!;
     protected override string StartNode => "VolleyballGameStart";
 
@@ -214,7 +213,6 @@ internal class BeachstickGameStartPoint : StartNodeEntry
     internal static bool HoldsStick => Context.player.heldItem?.associatedItem?.name == "Stick";
     protected override Node[] Nodes => [
         new(StartGame, [
-            command(() => IsWaitingStart = false),
             @if(() => NodeYet(StartGame), line(1, Original), line(UnityEngine.Random.Range(1, 6), Original)),
             done(),
         ],
@@ -227,13 +225,13 @@ internal class BeachstickGameStartPoint : StartNodeEntry
     ];
     private static void StartBSB()
     {
+        STags.SetBool(Const.STags.HasPlayedBeachstickball, true);
         typeof(VolleyballGameController).GetMethod("StartGame", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(controller, []);
     }
     internal static void OnGameReady()
     {
         controller.gameObject.SetActive(true);
         STags.SetBool(BeachstickGameReady, true);
-        IsWaitingStart = true;
     }
     internal override void OnGameStarted()
     {
