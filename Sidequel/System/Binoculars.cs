@@ -1,6 +1,7 @@
 ﻿
 using HarmonyLib;
 using ModdingAPI;
+using QuickUnityTools.Input;
 using UnityEngine;
 
 namespace Sidequel.System;
@@ -66,6 +67,7 @@ internal class Binoculars : MonoBehaviour
         GetComponent<RangedInteractable>().enabled = false;
         viewer = GetComponent<TowerViewer>();
         Traverse.Create(viewer).Field("originalNearPlane").SetValue(1f);
+        viewer.zoomNearPlane = 1f;
         viewer.minOffsetAngle = new(-360, -360);
         viewer.maxOffsetAngle = new(360, 360);
         offsetAngle = Traverse.Create(viewer).Field("offsetAngle");
@@ -111,6 +113,17 @@ internal class TowerViwerPatch
     {
         if (__instance.gameObject.name != Binoculars.ObjectName) return;
         Binoculars.NoticeDisabled();
+    }
+    private const float OriginalRotateSpeed = 18f;
+    private const float FastRotateSpeed = 36f;
+    [HarmonyPrefix()]
+    [HarmonyPatch("Update")]
+    internal static void PreUpdate(TowerViewer __instance, GameUserInput ___input)
+    {
+        if (__instance.gameObject.name != Binoculars.ObjectName) return;
+        if (___input == null) return;
+        var target = ___input.GetRunButton().isPressed ? FastRotateSpeed : OriginalRotateSpeed;
+        __instance.rotateSpeed = Mathf.MoveTowards(__instance.rotateSpeed, target, 1f);
     }
 }
 
