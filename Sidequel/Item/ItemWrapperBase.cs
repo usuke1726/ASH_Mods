@@ -78,6 +78,7 @@ internal class ItemWrapperBase
         item.description = string.IsNullOrEmpty(s) ? defaultDescription : s;
         //Debug($"LocaleChanged: \"{item.readableName}\" \"{item.readableNamePlural}\" \"{item.description}\"");
     }
+    internal virtual void OnGameStarted() { }
     internal void OnReturnedTitle()
     {
         item.readableName = defaultReadableName;

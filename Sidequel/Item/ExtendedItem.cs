@@ -53,6 +53,10 @@ internal class ExtendedItem : ItemWrapperBase
         }
         return ret;
     }
+    internal override void OnGameStarted()
+    {
+        if (createWorldPrefab != null) item.worldPrefab = createWorldPrefab();
+    }
     internal override void EnsureIconCreated(Sprite resource)
     {
         if (ready) return;
@@ -60,7 +64,6 @@ internal class ExtendedItem : ItemWrapperBase
         item.cannotDrop = cannotDrop;
         item.cannotStash = cannotStash;
         item.priority = priority;
-        if (createWorldPrefab != null) item.worldPrefab = createWorldPrefab();
         var tex = Util.EditableTexture(resource.texture);
         for (int x = 0; x < 12; x++)
         {

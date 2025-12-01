@@ -39,6 +39,7 @@ internal static class DataHandler
             {
                 coin.item.showPrompt = CollectableItem.PickUpPrompt.Never;
             }
+            foreach (var item in items.Values) item.OnGameStarted();
         };
         helper.Events.Gameloop.ReturnedToTitle += (_, _) =>
         {
