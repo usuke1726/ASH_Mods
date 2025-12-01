@@ -37,7 +37,7 @@ internal class Tim : NodeEntry
             ]),
             done(),
             done(Start1),
-        ], condition: () => _HM && NodeYet(HighMidStart1) && !Alex.HasAlexMoved && (_bJA || TriggeredByJon)),
+        ], condition: () => _HM && NodeYet(HighMidStart1) && NodeYet(Start1) && !Alex.HasAlexMoved && (_bJA || TriggeredByJon)),
 
         new(Start1, [
             lines(1, 13, digit2, [1, 4, 5, 6, 9, 13], [
@@ -88,7 +88,6 @@ internal class Tim : NodeEntry
             ),
             cont(-5),
             done(),
-            done(HighMidStart1),
             done(Start1),
         ], condition: () => _aJA && !TriggeredByJon && _HM && NodeYet(HighMidAfterJA2), priority: 10),
     ];
