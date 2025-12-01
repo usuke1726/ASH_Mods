@@ -117,6 +117,7 @@ internal class Peak : NodeEntry
     }
     internal static void OnReachedTop()
     {
+        if (PeakNodeCooltime.IsActive) return;
         wasFirstClimbing = !System.STags.GetBool(Const.STags.HasClimbedPeakOnce);
         System.STags.SetBool(Const.STags.HasClimbedPeakOnce);
         System.STags.SetInt(Const.STags.FeathersCountOnClimbedPeak, Items.Num(Items.GoldenFeather));
@@ -127,6 +128,24 @@ internal class Peak : NodeEntry
     private static void OnEnd()
     {
         Context.gameServiceLocator.levelUI.HideUI(false);
+        PeakNodeCooltime.Prepare();
+    }
+    private class PeakNodeCooltime : MonoBehaviour
+    {
+        internal static bool IsActive => instance != null;
+        private static PeakNodeCooltime? instance = null;
+        internal static void Prepare()
+        {
+            instance = new GameObject("Sidequel_PeakNodeCooltime").AddComponent<PeakNodeCooltime>();
+        }
+        private void Update()
+        {
+            if (Context.player.transform.position.y < 550)
+            {
+                instance = null;
+                GameObject.Destroy(gameObject);
+            }
+        }
     }
 }
 
