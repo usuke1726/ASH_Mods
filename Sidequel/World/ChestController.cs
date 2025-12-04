@@ -55,6 +55,7 @@ internal class ChestController
                 //Debug($"chest with id {id.id} is buried chest");
                 continue;
             }
+            if (chest.transform.parent.name == "Boat") continue;
             ids.Add(id.id);
         }
         if (State.IsNewGame) SetInitialItemsData(ShortenIds(ids));
