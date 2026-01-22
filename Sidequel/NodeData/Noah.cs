@@ -52,7 +52,7 @@ internal class Noah : NodeEntry
             line(1, Player),
             lineif(() => NodeDone(Start1), "HasMet.02", "HasNotMet.02", Original),
             done(Start1),
-            lines(3, 10, digit2, [3, 4, 5], [
+            lines(3, 10, digit2, [3, 4, 5, 6], [
                 new(7, emote(Emotes.Happy, Original)),
                 new(8, emote(Emotes.Normal, Original)),
             ]),
