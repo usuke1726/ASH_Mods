@@ -22,6 +22,7 @@ partial class Const
         internal const string HasShownOldPictureToJon = "HasShownOldPictureToJon";
         internal const string HasShownFishScale2ToJen = "HasShownFishScale2ToJen";
         internal const string HasShownFishScaleToKidDeer = "HasShownFishScaleToKidDeer";
+        internal const string HasShownSomethingToWil = "HasShownSomethingToWil";
         internal const string HasBorrowedFishingRodOnce = "HasBorrowedFishingRodOnce";
         internal const string HasGotFishScaleOnce = "HasGotFishScaleOnce";
         internal const string HasClimbedPeakOnce = "HasClimbedPeakOnce";

@@ -14,6 +14,7 @@ internal class RumorGuy : NodeEntry
     internal const string AfterJA2 = "RumorGuy.AfterJA2";
     internal const string AfterJA3 = "RumorGuy.AfterJA3";
     internal const string CuteEmptyCan = "RumorGuy.CuteEmptyCan";
+    internal static bool TalkedAboutWatch => NodeDone(BeforeJA3) || NodeDone(AfterJA2);
     protected override Characters? Character => Characters.RumorGuy;
     protected override Node[] Nodes => [
         new(BeforeJA1, [
@@ -77,30 +78,38 @@ internal class RumorGuy : NodeEntry
         new(AfterJA2, [
             lines(1, 4, digit2, [1]),
             @if(() => GetBool(Const.STags.TalkedAboutWilOnce),
-                @if(() => NodeDone(BeforeJA3),
-                    lines(1, 1, digit2("BeforeJA3Done.WilKnown"), [1]),
-                    lines(1, 5, digit2("BeforeJA3Yet.WilKnown"), [1, 5], [
-                        new(2, emote(Emotes.Happy, Original)),
-                        new(3, emote(Emotes.Normal, Original)),
-                    ])
-                ),
-                @if(() => NodeDone(BeforeJA3),
-                    lines(1, 4, digit2("BeforeJA3Done.WilUnknown"), [1, 2, 4], [
-                        new(3, emote(Emotes.Happy, Original)),
-                        new(4, emote(Emotes.Normal, Original)),
-                    ]),
-                    lines(1, 5, digit2("BeforeJA3Yet.WilUnknown"), [1, 2, 5], [
-                        new(4, emote(Emotes.Happy, Original)),
-                        new(5, emote(Emotes.Normal, Original)),
-                    ])
-                )
+                lines(1, 2, digit2("WilKnown"), [1], [
+                    new(2, emote(Emotes.Happy, Original)),
+                ]),
+                lines(1, 4, digit2("WilUnknown"), [1, 3], [
+                    new(2, emote(Emotes.Happy, Original)),
+                    new(4, emote(Emotes.Normal, Original)),
+                ])
             ),
             emote(Emotes.Normal, Original),
-            cont(-3),
-            lines(5, 8, digit2, [6, 8]),
-            @if(() => _L, lines(9, 10, digit2("L", ""), [9], [
-                new(10, emote(Emotes.Happy, Original)),
+            lines(5, 6, digit2, []),
+            @if(() => GetBool(Const.STags.HasShownSomethingToWil),
+                lines(1, 3, digit2("ShownToWil"), [1, 3]),
+                lines(1, 1, digit2("NotShownToWil"), [1])
+            ),
+            lines(7, 8, digit2, []),
+            @if(() => NodeDone(BeforeJA3),
+                lines(1, 2, digit2("DeborahKnown"), [1], [
+                    new(2, emote(Emotes.Happy, Original)),
+                ]),
+                lines(1, 6, digit2("DeborahUnknown"), [1, 2, 6], [
+                    new(3, emote(Emotes.Happy, Original)),
+                    new(4, emote(Emotes.Normal, Original)),
+                ])
+            ),
+            lines(9, 12, digit2, [12], [
+                new(9, emote(Emotes.Happy, Original)),
+                new(10, emote(Emotes.Normal, Original)),
+            ]),
+            @if(() => _L, lines(13, 14, digit2("L", ""), [13], [
+                new(14, emote(Emotes.Happy, Original)),
             ])),
+            cont(-3),
             done(),
         ], condition: () => NodeDone(AfterJA1) && NodeYet(AfterJA2)),
 

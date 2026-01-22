@@ -365,7 +365,7 @@ internal static class Data
     private static int? GetWatchState()
     {
         if (Cont.IsLow) return 2;
-        if (Flags.NodeDone(Deborah.Start1) || Flags.NodeDone(RumorGuy.BeforeJA3)) return 1;
+        if (Flags.NodeDone(Deborah.Start1) || RumorGuy.TalkedAboutWatch) return 1;
         return null;
     }
     private static int? GetStickState()

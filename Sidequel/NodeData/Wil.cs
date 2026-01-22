@@ -107,6 +107,7 @@ internal class Wil : NodeEntry
         ], condition: () => NodeDone(AfterBoatInspection1) && ResetPositionWatcher.IsActive, priority: int.MaxValue),
 
         new(TradingCard1, [
+            tag(Const.STags.HasShownSomethingToWil, true),
             lines(1, 7, digit2, [1, 2, 5]),
             @if(() => _HM,
                 lines(1, 2, digit2("HM", ""), [1, 2]),
