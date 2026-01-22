@@ -240,6 +240,7 @@ internal class TitleScreenPatch
         submenu = ui.CreateSimpleMenu([I18n.STRINGS.continueText, I18n.STRINGS.dontContinue], [
             () => {
                 submenu.Kill();
+                SaveData.OnVanillaNewGameStarted();
                 BeginLoadingNewGame(__instance);
             },
             () => {

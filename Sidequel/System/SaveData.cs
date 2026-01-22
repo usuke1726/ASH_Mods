@@ -71,14 +71,3 @@ internal class SaveData
     }
 }
 
-[HarmonyPatch(typeof(TitleScreen))]
-internal class BeginNewGameWatcherPatch
-{
-    [HarmonyPrefix()]
-    [HarmonyPatch("BeginLoadingNewGame")]
-    internal static void BeginLoadingNewGame()
-    {
-        SaveData.OnVanillaNewGameStarted();
-    }
-}
-
