@@ -49,6 +49,7 @@ public class Plugin : BaseUnityPlugin
             }
             else
             {
+                if (!Context.IsQuitting) GameloopEvents.OnGameQuitting();
                 Context.IsQuitting = false;
                 Player_Update.isFirstCall = true;
                 GameloopEvents.OnReturnedToTitle();

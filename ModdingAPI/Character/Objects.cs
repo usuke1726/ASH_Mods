@@ -84,7 +84,7 @@ public class Character
     {
         Character.helper = helper;
         helper.Events.Gameloop.PlayerUpdated += SetupCharacters;
-        helper.Events.Gameloop.GameQuitting += (_, _) =>
+        helper.Events.Gameloop.ReturnedToTitle += (_, _) =>
         {
             characters.Clear();
             transforms.Clear();
