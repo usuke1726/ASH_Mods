@@ -14,6 +14,7 @@ internal class Setup
         PlayerPosition.Setup(helper);
         ChestController.Setup(helper);
         FlowerController.Setup(helper);
+        Lighting.Setup(helper);
     }
 }
 
