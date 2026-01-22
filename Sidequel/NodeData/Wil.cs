@@ -56,7 +56,7 @@ internal class Wil : NodeEntry
         ], condition: () => true, priority: int.MinValue),
 
         new(AfterJA1, [
-            @if(() => NodeDone(BeforeJA1),
+            @if(() => NodeYet(BeforeJA1),
                 lines(1, 2, digit2("MetFirst"), [], [new(1, emote(Emotes.Happy, Original))]),
                 line(1, Original)
             ),
