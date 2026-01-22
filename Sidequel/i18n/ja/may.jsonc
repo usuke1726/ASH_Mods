@@ -68,8 +68,10 @@
     "node.May.Patrol1.01": "見回りの方は順調かい？",
     "node.May.Patrol1.lt3.02": "いや　これからだ",
     "node.May.Patrol1.ge3.02": "ああ　順調だよ",
-    "node.May.Patrol1.03": "次は　{{Place}}\nあたりを回っとこうかな",
-    "node.May.Patrol1.04": "了解　頼んだよ！",
+    "node.May.Patrol1.lt3.03": "まずは　{{Place}}\nあたりを回っとこうかな",
+    "node.May.Patrol1.ge3.03": "次は　{{Place}}\nあたりを回っとこうかな",
+    "node.May.Patrol1.04": "あとは　{{Place}}\nあたりとか　かな",
+    "node.May.Patrol1.05": "了解　頼んだよ！",
 
     "node.May.Patrol2.01": "見回りの方は順調かい？",
     "node.May.Patrol2.02": "ああ　順調だよ",

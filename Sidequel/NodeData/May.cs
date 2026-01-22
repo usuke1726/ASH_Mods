@@ -94,8 +94,10 @@ internal class May : NodeEntry
         new(Patrol1, [
             line(1, Original),
             lineif(() => PassedCount < 3, "lt3.02", "ge3.02", Player),
-            line(3, Player, replacer: s => ReplaceToPlaceI18nString(s, true, false)),
-            line(4, Original),
+            lineif(() => PassedCount < 3, "lt3.03", "ge3.03", Player,
+                replacer: s => ReplaceToPlaceI18nString(s, true, false)),
+            line(4, Player, replacer: s => ReplaceToPlaceI18nString(s, true, true)),
+            line(5, Original),
         ], condition: () => IsPatrolActive && !IsPatrolFinishing && PassedCount < PatrolBorderNum),
 
         new(Patrol2, [
