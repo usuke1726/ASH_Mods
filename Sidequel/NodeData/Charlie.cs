@@ -35,7 +35,7 @@ internal class Charlie : NodeEntry
 
         new(BeforeJA3, [
             lines(1, 6, digit2, [2, 4, 6], [new(5, emote(Emotes.Happy, Original))]),
-        ], condition: () => _bJA && NodeDone(BeforeJA3)),
+        ], condition: () => _bJA && NodeDone(BeforeJA2)),
 
         new(AfterJA1, [
             line(1, Original),
