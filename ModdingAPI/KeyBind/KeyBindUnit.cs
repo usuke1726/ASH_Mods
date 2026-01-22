@@ -126,7 +126,13 @@ public class KeyBindUnitEntry
     private readonly List<KeyBindUnit> _units = null!;
     public KeyBindUnitEntry(string query) { type = Type.Query; this.query = query; }
     public KeyBindUnitEntry(IReadOnlyList<KeyBindUnit> units) { type = Type.Units; _units = [.. units]; }
+    public KeyBindUnitEntry(Key key) : this([new(key)]) { }
     public static implicit operator KeyBindUnitEntry(string query) => new(query);
+    public static implicit operator KeyBindUnitEntry(Key key) => new(key);
+    public static implicit operator KeyBindUnitEntry(UnityEngine.KeyCode key) => new(key);
+    public static implicit operator KeyBindUnitEntry(QuickUnityTools.Input.Button key) => new(key);
+    public static implicit operator KeyBindUnitEntry(Trigger key) => new(key);
+    public static implicit operator KeyBindUnitEntry(InControl.InputControlType key) => new(key);
     public static implicit operator KeyBindUnitEntry(KeyBindUnit units) => new([units]);
     public static implicit operator KeyBindUnitEntry(KeyBindUnit[] units) => new(units);
     public static implicit operator KeyBindUnitEntry(List<KeyBindUnit> units) => new(units);
