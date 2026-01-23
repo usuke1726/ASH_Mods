@@ -116,10 +116,10 @@ internal class KidDeer : NodeEntry
             lines(7, 10, digit2, [9]),
         ], condition: () => false),
         new(Item_CuteEmptyCan, [
-            lines(1, 11, digit2, [2, 4, 5, 8, 9, 11], [
-                new(1, emote(Emotes.Happy, Original)),
-                new(3, emote(Emotes.Normal, Original)),
-                new(11, emote(Emotes.Surprise, Player)),
+            lines(1, 13, digit2, [2, 4, 6, 7, 10, 11, 13], [
+                new(3, emote(Emotes.Happy, Original)),
+                new(5, emote(Emotes.Normal, Original)),
+                new(13, emote(Emotes.Surprise, Player)),
             ]),
         ], condition: () => false),
         new(Item_TradingCard, [
