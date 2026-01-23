@@ -1,6 +1,7 @@
 ﻿
 using ModdingAPI;
 using Sidequel.Dialogue;
+using UnityEngine;
 
 namespace Sidequel.NodeData;
 
@@ -15,7 +16,8 @@ internal class Camper : NodeEntry
     internal const string ReturnRod = "Camper.ReturnRod";
     internal const string BorrowRodAgain = "Camper.BorrowRodAgain";
 
-    private bool BorrowingRod => Items.Has(Items.FishingRod);
+    private bool BorrowingRod => Items.Has(Items.FishingRod) || HoldingRod;
+    private bool HoldingRod => Context.player.heldItem?.associatedItem?.name == "FishingRod";
     protected override Node[] Nodes => [
         new(Start1, [
             lines(1, 13, digit2, [2, 5, 8, 13], [
@@ -71,6 +73,14 @@ internal class Camper : NodeEntry
             anchor("return"),
             lines(3, 8, digit2, [4, 5, 7], [
                 new(6, emote(Emotes.Happy, Original)),
+                new(7, command(() => {
+                    if(HoldingRod){
+                        var heldItem = Context.player.heldItem;
+                        Context.player.DropItem(false);
+                        Context.globalData.gameData.AddCollected(heldItem.associatedItem, 1, equipAction: true);
+                        GameObject.Destroy(heldItem.gameObject);
+                    }
+                })),
                 new(7, item(Items.FishingRod, -1)),
             ]),
             done(),
