@@ -1,0 +1,59 @@
+<Project>
+    <UsingTask TaskName="MergeI18nFiles"
+        TaskFactory="CodeTaskFactory"
+        AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+        <ParameterGroup>
+            <I18nPath ParameterType="System.String" Required="true" />
+            <Lang ParameterType="System.String" Required="true" />
+            <SkipAnnotationDeletion ParameterType="System.Boolean" Required="false" />
+        </ParameterGroup>
+        <Task>
+            <Using Namespace="System.Text.RegularExpressions" />
+            <Code Type="Fragment" Language="cs">
+<![CDATA[
+    var path = string.Format("{0}\\{1}", I18nPath, Lang);
+    var output = string.Format("{0}\\{1}.json", I18nPath, Lang);
+    var files = Enumerable.Concat(
+        Directory.EnumerateFiles(path, "*.json"),
+        Directory.EnumerateFiles(path, "*.jsonc")
+    );
+    Log.LogMessage(MessageImportance.High, "=== Merging {0} json files\n\ton \"{1}\"\n\tto \"{2}\"", files.Count(), path, output);
+    var keyPattern = new Regex("^\"([a-zA-Z0-9._-]+)\" *: *\"");
+    var speakerPattern = new Regex("^[a-zA-Z]: *");
+    var indent = new string(' ', 4);
+    var contents = "{\n" + string.Join(",\n", files.Select(file =>
+        {
+            return string.Join("\n", File.ReadAllLines(file)
+                .Select(line => line.Trim())
+                .Where(line => line != "" && line != "{" && line != "}" && !line.StartsWith("//"))
+                .Select(line => {
+                    var m1 = keyPattern.Match(line);
+                    if(!m1.Success){
+                        Log.LogWarning("invalid key: {0}", line);
+                        return null;
+                    }
+                    if(SkipAnnotationDeletion) return line;
+                    var key = m1.Groups[1].Value;
+                    if(key.StartsWith("font.") || key.StartsWith("item.") || key.StartsWith("system.")) return line;
+                    var val = line.Substring(m1.Length);
+                    var m2 = speakerPattern.Match(val);
+                    var prefix = "\"" + key + "\": \"";
+                    if(m2.Success){
+                        return prefix + val.Substring(m2.Length);
+                    }else{
+                        Log.LogWarning("invalid or missing speaker: \"{0}\": \"{1}\"", key, val);
+                        return prefix + val;
+                    }
+                })
+                .Where(line => line != null)
+                .Select(line => indent + line)
+            );
+        })
+    ) + "\n}";
+    File.WriteAllLines(output, contents.Split('\n'));
+    Log.LogMessage(MessageImportance.High, "merge done");
+]]>
+            </Code>
+        </Task>
+    </UsingTask>
+</Project>
