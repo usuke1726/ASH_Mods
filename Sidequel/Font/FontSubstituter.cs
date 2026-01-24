@@ -18,7 +18,7 @@ internal static class FontSubstituter
             int i = 0;
             while (true)
             {
-                var data = i18n.Localize($"font{i}");
+                var data = i18n.Localize($"font.{i}");
                 if (string.IsNullOrEmpty(data)) return result;
                 try
                 {

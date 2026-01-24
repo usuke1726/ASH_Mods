@@ -165,27 +165,27 @@ internal class Title
     {
         if (!Context.OnTitle)
         {
-            MainMenu.ShowDialog(I18nLocalize("ModConfigMenu.triedToStartOutsideMainMenu"));
+            MainMenu.ShowDialog(I18nLocalize("system.menu.triedToStartOutsideMainMenu"));
             return;
         }
         if (!CrossPlatform.DoesSaveExist())
         {
-            MainMenu.ShowDialog(I18nLocalize("ModConfigMenu.notCreatedSaveData"));
+            MainMenu.ShowDialog(I18nLocalize("system.menu.notCreatedSaveData"));
             return;
         }
         var saveDataExists = SaveData.DoesSaveDataExists();
         if (!isNewGame && !saveDataExists)
         {
-            MainMenu.ShowDialog(I18nLocalize("ModConfigMenu.notCreatedSaveData"));
+            MainMenu.ShowDialog(I18nLocalize("system.menu.notCreatedSaveData"));
             return;
         }
         State.SetNewGame(isNewGame);
         if (isNewGame && saveDataExists)
         {
             MainMenu.ShowConfirm(
-                I18nLocalize("ModConfigMenu.confirmOverwritingSaveData"),
-                I18nLocalize("ModConfigMenu.confirmOverwritingSaveData.y"),
-                I18nLocalize("ModConfigMenu.confirmOverwritingSaveData.n"),
+                I18nLocalize("system.menu.confirmOverwritingSaveData"),
+                I18nLocalize("system.menu.confirmOverwritingSaveData.y"),
+                I18nLocalize("system.menu.confirmOverwritingSaveData.n"),
                 NewGameController.StartGame);
         }
         else
@@ -248,7 +248,7 @@ internal class TitleScreenPatch
             }
         ]);
         var obj = ui.CreateTextMenuItem(I18n.STRINGS.overwriteSaveFile);
-        var t = I18nLocalize("ModConfigMenu.additionalConfirmMessage");
+        var t = I18nLocalize("system.menu.additionalConfirmMessage");
         if (!string.IsNullOrWhiteSpace(t))
         {
             obj.GetComponentInChildren<TextMeshProUGUI>().text += $"\n{t}";

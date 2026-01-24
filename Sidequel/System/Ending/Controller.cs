@@ -248,7 +248,7 @@ internal class Controller : MonoBehaviour
             var obj = Context.ui.CreateTextBoxContent("");
             text.font = obj.textMesh.font;
             GameObject.Destroy(obj.gameObject);
-            text.text = TextReplacer.ReplaceVariables(I18nLocalize("Ending.SkipButtonMessage"));
+            text.text = TextReplacer.ReplaceVariables(I18nLocalize("system.Ending.SkipButtonMessage"));
             text.gameObject.SetActive(true);
             text.color = new(0.5f, 0.5f, 0.5f, 0);
             //text.fontSize = 12;
@@ -307,7 +307,7 @@ internal class Controller : MonoBehaviour
             instance.text.gameObject.transform.localPosition = new(-175.2788f, -30, 0);
             instance.text.alignment = TextAlignmentOptions.Center;
             instance.text.horizontalAlignment = HorizontalAlignmentOptions.Center;
-            instance.text.text = I18nLocalize("Ending.ThanksForPlaying");
+            instance.text.text = I18nLocalize("system.Ending.ThanksForPlaying");
             instance.text.color = new(0.673f, 0.561f, 0, 0);
 #endif
         }

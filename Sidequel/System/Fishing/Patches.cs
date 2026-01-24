@@ -77,7 +77,7 @@ internal class FishItemActionsPatch
         ], [
             () => {
                 var obj = encyclopedia.dialogueBoxPrefab.Clone();
-                UI.SetGenericText(obj, I18nLocalize($"fishDesc.{FishNames.ToI18nKey(fish)}"));
+                UI.SetGenericText(obj, I18nLocalize($"item.fishDesc.{FishNames.ToI18nKey(fish)}"));
                 Context.gameServiceLocator.ui.AddUI(obj);
                 menu.Kill();
             },

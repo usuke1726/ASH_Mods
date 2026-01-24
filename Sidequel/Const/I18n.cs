@@ -9,7 +9,7 @@ partial class Const
     }
     internal static readonly Func<string, string> formatJATrigger = s =>
     {
-        var key = Flags.JATriggeredByJon ? "JATrigger.Jon" : "JATrigger.Alex";
+        var key = Flags.JATriggeredByJon ? "system.JATrigger.Jon" : "system.JATrigger.Alex";
         var trigger = I18nLocalize(key);
         return s.Replace("{{JATrigger}}", trigger);
     };

@@ -1,14 +1,14 @@
 ﻿{
-    "ModConfigMenu.triedToStartOutsideMainMenu": "メニュー画面に戻って選択してください",
-    "ModConfigMenu.notCreatedSaveData": "サイドストーリーを始める前に\nセーブデータを作成する必要があります",
-    "ModConfigMenu.continue": "つづきから",
-    "ModConfigMenu.newgame": "ニューゲーム",
-    "ModConfigMenu.confirmOverwritingSaveData": "<sprite name=\"Warning\" tint=1> 現在のサイドストーリーの\nセーブデータを上書きします\n(オリジナルのデータは消去されません)",
-    "ModConfigMenu.additionalConfirmMessage": "(※Sidequelのデータも消去されます！)",
-    "ModConfigMenu.confirmOverwritingSaveData.y": "つづける",
-    "ModConfigMenu.confirmOverwritingSaveData.n": "ちょっとまって！",
-    "Ending.SkipButtonMessage": "{{JumpButton}}+{{UseItemButton}}長押しでスキップ",
-    "Ending.ThanksForPlaying": "遊んでくれて　ありがとう！",
-    "JATrigger.Jon": "ジョン",
-    "JATrigger.Alex": "アレックス"
+    "system.menu.triedToStartOutsideMainMenu": "メニュー画面に戻って選択してください",
+    "system.menu.notCreatedSaveData": "サイドストーリーを始める前に\nセーブデータを作成する必要があります",
+    "system.menu.continue": "つづきから",
+    "system.menu.newgame": "ニューゲーム",
+    "system.menu.confirmOverwritingSaveData": "<sprite name=\"Warning\" tint=1> 現在のサイドストーリーの\nセーブデータを上書きします\n(オリジナルのデータは消去されません)",
+    "system.menu.additionalConfirmMessage": "(※Sidequelのデータも消去されます！)",
+    "system.menu.confirmOverwritingSaveData.y": "つづける",
+    "system.menu.confirmOverwritingSaveData.n": "ちょっとまって！",
+    "system.Ending.SkipButtonMessage": "{{JumpButton}}+{{UseItemButton}}長押しでスキップ",
+    "system.Ending.ThanksForPlaying": "遊んでくれて　ありがとう！",
+    "system.JATrigger.Jon": "ジョン",
+    "system.JATrigger.Alex": "アレックス"
 }

@@ -112,7 +112,7 @@ internal class Jon : NodeEntry
                 if(Items.CoinsNum >= 350) return "ge350";
                 return Items.CoinsNum - GetInt(Const.STags.CoinsAtJA) >= 150 ? "largeinc" : "smallinc";
             }),
-            lines(1, 6, digit2("ge350"), [1, 3, 6], [new(4, emote(Emotes.Happy, Original))], anchor: "ge350"),
+            lines(1, 5, digit2("ge350"), [1, 3, 5], [new(4, emote(Emotes.Happy, Original))], anchor: "ge350"),
             end(),
             lines(1, 5, digit2("lt350largeinc"), [1, 2, 5], [new(3, emote(Emotes.Happy, Original))], anchor: "largeinc"),
             end(),
@@ -272,7 +272,13 @@ internal class Jon : NodeEntry
             end(),
 
             anchor("shortOnCash"),
-            lines(1, 2, digit2("shortOnCash"), [1, 2]),
+            state(Sunscreen1, NodeStates.Refused),
+            lines(1, 6, digit2("shortOnCash"), [1, 2, 6], [
+                new(3, emote(Emotes.Happy, Original)),
+                new(4, emote(Emotes.Normal, Original)),
+                new(5, emote(Emotes.Happy, Original)),
+            ]),
+            end(),
             anchor("refuse"),
             state(Sunscreen1, NodeStates.Refused),
             lines(1, 4, digit2("refuse"), [4], [

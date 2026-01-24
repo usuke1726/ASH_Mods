@@ -134,5 +134,5 @@
     "item.Binoculars.namePlural": "双眼鏡",
     "item.Binoculars.description": "ズーム機能付きの双眼鏡。\nこれで色々な景色を見て回ろう！",
     "item.Binoculars.action": "のぞく",
-    "node.item.Binoculars.cannotUse": "さすがに落ちながらは　使えねぇよ！"
+    "node.item.Binoculars.cannotUse": "P:さすがに落ちながらは　使えねぇよ！"
 }
