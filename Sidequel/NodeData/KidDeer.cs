@@ -64,6 +64,7 @@ internal class KidDeer : NodeEntry
                 new(10, emote(Emotes.Surprise, Original)),
                 new(12, emote(Emotes.Happy, Original)),
             ]),
+            command(ReserveReadingPose),
             done(),
         ], condition: () => NodeDone(Start1) && NodeYet(Start2)),
 
@@ -192,6 +193,7 @@ internal class KidDeer : NodeEntry
         ], condition: () => false),
     ];
     private bool fromScale2 = false;
+    private static RuntimeAnimatorController readingAnimation = null!;
     internal override void OnGameStarted()
     {
         ModdingAPI.Character.OnSetupDone(() =>
@@ -210,9 +212,41 @@ internal class KidDeer : NodeEntry
                 Traverse.Create(range).Field("rangeSqr").SetValue(49f);
             });
             Sidequel.Character.Pose.Set(ch.transform, Poses.Sitting);
+            var book = Ch(Characters.KidBoatDeer3).transform.Find("Fox/Armature/root/Base/Chest/collar_l/arm_l/Cube (1)");
+            book.parent = ch.transform.Find("Fox/Armature/root/Base/Chest/collar_l/arm_l");
+            book.localPosition = new(-1.6505f, -1.1116f, -0.2081f);
+            book.localRotation = Quaternion.Euler(65.3639f, 12.7566f, 88.4239f);
+            readingAnimation = Ch(Characters.KidBoatDeer3).transform.GetComponentInChildren<Animator>().runtimeAnimatorController;
+            if (NodeDone(Start2)) SetReadingPose();
         });
         Load();
     }
+    private static void ReserveReadingPose()
+    {
+        var watcher = new GameObject("Sidequel_KidDeer_StartReadingWatcher").AddComponent<StartReadingWatcher>();
+        watcher.action = SetReadingPose;
+    }
+    private static void SetReadingPose()
+    {
+        Ch(Characters.KidBoatDeer2).transform.GetComponentInChildren<Animator>().runtimeAnimatorController = readingAnimation;
+    }
+    private class StartReadingWatcher : MonoBehaviour
+    {
+        private static readonly Vector3 basePosition = new(143.6824f, 20.059f, 1311.036f);
+        private const float Border = 40000f;
+        internal Action action = null!;
+        private void Update()
+        {
+            var distance = (basePosition - Context.player.transform.position.SetY(0)).sqrMagnitude;
+            if (distance >= Border)
+            {
+                action?.Invoke();
+                Debug($"KidDeer.StartReadingWatcher deactivated", LL.Warning);
+                GameObject.Destroy(gameObject);
+            }
+        }
+    }
+
 
     private bool CanStartAny => (showingItem = Find()) != null;
     private string Find()
