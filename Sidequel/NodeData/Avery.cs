@@ -30,9 +30,14 @@ internal class Avery : NodeEntry
     private bool raceReady = false;
     protected override Node[] Nodes => [
         new(BeforeJA1, [
-            lines(1, 12, digit2, [1, 4, 5, 6, 9, 12]),
+            lines(1, 12, digit2, [1, 4, 5, 6, 9, 12], [
+                new(2, emote(Emotes.Happy, Original)),
+                new(3, emote(Emotes.Normal, Original)),
+                new(10, emote(Emotes.Happy, Original)),
+                new(11, emote(Emotes.Normal, Original)),
+            ]),
             done(),
-        ], condition: () => _bJA && NodeYet(BeforeJA1)),
+        ], condition: () => _bJA && NodeYet(BeforeJA1) && NodeYet(RunningGoat.BeforeJA1)),
 
         new(BeforeJA2, [
             lines(1, 15, digit2, [2, 5, 6,11, 15], [
@@ -41,7 +46,7 @@ internal class Avery : NodeEntry
                 new(14, emote(Emotes.Happy, Original)),
             ]),
             done(),
-        ], condition: () => _bJA && NodeDone(BeforeJA1) && NodeYet(BeforeJA2)),
+        ], condition: () => _bJA && NodeYet(BeforeJA2)),
 
         new(BeforeJA3, [
             lines(1, 3, digit2, [2]),
