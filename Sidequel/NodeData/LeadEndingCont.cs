@@ -19,6 +19,6 @@ internal class LeadEndingCont : NodeEntry
         ]),
         lineif(() => GetBool(Const.STags.HasClimbedPeakOnce), "HasClimbedOnce.07", "HasNotClimbed.07", Player),
     ]);
-    internal static bool IsActive => Cont.IsEndingCont && NodeYet(Id);
+    internal static bool IsActive => Items.CoinsSavedUp && Cont.IsEndingCont && NodeYet(Id);
 }
 
