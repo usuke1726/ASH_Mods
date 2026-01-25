@@ -65,7 +65,7 @@ internal class SaveData
             var a = d.Split(":", 2);
             if (a.Length < 2) continue;
             if (!int.TryParse(a[0], out var key)) continue;
-            ret[key] = a[0] != "0";
+            ret[key] = a[1] != "0";
         }
         return ret;
     }
