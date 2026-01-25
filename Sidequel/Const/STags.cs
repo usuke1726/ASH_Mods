@@ -39,6 +39,7 @@ partial class Const
         internal const string FishCatchCount = "FishCatchCount";
         internal const string ItemCountFromChest = "ItemCountFromChest";
         internal const string HasCompletedGame = "HasCompletedGame";
+        internal const string ShowCompass = "ShowCompass";
     }
 }
 

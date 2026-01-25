@@ -13,6 +13,7 @@ internal class Setup
         SaveData.Setup(helper);
         STags.Setup(helper);
         Binoculars.Setup(helper);
+        Compass.Setup(helper);
         Music.Setup(helper);
         Patrol.PassingStateRegistory.Setup(helper);
         Title.Setup(helper);
