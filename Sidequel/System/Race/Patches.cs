@@ -20,19 +20,28 @@ internal class RaceControllerPatch
 internal class RaceCoordPatch
 {
     internal const string LighthouseRaceId = "LighthouseRace";
+    internal const string OldBuildingRaceId = "OldBuildingRace";
+    internal const string MountainTopRaceId = "MountainTopRace";
     [HarmonyPrefix()]
     [HarmonyPatch("PlaceRacer")]
     internal static bool PlaceRacer(RaceData raceData, RaceCoordinator __instance)
     {
         if (!State.IsActive) return true;
-        Debug($"PlaceRacer called (raceData.id: {raceData?.id})");
+        if (NodeData.WalkieTalkieEntry.IsAtStartPosition) return false;
         if (raceData == null || raceData.id != LighthouseRaceId)
         {
             var race = __instance.raceData.Find(race => race.id == LighthouseRaceId);
             if (race != null) __instance.PlaceRacer(race);
             return false;
         }
+        Debug($"Moving Avery to the race starting position");
         return true;
+    }
+    internal static void SetupCoordinator(RaceCoordinator instance)
+    {
+        if (!State.IsActive) return;
+        foreach (var d in instance.raceData) d.requireTag = d.id != MountainTopRaceId ? "" : "Sidequel_AlwaysFalseTag";
+        instance.PlaceRacer(null);
     }
 }
 
