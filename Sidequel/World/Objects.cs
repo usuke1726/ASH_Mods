@@ -21,6 +21,8 @@ internal class Objects
         NPCs.Find("PolarBearNPC").gameObject.SetActive(false);
         NPCs.Find("CampfireFriends").gameObject.SetActive(true);
         NPCs.Find("YellAtNode").GetComponent<RangedInteractable>().enabled = false;
+        var auntRunOff = GameObject.Find("Cutscenes").transform.Find("AuntRunOff");
+        if (auntRunOff != null) auntRunOff.GetComponent<BoxCollider>().enabled = false;
         foreach (Transform child in NPCs.Find("ArtistQuest"))
         {
             child.gameObject.SetActive(child.name == "Artist1");
