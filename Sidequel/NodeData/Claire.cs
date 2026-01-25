@@ -73,5 +73,13 @@ internal class Claire : NodeEntry
             end(),
         ], condition: () => _aJA && NodeDone(AfterJA1)),
     ];
+
+    internal override void OnGameStarted()
+    {
+        ModdingAPI.Character.OnSetupDone(() =>
+        {
+            Sidequel.Character.Core.Claire.transform.GetComponentInChildren<NPCIKAnimator>().lookAtPlayerRadius = 8f;
+        });
+    }
 }
 

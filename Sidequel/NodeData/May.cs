@@ -234,5 +234,12 @@ internal class May : NodeEntry
         }
         return mes.Replace("{{Place}}", I18nLocalize($"node.May.PatrolPlace.{checkpoint}"));
     }
+    internal override void OnGameStarted()
+    {
+        ModdingAPI.Character.OnSetupDone(() =>
+        {
+            Ch(Characters.AuntMay).transform.GetComponentInChildren<NPCIKAnimator>().lookAtPlayerRadius = 8f;
+        });
+    }
 }
 
