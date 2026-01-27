@@ -62,5 +62,12 @@ internal class Taylor : NodeEntry
             lines(1, 3, digit2, [2]),
         ], condition: () => NodeActive(Const.Events.GoldMedal) && NodeDone(GoldMedal1), priority: 5),
     ];
+    internal override void OnGameStarted()
+    {
+        ModdingAPI.Character.OnSetupDone(() =>
+        {
+            Ch(Characters.Taylor).transform.Find("Rabbit/Head").gameObject.SetActive(false);
+        });
+    }
 }
 

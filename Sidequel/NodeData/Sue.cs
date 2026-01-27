@@ -78,6 +78,7 @@ internal class Sue : NodeEntry
         ModdingAPI.Character.OnSetupDone(() =>
         {
             Ch(Characters.Sue).animator.SetBool("Happy", true);
+            Ch(Characters.Sue).transform.Find("Rabbit/Head").gameObject.SetActive(false);
         });
     }
 }

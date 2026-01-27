@@ -124,6 +124,10 @@ internal class BeachstickKid : NodeEntry
             if (!child.name.StartsWith("Stick")) continue;
             if (positions.Any(p => (child.transform.position - p).sqrMagnitude < 10f)) child.gameObject.SetActive(false);
         }
+        ModdingAPI.Character.OnSetupDone(() =>
+        {
+            Ch(Characters.BeachstickballKid).transform.Find("Character/Armature/root/Base/Chest/Head/BaseballCap").gameObject.SetActive(false);
+        });
     }
     private static void OnStartFirstTalk()
     {
