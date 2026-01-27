@@ -20,6 +20,7 @@ internal class SpecialFeather : MonoBehaviour
             if (!State.IsActive || HasGotFeather) return;
             instance = new GameObject("Sidequel_SpecialFeatherController").AddComponent<SpecialFeather>();
         };
+        SpecialFeatherPatch.Setup(helper);
     }
     private static void SetupTowerViewerAtOutlookPoint()
     {
