@@ -1,4 +1,6 @@
 ﻿
+#define THREE_FEATHERS_ONLY
+
 using HarmonyLib;
 using ModdingAPI;
 using UnityEngine;
@@ -135,7 +137,13 @@ internal class SpecialFeather : MonoBehaviour
     {
         var player = other.GetComponent<Player>();
         var isPlayer = player != null && (bool)player;
-        if (isPlayer) Show();
+        if (isPlayer)
+        {
+#if THREE_FEATHERS_ONLY
+            if (Items.Num(Items.GoldenFeather) > 3) return;
+#endif
+            Show();
+        }
     }
     private static Texture2D ChangeColor(Texture2D _tex)
     {
