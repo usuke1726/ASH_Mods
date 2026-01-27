@@ -234,6 +234,7 @@
     "node.WalkieTalkie.RaceLose.O1.01": "O:分かったわ\nスタート地点に戻りましょう！",
     "node.WalkieTalkie.RaceLose.O2.01": "O:あらそう　分かったわ",
     "node.WalkieTalkie.RaceWinWithinRace.01": "O:あっ　イジワル！\nアタシ　まだ走ってるのに！",
+    "node.WalkieTalkie.RaceWinWithinRaceNearby.01": "O:あっ　イジワル！\nアタシ　まだ走ってたのに！",
     "node.WalkieTalkie.RaceWin.01": "O:あっ　カーター！",
     "node.WalkieTalkie.RaceWin.02": "O:さっきのレース　すごかったわね！",
     "node.WalkieTalkie.RaceWin.03": "O:話しかけてくれても　よかったのに！",

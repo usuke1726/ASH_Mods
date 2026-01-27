@@ -85,6 +85,7 @@ internal class WalkieTalkie : NodeEntry
     internal const string WithinRace = "WalkieTalkie.WithinRace";
     internal const string RaceWin = "WalkieTalkie.RaceWin";
     internal const string RaceWinWithinRace = "WalkieTalkie.RaceWinWithinRace";
+    internal const string RaceWinWithinRaceNearby = "WalkieTalkie.RaceWinWithinRaceNearby";
     internal const string RaceLose = "WalkieTalkie.RaceLose";
     internal const string Normal = "WalkieTalkie.Normal";
     internal const string Place_LightHouse = "LightHouse";
@@ -180,6 +181,10 @@ internal class WalkieTalkie : NodeEntry
             sp(),
             line(1),
         ], condition: () => false),
+
+        new(RaceWinWithinRaceNearby, [
+            line(1, "Avery"),
+        ], condition: () => false),
     ];
 
     private static void Abandon()
@@ -201,7 +206,11 @@ internal class WalkieTalkie : NodeEntry
     {
         if (Avery.RaceActive)
         {
-            if (!Avery.RaceController!.recorder.recording) return RaceWinWithinRace;
+            if (!Avery.RaceController!.recorder.recording)
+            {
+                if (WalkieTalkieEntry.IsNearby) return RaceWinWithinRaceNearby;
+                return RaceWinWithinRace;
+            }
             return WithinRace;
         }
         if (WalkieTalkieEntry.IsNearby) return Nearby;
