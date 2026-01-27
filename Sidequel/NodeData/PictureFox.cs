@@ -17,6 +17,9 @@ internal class PictureFox : NodeEntry
     internal const string AfterJA3 = "PictureFox.AfterJA3";
     internal const string AfterJA4 = "PictureFox.AfterJA4";
     internal const string AfterJA5 = "PictureFox.AfterJA5";
+    internal const string BuyBack = "PictureFox.BuyBack";
+    internal const string BuyBack2 = "PictureFox.BuyBack2";
+    internal const string AfterBuyBack = "PictureFox.AfterBuyBack";
     protected override Characters? Character => Characters.PictureFox1;
     protected override Node[] Nodes => [
         new(BeforeJA1, [
@@ -100,7 +103,58 @@ internal class PictureFox : NodeEntry
         new(AfterJA5, [
             lines(1, 4, digit2, [4], [new(3, emote(Emotes.Happy, Original))]),
         ], condition: () => NodeDone(AfterJA3) && !TalkedToImmediately),
+
+        new(BuyBack, [
+            line(1, Original),
+            option(["O1", "O2"]),
+            @if(() => LastSelected == 1, "buy"),
+            lines(1, 2, digit2("O1"), [], [new(2, emote(Emotes.Happy, Original))]),
+            end(),
+            anchor("buy"),
+            lines(1, 8, digit2("O2"), [1, 2, 3, 7, 8], [
+                new(6, emote(Emotes.Happy, Original)),
+                new(8, emote(Emotes.Normal, Original)),
+            ]),
+            @if(() => Items.CoinsNum < 40, "shortOnCash"),
+            item([Items.Coin, Items.GoldenFeather], [-40, 1]),
+            lines(9, 10, digit2("O2"), [9], [new(10, emote(Emotes.Happy, Original))]),
+            done(),
+            end(),
+            anchor("shortOnCash"),
+            wait(0.7f),
+            line("O2.ShortOnCash.01", Player),
+            @if(() => Items.CoinsSavedUp, lines(1, 2, digit2("O2.ShortOnCash.AfterMade400Coins"), [1, 2])),
+            lines(2, 5, digit2("O2.ShortOnCash"), [2, 5], [
+                new(4, emote(Emotes.Happy, Original)),
+            ]),
+            state(NodeStates.InProgress),
+        ], priority: 100, condition: () => {
+            if(NodeYet(AfterJA3) || !NodeYet(BuyBack)) return false;
+            if(buyBackCooltime > 0){
+                buyBackCooltime--;
+                return false;
+            }
+            buyBackCooltime = 1;
+            return true;
+        }),
+
+        new(BuyBack2, [
+            lines(1, 2, digit2, [1]),
+            item([Items.Coin, Items.GoldenFeather], [-40, 1]),
+            lines(3, 4, digit2, [3], [new(4, emote(Emotes.Happy, Original))]),
+            done(BuyBack),
+            done(),
+        ], priority: 100, condition: () => NodeIP(BuyBack) && Items.CoinsNum >= 40),
+
+        new(AfterBuyBack, [
+            lines(1, 6, digit2, [4, 5], [
+                new(2, emote(Emotes.Happy, Original)),
+                new(3, emote(Emotes.Normal, Original)),
+                new(6, emote(Emotes.Happy, Original)),
+            ]),
+        ], priority: 100, condition: () => NodeDone(BuyBack)),
     ];
+    private int buyBackCooltime = 2;
 
     private float acceptedTime = -1;
     private bool TalkedToImmediately => acceptedTime > 0 && Time.time - acceptedTime < 30f;
