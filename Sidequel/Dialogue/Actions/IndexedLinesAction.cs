@@ -96,6 +96,10 @@ internal class RangedLinesAction : BaseAction, IInvokableInAction
                 yield return conversation.ShowLine(text);
             }
         }
+        if (actionsMap.TryGetValue(maxInclusive + 1, out var actionsAfterLines))
+        {
+            foreach (var action in actionsAfterLines) yield return action.Invoke(conversation);
+        }
     }
 }
 
