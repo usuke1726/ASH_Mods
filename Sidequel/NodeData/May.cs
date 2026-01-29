@@ -3,6 +3,7 @@ using ModdingAPI;
 using Sidequel.Dialogue;
 using Sidequel.System;
 using Sidequel.System.Patrol;
+using UnityEngine;
 
 namespace Sidequel.NodeData;
 
@@ -104,13 +105,25 @@ internal class May : NodeEntry
             lines(1, 5, digit2, [2, 3, 4]),
             line("place1", Original, replacer: s => ReplaceToPlaceI18nString(s, false, false)),
             @if(() => TalkingPatsPoint && !HasTalkedAboutPatsPoint,
-                lines(1, 4, digit2("place.PatsPoint"), [1, 3, 4], [new(1, command(() => HasTalkedAboutPatsPoint = true))]),
+                lines(1, 4, digit2("place.PatsPoint"), [1, 3, 4], [
+                    new(1, command(() => HasTalkedAboutPatsPoint = true)),
+                    new(2, lookTr(Original, () => patsPointLookAt)),
+                    new(3, lookTr(Player, () => patsPointLookAt)),
+                    new(4, look(Original, null)),
+                    new(5, look(Player, null)),
+                ]),
                 line("place1.default", Player)
             ),
             @if(() => UnpassedCount == 1, "end"),
             line("place2", Original, replacer: s => ReplaceToPlaceI18nString(s, false, true)),
             @if(() => TalkingPatsPoint && !HasTalkedAboutPatsPoint,
-                lines(1, 4, digit2("place.PatsPoint"), [1, 3, 4], [new(1, command(() => HasTalkedAboutPatsPoint = true))]),
+                lines(1, 4, digit2("place.PatsPoint"), [1, 3, 4], [
+                    new(1, command(() => HasTalkedAboutPatsPoint = true)),
+                    new(2, lookTr(Original, () => patsPointLookAt)),
+                    new(3, lookTr(Player, () => patsPointLookAt)),
+                    new(4, look(Original, null)),
+                    new(5, look(Player, null)),
+                ]),
                 line("place2.default", Player)
             ),
             anchor("end"),
@@ -240,6 +253,9 @@ internal class May : NodeEntry
         {
             Ch(Characters.AuntMay).transform.GetComponentInChildren<NPCIKAnimator>().lookAtPlayerRadius = 8f;
         });
+        patsPointLookAt = new GameObject("Sidequel_May_PatsPointLookAt").transform;
+        patsPointLookAt.position = new(839.9713f, 87.662f, 136.8628f);
     }
+    private static Transform patsPointLookAt = null!;
 }
 
