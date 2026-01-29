@@ -20,7 +20,7 @@ internal class Peak : NodeEntry
         get => camera.gameObject.activeSelf; set
         {
             camera.gameObject.SetActive(value);
-            moon.gameObject.SetActive(value);
+            Timer.Register(value ? 0 : 3.5f, () => moon.gameObject.SetActive(value));
         }
     }
     internal const string Entry = "Peak.Entry";
