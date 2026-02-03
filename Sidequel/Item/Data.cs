@@ -323,6 +323,26 @@ internal static class Data
             ){
                 priority = -8,
             },
+            new(
+                id: Items.RubberFlowerSapling,
+                iconData: """
+                000000000000
+                000000000000
+                000000000000
+                001100001100
+                011110011110
+                111111111111
+                110001100011
+                000001100000
+                000001100000
+                000001100000
+                000001100000
+                000000000000
+                """
+            ){
+                createWorldPrefab = AdditionalFlower.CreateWorldPrefab,
+                priority = 8,
+            },
         ];
     }
     internal static void LoadOriginalItems()

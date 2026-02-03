@@ -130,6 +130,11 @@
     "item.EternalFeather.namePlural": "永遠の羽根",
     "item.EternalFeather.description": "不気味に輝く羽根。これを持っていると\nいくらでも　元気がわいてくる！",
 
+    "item.RubberFlowerSapling.name": "ゴムの花の苗",
+    "item.RubberFlowerSapling.namePlural": "ゴムの花の苗",
+    "item.RubberFlowerSapling.description": "これを植えて水をやれば、\n高い所までラクに飛ぶことができる。",
+    "item.RubberFlowerSapling.action": "植える",
+
     "item.Binoculars.name": "双眼鏡",
     "item.Binoculars.namePlural": "双眼鏡",
     "item.Binoculars.description": "ズーム機能付きの双眼鏡。\nこれで色々な景色を見て回ろう！",

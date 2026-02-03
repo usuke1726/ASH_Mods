@@ -12,6 +12,7 @@ internal class Setup
         done = true;
         DataHandler.Setup(helper);
         SpecialFeather.Setup(helper);
+        AdditionalFlower.Setup(helper);
     }
 }
 
