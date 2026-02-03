@@ -41,13 +41,25 @@ internal static class STags
         else if (value is bool @bool) SetBool(id, @bool);
     }
     public static void SetInt(string id, int value) => intValues[FormatId(id)] = value;
-    public static void TrySetInt(string id, int value) => intValues.TryAdd(FormatId(id), value);
+    public static bool TrySetInt(string id, int value) => intValues.TryAdd(FormatId(id), value);
     public static void SetFloat(string id, float value) => floatValues[FormatId(id)] = value;
-    public static void TrySetFloat(string id, float value) => floatValues.TryAdd(FormatId(id), value);
-    public static void SetString(string id, string value) => stringValues[FormatId(id)] = value;
-    public static void TrySetString(string id, string value) => stringValues.TryAdd(FormatId(id), value);
+    public static bool TrySetFloat(string id, float value) => floatValues.TryAdd(FormatId(id), value);
+    public static void SetString(string id, string value)
+    {
+        if (value == null) stringValues.Remove(id);
+        else stringValues[FormatId(id)] = value;
+    }
+    public static bool TrySetString(string id, string value)
+    {
+        if (value == null)
+        {
+            stringValues.Remove(id);
+            return true;
+        }
+        else return stringValues.TryAdd(FormatId(id), value);
+    }
     public static void SetBool(string id, bool value = true) => boolValues[FormatId(id)] = value;
-    public static void TrySetBool(string id, bool value) => boolValues.TryAdd(FormatId(id), value);
+    public static bool TrySetBool(string id, bool value) => boolValues.TryAdd(FormatId(id), value);
     public static void AddInt(string id, int value) => SetInt(id, GetInt(id, 0) + value);
     public static void AddFloat(string id, float value) => SetFloat(id, GetFloat(id, 0) + value);
     public static void ToggleBool(string id) => SetBool(id, !GetBool(id, false));
@@ -59,6 +71,13 @@ internal static class STags
     public static float GetFloat(string id, float defaultValue = 0) => TryGetFloat(id, out var v) ? v : defaultValue;
     public static string GetString(string id, string? defaultValue = null) => TryGetString(id, out var v) ? v : defaultValue!;
     public static bool GetBool(string id, bool defaultValue = false) => TryGetBool(id, out var v) ? v : defaultValue;
+    public static void RemoveValuesWithTag(string tag)
+    {
+        intValues.Remove(tag);
+        floatValues.Remove(tag);
+        stringValues.Remove(tag);
+        boolValues.Remove(tag);
+    }
 
 
     private static class SaveHandler
