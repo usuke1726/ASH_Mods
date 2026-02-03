@@ -5,13 +5,14 @@ namespace Sidequel.Dialogue.Actions;
 
 internal class IndexedLinesAction : RangedLinesAction
 {
-    public IndexedLinesAction(Func<int, string> getI18nKey, string speaker, List<Tuple<int, IInvokableInAction>>? actions = null, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(1, 1000, getI18nKey, speaker, actions, replacer, useId, anchor) { }
-    public IndexedLinesAction(Func<int, string> getI18nKey, Func<int, string> getSpeaker, List<Tuple<int, IInvokableInAction>>? actions = null, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(1, 1000, getI18nKey, getSpeaker, actions, replacer, useId, anchor) { }
-    public IndexedLinesAction(Func<int, string> getI18nKey, HashSet<int> playerIndexes, List<Tuple<int, IInvokableInAction>>? actions = null, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(1, 1000, getI18nKey, playerIndexes, actions, replacer, useId, anchor) { }
+    public IndexedLinesAction(Func<int, string> getI18nKey, string speaker, List<Tuple<int, IInvokableInAction>>? actions = null, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(1, 1000, getI18nKey, speaker, actions, replacer, useId, anchor) { alertOnKeyNotFound = false; }
+    public IndexedLinesAction(Func<int, string> getI18nKey, Func<int, string> getSpeaker, List<Tuple<int, IInvokableInAction>>? actions = null, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(1, 1000, getI18nKey, getSpeaker, actions, replacer, useId, anchor) { alertOnKeyNotFound = false; }
+    public IndexedLinesAction(Func<int, string> getI18nKey, HashSet<int> playerIndexes, List<Tuple<int, IInvokableInAction>>? actions = null, Func<string, string>? replacer = null, bool useId = true, string? anchor = null) : base(1, 1000, getI18nKey, playerIndexes, actions, replacer, useId, anchor) { alertOnKeyNotFound = false; }
 }
 
 internal class RangedLinesAction : BaseAction, IInvokableInAction
 {
+    protected bool alertOnKeyNotFound = true;
     private readonly int minInclusive;
     private readonly int maxInclusive;
     private readonly Func<int, string> getI18nKey;
@@ -88,7 +89,7 @@ internal class RangedLinesAction : BaseAction, IInvokableInAction
                     conversation.currentSpeaker = ch.gameObject.transform;
                 }
             }
-            var s = replacer(I18n(getI18nKey(index), useId));
+            var s = replacer(I18n(getI18nKey(index), useId, alertOnKeyNotFound));
             if (string.IsNullOrEmpty(s)) break;
             var text = TextReplacer.ReplaceVariables(s);
             if (!string.IsNullOrWhiteSpace(text))

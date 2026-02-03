@@ -16,7 +16,20 @@ internal partial class ModEntry : Mod
     internal static class Global
     {
         public static IMonitor Monitor => instance.Monitor;
-        public static string I18nLocalize(string id, params IEnumerable<object> args) => FontSubstituter.Replace(instance.I18n_.Localize(id, args));
+        public static string I18nLocalize(string id, params IEnumerable<object> args) => I18nLocalize(true, id, args);
+        public static string I18nLocalize(bool alertOnKeyNotFound, string id, params IEnumerable<object> args)
+        {
+            if (instance.I18n_.TryToLocalize(id, out var t, args))
+            {
+                return FontSubstituter.Replace(t);
+            }
+            else if (alertOnKeyNotFound)
+            {
+                Monitor.Log($"Not found i18n key \"{id}\"", LL.Warning);
+                return $"ERROR!!";
+            }
+            else return "";
+        }
 
         [Conditional("DEBUG")]
         public static void Debug(string m, LL level = LL.Debug) => Monitor.Log(m, level, true);
