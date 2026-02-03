@@ -134,6 +134,8 @@
     "item.RubberFlowerSapling.namePlural": "ゴムの花の苗",
     "item.RubberFlowerSapling.description": "これを植えて水をやれば、\n高い所までラクに飛ぶことができる。",
     "item.RubberFlowerSapling.action": "植える",
+    "node.item.RubberFlowerSapling.cannotPlant": "P:ここに植えるのは　ムリだろ",
+    "node.item.RubberFlowerSapling.shouldNotPlant": "P:ここは　やめとこう",
 
     "item.Binoculars.name": "双眼鏡",
     "item.Binoculars.namePlural": "双眼鏡",

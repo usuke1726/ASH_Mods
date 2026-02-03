@@ -71,7 +71,12 @@ internal class AdditionalFlower
                 player.isSwimming ||
                 player.isClimbing ||
                 player.isGliding ||
-                player.isSliding ||
+                player.isSliding
+            );
+        }
+        private static bool ShouldNotPlant(Player player)
+        {
+            return (
                 player.transform.position.y >= 600f
             );
         }
@@ -82,21 +87,28 @@ internal class AdditionalFlower
             yield return new WaitForSeconds(0.25f);
             if (CannotPlant(player))
             {
-                GameObject.Destroy(inputLock);
-                isActive = false;
-                yield break;
+                NodeData.RubberFlowerSapling.cannnotPlantActivated = true;
+                Dialogue.DialogueController.instance.StartConversation(null);
             }
-            player.body.velocity = Vector3.zero;
-            if (DataHandler.Find(Items.RubberFlowerSapling, out var saplingItem))
+            else if (ShouldNotPlant(player))
             {
-                DataHandler.AddCollected(saplingItem, -1);
-                Context.levelUI.statusBar.ShowCollection(saplingItem.item).HideAndKill(1f);
+                NodeData.RubberFlowerSapling.shouldNotPlantActivated = true;
+                Dialogue.DialogueController.instance.StartConversation(null);
             }
-            var stopPose = player.ikAnimator.Pose(Pose.LookingDown);
-            yield return new WaitForSeconds(0.75f);
-            Clone(player);
-            stopPose();
-            yield return new WaitForSeconds(0.75f);
+            else
+            {
+                player.body.velocity = Vector3.zero;
+                if (DataHandler.Find(Items.RubberFlowerSapling, out var saplingItem))
+                {
+                    DataHandler.AddCollected(saplingItem, -1);
+                    Context.levelUI.statusBar.ShowCollection(saplingItem.item).HideAndKill(1f);
+                }
+                var stopPose = player.ikAnimator.Pose(Pose.LookingDown);
+                yield return new WaitForSeconds(0.75f);
+                Clone(player);
+                stopPose();
+                yield return new WaitForSeconds(0.75f);
+            }
             GameObject.Destroy(inputLock);
             isActive = false;
         }
