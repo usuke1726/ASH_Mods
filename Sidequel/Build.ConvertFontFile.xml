@@ -86,7 +86,7 @@
     {
         var indent = new string(' ', 4);
         var contents = "{\n" + string.Join(",\n", Enumerable.Range(0, output.Count)
-            .Select(i => string.Format("{0}\"font{1}\": \"{2}\"", indent, i, output[i]))
+            .Select(i => string.Format("{0}\"font.{1}\": \"{2}\"", indent, i, output[i]))
         ) + "\n}";
         File.WriteAllLines(outputFilePath, contents.Split('\n'));
     }
