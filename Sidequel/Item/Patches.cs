@@ -1,6 +1,7 @@
 ﻿
 using HarmonyLib;
 using QuickUnityTools.Input;
+using Sidequel.System;
 
 namespace Sidequel.Item;
 
@@ -71,6 +72,34 @@ internal class PauseMenuPatch
     {
         if (!State.IsActive) return;
         if (item.name == fishingRodEscapedName) item.name = fishingRodName;
+    }
+}
+
+[HarmonyPatch(typeof(Tags))]
+internal class HeldItemTagPatch
+{
+    private const string Tag = "HeldItem";
+    [HarmonyPrefix()]
+    [HarmonyPatch("GetString")]
+    internal static bool GetString(string tag, ref string __result)
+    {
+        if (tag == Tag)
+        {
+            __result = STags.GetString(Tag);
+            return false;
+        }
+        return true;
+    }
+    [HarmonyPrefix()]
+    [HarmonyPatch("SetString")]
+    internal static bool SetString(string tag, string value)
+    {
+        if (tag == Tag)
+        {
+            STags.SetString(Tag, value);
+            return false;
+        }
+        return true;
     }
 }
 
