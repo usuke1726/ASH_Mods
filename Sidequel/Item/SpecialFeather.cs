@@ -175,11 +175,14 @@ internal class SpecialFeather : MonoBehaviour
 [HarmonyPatch(typeof(Player))]
 internal class SpecialFeatherPatch
 {
+    private const float DefaultExtraJumpMultiplier = 0.5f;
     internal static void Setup(IModHelper helper)
     {
         helper.Events.Gameloop.GameStarted += (_, _) =>
         {
-            if (State.IsActive && Items.Has(Items.EternalFeather)) OnGotFeather();
+            if (!State.IsActive) return;
+            if (Items.Has(Items.EternalFeather)) OnGotFeather();
+            else Context.player.silverFeatherExtraJumpMultiplier = DefaultExtraJumpMultiplier;
         };
         helper.Events.Gameloop.ReturnedToTitle += (_, _) => isActive = false;
     }
@@ -187,6 +190,7 @@ internal class SpecialFeatherPatch
     {
         isActive = true;
         OnSilverFeathersUpdated(Context.player, 1);
+        Context.player.silverFeatherExtraJumpMultiplier = 0.75f;
     }
     private static bool isActive = false;
     [HarmonyPrefix()]
