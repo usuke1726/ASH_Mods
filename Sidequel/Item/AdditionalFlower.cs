@@ -63,7 +63,7 @@ internal class AdditionalFlower
     private class PlantingCoroutine : MonoBehaviour
     {
         private static PlantingCoroutine? instance = null;
-        private void Start() => StartCoroutine(Plant());
+        private static bool isActive = false;
         private static bool CannotPlant(Player player)
         {
             return (
@@ -83,6 +83,7 @@ internal class AdditionalFlower
             if (CannotPlant(player))
             {
                 GameObject.Destroy(inputLock);
+                isActive = false;
                 yield break;
             }
             player.body.velocity = Vector3.zero;
@@ -97,12 +98,15 @@ internal class AdditionalFlower
             stopPose();
             yield return new WaitForSeconds(0.75f);
             GameObject.Destroy(inputLock);
-            instance = null;
+            isActive = false;
         }
+        private void OnDestroy() => instance = null;
         internal static void StartPlanting()
         {
-            if (instance != null) return;
-            instance = new GameObject("Sidequel_AdditionalFlower_PlantingController").AddComponent<PlantingCoroutine>();
+            if (isActive) return;
+            instance ??= new GameObject("Sidequel_AdditionalFlower_PlantingController").AddComponent<PlantingCoroutine>();
+            isActive = true;
+            instance.StartCoroutine(instance.Plant());
         }
     }
     private static void Clone(int idx, Vector3 position)
