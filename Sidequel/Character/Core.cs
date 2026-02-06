@@ -7,16 +7,54 @@ namespace Sidequel.Character;
 
 internal partial class Core
 {
+    internal abstract class NPC
+    {
+        internal abstract void Create();
+        internal abstract ModdingAPI.Character Character { get; }
+        internal abstract bool Match(string name, bool matchAsObjectName);
+    }
     private static Player player = null!;
     private static Transform toughBird = null!;
     private static bool setupDone = false;
     private static bool isHalfEye = true;
 
+    private static readonly IReadOnlyDictionary<int, NPC> npcs = new Dictionary<int, NPC>()
+    {
+        [Const.Object.ClaireObjectId] = new Claire(),
+        [Const.Object.TheoObjectId] = new Theo(),
+        [Const.Object.LilyObjectId] = new Lily(),
+        [Const.Object.LeoObjectId] = new Leo(),
+    };
+    internal static ModdingAPI.Character Claire => npcs[Const.Object.ClaireObjectId].Character;
+    internal static ModdingAPI.Character Theo => npcs[Const.Object.TheoObjectId].Character;
+    internal static ModdingAPI.Character Lily => npcs[Const.Object.LilyObjectId].Character;
+    internal static ModdingAPI.Character Leo => npcs[Const.Object.LeoObjectId].Character;
+    internal static bool TryGetNPC(string name, bool matchAsObjectName, out ModdingAPI.Character character)
+    {
+        foreach (var npc in npcs.Values)
+        {
+            if (npc.Match(name, matchAsObjectName))
+            {
+                character = npc.Character;
+                return true;
+            }
+        }
+        character = null!;
+        return false;
+    }
+    internal static bool TryGetNPC(int ch, out ModdingAPI.Character character)
+    {
+        if (npcs.TryGetValue(ch, out var npc)) character = npc.Character;
+        else character = null!;
+        return character != null;
+    }
+
     internal static void Setup(IModHelper helper)
     {
         helper.Events.Gameloop.GameStarted += (_, _) =>
         {
-            CreateClaireNPC();
+            if (!State.IsActive) return;
+            foreach (var npc in npcs.Values) npc.Create();
             ChangeToToughBird();
         };
         helper.Events.Gameloop.ReturnedToTitle += (_, _) =>
@@ -31,54 +69,6 @@ internal partial class Core
         }, name: "(Debug)ToggleEmotion");
     }
 
-    internal static ModdingAPI.Character Claire { get; private set; } = null!;
-    private static void CreateClaireNPC()
-    {
-        if (!State.IsActive) return;
-        var NPCs = GameObject.Find("NPCs");
-        if (NPCs == null) return;
-        var auntMay = NPCs.transform.Find("AuntMayNPC").gameObject;
-        if (auntMay == null) return;
-        var claireObj = auntMay.Clone();
-        claireObj.name = Const.Object.Claire;
-        claireObj.GetComponentInChildren<Animator>().speed = 0.6f;
-        Claire = new ModdingAPI.Character((Characters)Const.Object.ClaireObjectId, claireObj.transform);
-
-        claireObj.transform.parent = NPCs.transform;
-        claireObj.transform.position = new(651.1263f, 20.47f, 338.8536f);
-        claireObj.transform.rotation = Quaternion.Euler(0, 115.3961f, 0);
-
-        Color skinColor = new(0.271f, 0.243f, 0.400f, 1);
-        Color shirtColor = new(0.8585f, 0, 0.144f, 1);
-        Color beakColor = new(1, 0.820f, 0, 1);
-
-        var bird = claireObj.transform.Find("Bird");
-        bird.Find("Arms").GetComponent<SkinnedMeshRenderer>().material.color = skinColor;
-        bird.Find("Body").GetComponent<SkinnedMeshRenderer>().material.color = shirtColor;
-        bird.Find("Head").GetComponent<SkinnedMeshRenderer>().materials[0].color = skinColor;
-        bird.Find("Head").GetComponent<SkinnedMeshRenderer>().materials[1].color = beakColor;
-        bird.Find("Head").GetComponent<SkinnedMeshRenderer>().materials[2].color = skinColor;
-        bird.Find("Legs").GetComponent<SkinnedMeshRenderer>().materials[0].color = skinColor;
-        bird.Find("Legs").GetComponent<SkinnedMeshRenderer>().materials[1].color = skinColor;
-
-        var head = claireObj.transform.Find("Bird/Armature/root/Base/Chest/Head_0/");
-        if (head == null)
-        {
-            Monitor.Log($"The head of Claire Object is null!!", LL.Warning);
-            return;
-        }
-        ModdingAPI.Character.OnSetupDone(() =>
-        {
-            var deerHat = ModdingAPI.Character.Get(Characters.SunhatDeer).gameObject.transform.Find("Bird/Armature/root/Base/Chest/Head_0/Hat").gameObject;
-            head.Find("Hat").gameObject.SetActive(false);
-            var sunhat = deerHat.Clone();
-            sunhat.name = "SunHat";
-            sunhat.SetActive(true);
-            sunhat.transform.parent = head;
-            sunhat.transform.localPosition = new(-2.435f, 0.0515f, 0.1987f);
-            sunhat.transform.localRotation = Quaternion.Euler(0, 271.3634f, 0);
-        });
-    }
     private static void ChangeToToughBird()
     {
         if (setupDone) return;

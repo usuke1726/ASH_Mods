@@ -22,16 +22,16 @@ internal static class Character
             character = ModdingAPI.Character.Get(Characters.Claire);
             return true;
         }
-        else if (name == Const.Object.Claire || name == "Claire")
+        else if (Sidequel.Character.Core.TryGetNPC(name, false, out var npc))
         {
-            character = Sidequel.Character.Core.Claire;
+            character = npc;
             return true;
         }
         else return ModdingAPI.Character.TryGet(name, out character);
     }
     public static ModdingAPI.Character Get(Characters ch)
     {
-        if ((int)ch == Const.Object.ClaireObjectId) return Sidequel.Character.Core.Claire;
+        if (Sidequel.Character.Core.TryGetNPC((int)ch, out var npc)) return npc;
         else return ModdingAPI.Character.Get(ch);
     }
 }

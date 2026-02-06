@@ -39,10 +39,7 @@ internal static class NodeSelector
     }
     private static ModdingAPI.Character? SpeakerToCharacter(Transform? speaker)
     {
-        if (speaker != null && speaker.name == Const.Object.Claire)
-        {
-            return Sidequel.Character.Core.Claire;
-        }
+        if (speaker != null && Sidequel.Character.Core.TryGetNPC(speaker.name, true, out var npc)) return npc;
         return ModdingAPI.Character.TryGet(speaker!, out var ch) ? ch : null;
     }
     internal static Node? Find(string id, Characters? character)
