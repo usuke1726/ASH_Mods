@@ -19,20 +19,32 @@ internal class Binoculars : NodeEntry
 
 internal class RubberFlowerSapling : NodeEntry
 {
-    internal static bool cannnotPlantActivated = false;
+    internal static bool cannnotWorkActivated = false;
     internal static bool shouldNotPlantActivated = false;
-    internal const string CannotPlant = "RubberFlowerSapling.CannotPlant";
+    internal static bool flowerNotFoundActivated = false;
+    internal static bool shouldGetCloserActivated = false;
+    internal const string CannotWork = "RubberFlowerSapling.CannotWork";
     internal const string ShouldNotPlant = "RubberFlowerSapling.ShouldNotPlant";
+    internal const string FlowerNotFound = "RubberFlowerSapling.FlowerNotFound";
+    internal const string ShouldGetCloser = "RubberFlowerSapling.ShouldGetCloser";
     protected override Characters? Character => null;
     protected override Node[] Nodes => [
-        new(CannotPlant, [
-            command(() => cannnotPlantActivated = false),
-            line("item.RubberFlowerSapling.cannotPlant", Player, useId: false),
-        ], condition: () => cannnotPlantActivated, priority: int.MaxValue),
+        new(CannotWork, [
+            command(() => cannnotWorkActivated = false),
+            line("item.RubberFlowerSapling.cannotWork", Player, useId: false),
+        ], condition: () => cannnotWorkActivated, priority: int.MaxValue),
         new(ShouldNotPlant, [
             command(() => shouldNotPlantActivated = false),
             line("item.RubberFlowerSapling.shouldNotPlant", Player, useId: false),
         ], condition: () => shouldNotPlantActivated, priority: int.MaxValue),
+        new(FlowerNotFound, [
+            command(() => flowerNotFoundActivated = false),
+            line("item.RubberFlowerSapling.notFoundFlower", Player, useId: false),
+        ], condition: () => flowerNotFoundActivated, priority: int.MaxValue),
+        new(ShouldGetCloser, [
+            command(() => shouldGetCloserActivated = false),
+            line("item.RubberFlowerSapling.shouldGetCloser", Player, useId: false),
+        ], condition: () => shouldGetCloserActivated, priority: int.MaxValue),
     ];
 }
 
