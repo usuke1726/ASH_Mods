@@ -105,7 +105,16 @@ internal class Camper : NodeEntry
     {
         ModdingAPI.Character.OnSetupDone(() =>
         {
-            Ch(Characters.Camper).animator.SetBool("Happy", true);
+            var ch = Ch(Characters.Camper);
+            ch.animator.SetBool("Happy", true);
+            var head = ch.transform.Find("Bird/Armature/root/Base/Chest/Head_0");
+            var circleSprite = Ch(Characters.AuntMay).transform.Find("Bird/Armature/root/Base/Chest/Head_0/EyeL").GetComponent<SpriteRenderer>().sprite;
+            var eyeR = head.Find("EyeR");
+            var eyeL = head.Find("EyeL");
+            eyeR.GetComponent<SpriteRenderer>().sprite = circleSprite;
+            eyeL.GetComponent<SpriteRenderer>().sprite = circleSprite;
+            eyeR.Find("Pupil").GetComponent<SpriteRenderer>().sprite = circleSprite;
+            eyeL.Find("Pupil").GetComponent<SpriteRenderer>().sprite = circleSprite;
         });
     }
 }
