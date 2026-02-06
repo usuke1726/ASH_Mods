@@ -101,6 +101,31 @@ internal class AdditionalFlower
             if (originalFlowerShortenIds.Count == num) break;
         }
     }
+    private class AtmosphereChecker : MonoBehaviour
+    {
+        private const float ActivatingTime = 0.7f;
+        private static AtmosphereController atmosphere = null!;
+        private float startTime;
+        private Sapling sapling = null!;
+        private void Start()
+        {
+            if (atmosphere == null || atmosphere.gameObject == null)
+            {
+                atmosphere = GameObject.Find("/LevelSingletons").transform.Find("Customized/Atmosphere").GetComponent<AtmosphereController>();
+            }
+            if (!atmosphere.rain.isPlaying) GameObject.Destroy(this);
+            startTime = Time.time;
+            sapling = GetComponent<Sapling>();
+        }
+        private void Update()
+        {
+            if (Time.time - startTime >= ActivatingTime)
+            {
+                sapling.Water();
+                GameObject.Destroy(this);
+            }
+        }
+    }
     private class PlantingCoroutine : MonoBehaviour
     {
         private static PlantingCoroutine instance = null!;
@@ -231,6 +256,7 @@ internal class AdditionalFlower
         newObj.GetComponent<GameObjectID>().id = $"{SaplingBoolTagPatcher.SaplingIDPrefix}{idx}";
         newObj.transform.position = position;
         newObj.GetComponent<SphereCollider>().enabled = !watered[idx];
+        newObj.AddComponent<AtmosphereChecker>();
         objects[idx] = newObj.transform;
     }
     private static void Clone(Player player)
