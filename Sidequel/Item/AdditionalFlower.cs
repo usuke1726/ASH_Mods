@@ -142,8 +142,14 @@ internal class AdditionalFlower
         }
         private static bool ShouldNotPlant(Player player)
         {
+            var pos = player.transform.position;
+            var layer = (1 << 0) | (1 << 4) | (1 << 10) | (1 << 12);
+            if (Physics.Raycast(pos + Vector3.up * 2f, Vector3.down, out var hitObj, 10f, layer))
+            {
+                if (hitObj.collider.transform.parent.name != "Terrains") return true;
+            }
             return (
-                player.transform.position.y >= 600f ||
+                pos.y >= 600f ||
                 IsThereFlowerNearby(out _, out _, out _)
             );
         }
