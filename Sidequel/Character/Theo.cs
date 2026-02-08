@@ -66,6 +66,15 @@ internal class Theo : Core.NPC
         eyeR.Find("Pupil").GetComponent<SpriteRenderer>().sprite = circleSprite;
         eyeL.Find("Pupil").GetComponent<SpriteRenderer>().sprite = circleSprite;
 
+        float z = 268.5268f;
+        eyeL.localRotation = Quaternion.Euler(eyeL.localRotation.eulerAngles with { z = z });
+        eyeR.localRotation = Quaternion.Euler(eyeR.localRotation.eulerAngles with { z = z });
+        var happyL = eyeL.Find("HappyEyes");
+        var happyR = eyeR.Find("HappyEyes");
+        float z2 = 358.9214f;
+        happyL.localRotation = Quaternion.Euler(happyL.localRotation.eulerAngles with { z = z2 });
+        happyR.localRotation = Quaternion.Euler(happyR.localRotation.eulerAngles with { z = z2 });
+
         TheosUmbrella.Create();
     }
     private class TheosUmbrella
