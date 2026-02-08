@@ -115,6 +115,14 @@ internal static class FontSubstituter
         }
         return s;
     }
+    internal static string ReverseReplace(string s)
+    {
+        foreach (var item in replaceMap)
+        {
+            s = s.Replace(item.Item2, item.Item1);
+        }
+        return s;
+    }
     private static void Apply()
     {
         Assert(fontAsset != null, "fontAsset is null!!");
