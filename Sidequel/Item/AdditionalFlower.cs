@@ -134,7 +134,6 @@ internal class AdditionalFlower
         {
             return (
                 !player.isGrounded ||
-                player.isSwimming ||
                 player.isClimbing ||
                 player.isGliding ||
                 player.isSliding
@@ -156,7 +155,7 @@ internal class AdditionalFlower
                 return false;
             }
             var pos = player.transform.position;
-            if (pos.y >= 600f || IsThereFlowerNearby(out _, out _, out _)) return true;
+            if (player.isSwimming || pos.y >= 600f || IsThereFlowerNearby(out _, out _, out _)) return true;
             var layer = (1 << 0) | (1 << 4) | (1 << 10) | (1 << 12) | (1 << 21) | (1 << 24);
             if (!Physics.Raycast(pos + Vector3.up * 2f, Vector3.down, out var hitObj, 10f, layer)) return true;
             if (!IsAllowedGround(hitObj.collider)) return true;
@@ -175,14 +174,14 @@ internal class AdditionalFlower
             var player = Context.player;
             var inputLock = GameUserInput.CreateInputGameObjectWithPriority(10);
             yield return new WaitForSeconds(0.25f);
-            if (CannotWork(player))
-            {
-                NodeData.RubberFlowerSapling.cannnotWorkActivated = true;
-                Dialogue.DialogueController.instance.StartConversation(null);
-            }
-            else if (ShouldNotPlant(player))
+            if (ShouldNotPlant(player))
             {
                 NodeData.RubberFlowerSapling.shouldNotPlantActivated = true;
+                Dialogue.DialogueController.instance.StartConversation(null);
+            }
+            else if (CannotWork(player))
+            {
+                NodeData.RubberFlowerSapling.cannnotWorkActivated = true;
                 Dialogue.DialogueController.instance.StartConversation(null);
             }
             else
