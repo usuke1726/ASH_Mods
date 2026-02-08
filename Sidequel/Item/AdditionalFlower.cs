@@ -142,16 +142,25 @@ internal class AdditionalFlower
         }
         private static bool ShouldNotPlant(Player player)
         {
-            var pos = player.transform.position;
-            var layer = (1 << 0) | (1 << 4) | (1 << 10) | (1 << 12);
-            if (Physics.Raycast(pos + Vector3.up * 2f, Vector3.down, out var hitObj, 10f, layer))
+            static bool IsAllowedGround(Collider collider)
             {
-                if (hitObj.collider.transform.parent.name != "Terrains") return true;
+                var tr = collider.transform;
+                var parent = tr.parent;
+                // Debug($"rayCast hit .../{parent.name}/{tr.name}");
+                if (parent.name == "Terrains" && tr.name.StartsWith("Terrain")) return true;
+                string[] allowedDecorObjctPrefixes = [
+                    "WaterRocks", "CaveEntrance", "WideCaveEntrance"
+                ];
+                if (parent.name == "Decor" && allowedDecorObjctPrefixes.Any(tr.name.StartsWith)) return true;
+                if (parent.name == "Decor" && tr.name.StartsWith("SoftRock") && tr.gameObject.layer == 12) return true;
+                return false;
             }
-            return (
-                pos.y >= 600f ||
-                IsThereFlowerNearby(out _, out _, out _)
-            );
+            var pos = player.transform.position;
+            if (pos.y >= 600f || IsThereFlowerNearby(out _, out _, out _)) return true;
+            var layer = (1 << 0) | (1 << 4) | (1 << 10) | (1 << 12) | (1 << 21) | (1 << 24);
+            if (!Physics.Raycast(pos + Vector3.up * 2f, Vector3.down, out var hitObj, 10f, layer)) return true;
+            if (!IsAllowedGround(hitObj.collider)) return true;
+            return false;
         }
         private static bool ShouldNotRemove(Transform obj, int? idx)
         {
