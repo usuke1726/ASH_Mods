@@ -23,10 +23,12 @@ internal class RubberFlowerSapling : NodeEntry
     internal static bool shouldNotPlantActivated = false;
     internal static bool flowerNotFoundActivated = false;
     internal static bool shouldGetCloserActivated = false;
+    internal static bool shouldNotRemoveActivated = false;
     internal const string CannotWork = "RubberFlowerSapling.CannotWork";
     internal const string ShouldNotPlant = "RubberFlowerSapling.ShouldNotPlant";
     internal const string FlowerNotFound = "RubberFlowerSapling.FlowerNotFound";
     internal const string ShouldGetCloser = "RubberFlowerSapling.ShouldGetCloser";
+    internal const string ShouldNotRemove = "RubberFlowerSapling.ShouldNotRemove";
     protected override Characters? Character => null;
     protected override Node[] Nodes => [
         new(CannotWork, [
@@ -45,6 +47,10 @@ internal class RubberFlowerSapling : NodeEntry
             command(() => shouldGetCloserActivated = false),
             line("item.RubberFlowerSapling.shouldGetCloser", Player, useId: false),
         ], condition: () => shouldGetCloserActivated, priority: int.MaxValue),
+        new(ShouldNotRemove, [
+            command(() => shouldNotRemoveActivated = false),
+            line("item.RubberFlowerSapling.shouldNotRemove", Player, useId: false),
+        ], condition: () => shouldNotRemoveActivated, priority: int.MaxValue),
     ];
 }
 

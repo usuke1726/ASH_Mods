@@ -153,6 +153,14 @@ internal class AdditionalFlower
                 IsThereFlowerNearby(out _, out _, out _)
             );
         }
+        private static bool ShouldNotRemove(Transform obj, int? idx)
+        {
+            if (idx != null) return false;
+            Vector3[] positions = [
+                new(248.46f, 70.44f, 220.55f),
+            ];
+            return positions.Any(p => (obj.position - p).sqrMagnitude < 100f);
+        }
         private IEnumerator Plant()
         {
             var player = Context.player;
@@ -194,6 +202,11 @@ internal class AdditionalFlower
             {
                 if (existsBitFarAway) NodeData.RubberFlowerSapling.shouldGetCloserActivated = true;
                 else NodeData.RubberFlowerSapling.flowerNotFoundActivated = true;
+                Dialogue.DialogueController.instance.StartConversation(null);
+            }
+            else if (ShouldNotRemove(obj, index))
+            {
+                NodeData.RubberFlowerSapling.shouldNotRemoveActivated = true;
                 Dialogue.DialogueController.instance.StartConversation(null);
             }
             else if (CannotWork(player))

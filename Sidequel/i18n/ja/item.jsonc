@@ -139,6 +139,7 @@
     "node.item.RubberFlowerSapling.shouldNotPlant": "P:ここは　やめとこう",
     "node.item.RubberFlowerSapling.notFoundFlower": "P:近くに花は　ないみたいだな",
     "node.item.RubberFlowerSapling.shouldGetCloser": "P:もっと近寄らないと…",
+    "node.item.RubberFlowerSapling.shouldNotRemove": "P:この花は　やめとこう",
 
     "item.Binoculars.name": "双眼鏡",
     "item.Binoculars.namePlural": "双眼鏡",
